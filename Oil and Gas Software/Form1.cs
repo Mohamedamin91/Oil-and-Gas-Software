@@ -33,7 +33,9 @@ namespace Oil_and_Gas_Software
             dt.Rows.Clear();
             using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
             {
-                using (SqlCommand cmd = new SqlCommand(" select rigs.Rigname 'Rig',WELLS.Wellname 'Well No',MATERIALS.MATName 'Materials', MUD_TRATMENT.QTY'QTY',MATERIALS.PackingQTY'PQTY',MATERIALS.UnitName 'Unit',reports.Date 'Date' from RIGS,WELLS,REPORTS,MUD_TRATMENT,MATERIALS where  REPORTS.RIGID = rigs.RIGID and reports.WELLID = WELLS.WELLID  and  MUD_TRATMENT .MATID = MATERIALS.MATID and  MUD_TRATMENT .REPORTID = REPORTS.REPORTID order by [Well No] ", con))
+                using (SqlCommand cmd = new SqlCommand(" select rigs.Rigname 'Rig',WELLS.Wellname 'Well No',MATERIALS.MATName 'Materials', MUD_TRATMENT.QTY'QTY'," +
+                    "MUD_TRATMENT.PackingQTY'PQTY',MUD_TRATMENT.UnitName 'Unit',reports.Date 'Date' from RIGS,WELLS,REPORTS,MUD_TRATMENT,MATERIALS" +
+                    " where  REPORTS.RIGID = rigs.RIGID and reports.WELLID = WELLS.WELLID  and  MUD_TRATMENT .MATID = MATERIALS.MATID and  MUD_TRATMENT .REPORTID = REPORTS.REPORTID order by [Well No] ", con))
               
                 {
 
@@ -304,6 +306,8 @@ namespace Oil_and_Gas_Software
                                     Match result2 = re.Match(brackets);
                                     string PackingQTY = result2.Groups[1].Value;
                                     string UnitName = result2.Groups[2].Value;
+                                    MessageBox.Show("at the first " + UnitName);
+
 
                                     /*extract value between  materials */
 
@@ -318,14 +322,11 @@ namespace Oil_and_Gas_Software
                                         int KEYWORDExist = (int)check_KEYWORD.ExecuteScalar();
                                         if (KEYWORDExist == 0)
                                         {
-                                            using (SqlCommand cmd = new SqlCommand("INSERT INTO MATERIALS(MATName,UnitName,PackingQTY) VALUES (@C1,@C2,@C3)", con))
+                                            using (SqlCommand cmd = new SqlCommand("INSERT INTO MATERIALS(MATName) VALUES (@C1)", con))
                                             {
                                                 cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.VarChar));
                                                 cmd.Parameters["@C1"].Value = keyword.ToString();
-                                                cmd.Parameters.Add(new SqlParameter("@C2", SqlDbType.VarChar));
-                                                cmd.Parameters["@C2"].Value = UnitName.ToString();
-                                                cmd.Parameters.Add(new SqlParameter("@C3", SqlDbType.VarChar));
-                                                cmd.Parameters["@C3"].Value = PackingQTY;
+                                               
                                                 cmd.ExecuteNonQuery();
                                                 using (SqlCommand cmd1 = new SqlCommand("SELECT (MATID)  FROM  MATERIALS WHERE MATName=@C1", con))
                                                 {
@@ -353,7 +354,8 @@ namespace Oil_and_Gas_Software
                                     /** Update Category and sub cat**/
                                     using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                     {
-                                        SqlCommand cmd0 = new SqlCommand(" UPDATE [MATERIALS] SET [PackingQTY] = 1 WHERE [PackingQTY]= 0 ", con);
+                                         // updating pQTY =1 where pQTY =0 
+                                        SqlCommand cmd0 = new SqlCommand(" UPDATE [MUD_TRATMENT] SET [PackingQTY] = 1 WHERE [PackingQTY]= 0 ", con);
                                         SqlCommand cmd1 = new SqlCommand(" UPDATE [MATERIALS] SET [CatID] = 1 /*,[SubID]=1 */ WHERE [MATName]= 'BARITE' or [MATName]= 'BA-NF' or [MATName]= 'BA-AM' or [MATName]= 'BA-AL'  or [MATName]= 'BA-AF' or [MATName]= 'BA-OR' or [MATName]= 'KI-BARITE' or [MATName]= 'BA-PERF' or [MATName]= 'BA-ESNAAD' or [MATName]= 'BA-BAR'  or[MATName]= 'BA-IBC' or [MATName]= 'BA-OM'  or[MATName]= 'BA-AGMED' or [MATName]= 'BA-MID'  or[MATName]= 'BA-POUR' or [MATName]= 'BA-ATAD'  or[MATName]= 'BA' ", con);
                                         SqlCommand cmd2 = new SqlCommand(" UPDATE [MATERIALS] SET [CatID] = 2 /*,[SubID]=2*/   WHERE [MATName]= 'BA-NF-BULK' or [MATName]= 'BA-BA-BULK' or [MATName]= 'BA-AR-BULK' or [MATName]= 'BA-DMF-BULK'or[MATName]= 'BA BULK'", con);
                                         SqlCommand cmd3 = new SqlCommand(" UPDATE [MATERIALS] SET [CatID] = 3 /*,[SubID]=3*/   WHERE [MATName]= 'CABR2' or [MATName]= 'CABR2-MI' or [MATName]= 'CABR2-HAL' or [MATName]= 'CABR2-TET'or [MATName]= 'CABR2-OS' or [MATName]= 'CABR2-JOR' or [MATName]= 'CABR2-AGR' or [MATName]= 'CABR2-SHA' or[MATName]= 'CABR2-JIA' or [MATName]= 'CABR2-WEI'  or[MATName]= 'CABR2-ALB'", con);
@@ -478,14 +480,11 @@ namespace Oil_and_Gas_Software
                                                 /** get reprot id */
                                                 using (SqlCommand cmd1 = new SqlCommand("SELECT Count(*) from REPORTS,MUD_TRATMENT " +
                                                     "where MUD_TRATMENT.REPORTID = @C1 and MUD_TRATMENT.MATID = @C2 AND" +
-                                                    "  MUD_TRATMENT.QTY = @C3 and REPORTS.date = @C4 and Reports.reportid = MUD_TRATMENT.REPORTID", con1))
+                                                    "  MUD_TRATMENT.QTY = @C3 and REPORTS.date = @C4 and UnitName =@C5 and PackingQTY= @C6 " +
+                                                    "and Reports.reportid = MUD_TRATMENT.REPORTID", con1))
                                                 {
                                                     cmd1.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
                                                     cmd1.Parameters["@C1"].Value = ReportID.ToString();
-
-                                                     
-                                           //         MessageBox.Show("from code"+ReportID.ToString());
-
 
                                                     cmd1.Parameters.Add(new SqlParameter("@C2", SqlDbType.Int));
                                                     cmd1.Parameters["@C2"].Value = MaterialID.ToString();
@@ -496,10 +495,16 @@ namespace Oil_and_Gas_Software
                                                     cmd1.Parameters.Add(new SqlParameter("@C4", SqlDbType.Date));
                                                     cmd1.Parameters["@C4"].Value = enter_date;
 
+                                                    cmd1.Parameters.Add(new SqlParameter("@C5", SqlDbType.NVarChar));
+                                                    cmd1.Parameters["@C5"].Value = UnitName;
+
+                                                    cmd1.Parameters.Add(new SqlParameter("@C6", SqlDbType.NVarChar));
+                                                    cmd1.Parameters["@C6"].Value = PackingQTY;
+
                                                     int FILEExist2 = (int)cmd1.ExecuteScalar();
                                                     if (FILEExist2 == 0)
                                                     {
-                                                        using (SqlCommand cmd2 = new SqlCommand("insert into  MUD_TRATMENT ( REPORTID,MATID,QTY) values (@C1,@C2 ,@C3)  ", con1))
+                                                        using (SqlCommand cmd2 = new SqlCommand("insert into  MUD_TRATMENT ( REPORTID,MATID,QTY,UnitName,PackingQTY) values (@C1,@C2 ,@C3,@C4,@C5)  ", con1))
                                                         {
                                                             cmd2.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
                                                             cmd2.Parameters["@C1"].Value = ReportID.ToString();
@@ -508,11 +513,18 @@ namespace Oil_and_Gas_Software
                                                             cmd2.Parameters["@C2"].Value = MaterialID.ToString();
 
                                                             cmd2.Parameters.Add(new SqlParameter("@C3", SqlDbType.NVarChar));
-                                                            cmd2.Parameters["@C3"].Value = MValue.ToString();
+                                                            cmd2.Parameters["@C3"].Value = MValue.ToString(); 
+                                                            
+                                                            cmd2.Parameters.Add(new SqlParameter("@C4", SqlDbType.NVarChar));
+                                                            cmd2.Parameters["@C4"].Value = UnitName.ToString();
+
+                                                            cmd2.Parameters.Add(new SqlParameter("@C5", SqlDbType.NVarChar));
+                                                            cmd2.Parameters["@C5"].Value = PackingQTY.ToString();
+                                                            MessageBox.Show("at the end "+UnitName);
 
 
 
-                                                            cmd2.ExecuteNonQuery();
+                                                          cmd2.ExecuteNonQuery();
 
                                                         }
                                                         /** end data into mudtratment */
@@ -653,7 +665,7 @@ namespace Oil_and_Gas_Software
                                     int RIGExist = (int)check_RIG.ExecuteScalar();
                                     if (RIGExist == 0)
                                     {
-                                        using (SqlCommand cmd = new SqlCommand("INSERT INTO Rigs (RIGN) VALUES (@C1)", con))
+                                        using (SqlCommand cmd = new SqlCommand("INSERT INTO Rigs (Rigname) VALUES (@C1)", con))
                                         {
                                           
                                             cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.VarChar));
