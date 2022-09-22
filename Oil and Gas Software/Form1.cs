@@ -470,7 +470,7 @@ namespace Oil_and_Gas_Software
 
                                         ReportID = (int)check_FILE.ExecuteScalar();
 
-                                        MessageBox.Show(" from db "+ReportID.ToString());
+                                   //     MessageBox.Show(" from db "+ReportID.ToString());
                                       
                                         int FILEExist = (int)check_FILE.ExecuteScalar();
                                         if (FILEExist != 0)
@@ -480,14 +480,14 @@ namespace Oil_and_Gas_Software
                                                 con1.Open();
                                                 /** get reprot id */
                                                 using (SqlCommand cmd1 = new SqlCommand("SELECT Count(*) from REPORTS,MUD_TRATMENT " +
-                                                    "where Reports.REPORTID = @C1 and MUD_TRATMENT.MATID = @C2 AND" +
+                                                    "where MUD_TRATMENT.REPORTID = @C1 and MUD_TRATMENT.MATID = @C2 AND" +
                                                     "  MUD_TRATMENT.QTY = @C3 and REPORTS.date = @C4 and Reports.reportid = MUD_TRATMENT.REPORTID", con1))
                                                 {
                                                     cmd1.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
                                                     cmd1.Parameters["@C1"].Value = ReportID.ToString();
 
                                                      
-                                                    MessageBox.Show("from code"+ReportID.ToString());
+                                           //         MessageBox.Show("from code"+ReportID.ToString());
 
 
                                                     cmd1.Parameters.Add(new SqlParameter("@C2", SqlDbType.Int));
