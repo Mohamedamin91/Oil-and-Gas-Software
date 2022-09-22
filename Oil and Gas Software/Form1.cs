@@ -1,17 +1,18 @@
-﻿using System;
+﻿using Aspose.Cells;
+using MetroFramework.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
-using Aspose.Cells;
-using MetroFramework.Forms;
-using System.Text.RegularExpressions;
-using System.IO;
 
 namespace Oil_and_Gas_Software
 {
@@ -22,6 +23,7 @@ namespace Oil_and_Gas_Software
         FolderBrowserDialog fbd = new FolderBrowserDialog();
         DataTable dt = new DataTable();
         SqlDataReader reader;
+    
         public Form1()
         {
             InitializeComponent();
@@ -31,10 +33,11 @@ namespace Oil_and_Gas_Software
             dt.Rows.Clear();
             using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT " +
-                    " [MATName] as 'Material',[Val]as'Qty',PackingQTY as 'Packaging Quantity',UnitName as 'Unit',[Rigname] 'Well No (Type)',[Date] " +
-                    "FROM [OILREPORT2].[dbo].[FILES],OILREPORT2.dbo.MATERIALS,OILREPORT2.dbo.Rigs" +
-                    " where REPORTS.MATID = MATERIALS.MATID and FILES.RigID = Rigs.RigID  ", con))
+                using (SqlCommand cmd = new SqlCommand(" SELECT * FROM REPORTS ", con))
+                //using (SqlCommand cmd = new SqlCommand("SELECT " +
+                //    " [MATName] as 'Material',[Val]as'Qty',PackingQTY as 'Packaging Quantity',UnitName as 'Unit',[Wellname] 'Well No (Type)',[Date] " +
+                //    "FROM [OILREPORT2].[dbo].[FILES],OILREPORT2.dbo.MATERIALS,OILREPORT2.dbo.Rigs" +
+                //    " where REPORTS.MATID = MATERIALS.MATID and FILES.RigID = Rigs.RigID  ", con))
                 {
 
                     using (SqlDataAdapter ada = new SqlDataAdapter(cmd))
@@ -52,10 +55,12 @@ namespace Oil_and_Gas_Software
                 }
             }
         }
+
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
+      
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -65,12 +70,15 @@ namespace Oil_and_Gas_Software
         private void BrowseBtn_Click(object sender, EventArgs e)
         {
             // dt.Rows.Clear();
-            //method to remove MATERIALS
+            //method to remove keywords
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
 
                 int MaterialID;
                 int RigID;
+                int WellID;
+                int ReportID;
+
                 txtfilepath.Text = fbd.SelectedPath;
                 DirectoryInfo dir = new DirectoryInfo(fbd.SelectedPath);
 
@@ -78,15 +86,16 @@ namespace Oil_and_Gas_Software
                 {
                     string extractedfullDATE = "";
                     string extractedDATEONLY = "";
-                    string extractedRIGNAME = "";
+                    string extractedWELLNAME = "";
                     string extractedRIGDATA = "";
                     string extractedRIGDepth = "";
                     string last24 = "";
                     string DaysSince = "";
-                    string extratcRIGNameNEWONE = "";
+                    string extratcRIGNO = "";
                     var Depth = "";
-                    var Rigname = "";
+                    var Wellname = "";
                     RigID = 0;
+                    WellID = 0;
                     var workbook = new Workbook(file.FullName);
                     workbook.Save(file.FullName + ".txt");
                     using (var sr1 = new StreamReader(file.FullName, true))
@@ -120,19 +129,19 @@ namespace Oil_and_Gas_Software
                                 extractedDATEONLY = extractedDATEONLY.Replace("' ", "");
                                 int From2 = FullData.IndexOf("Well No (Type) :") + "Well No (Type) :".Length;
                                 int To2 = FullData.IndexOf("Charge #");
-                                extractedRIGNAME = FullData.Substring(From2, To2 - From2);
+                                extractedWELLNAME = FullData.Substring(From2, To2 - From2);
                                 // remove between bractise /** to 
-                                extractedRIGNAME = Regex.Replace(extractedRIGNAME, @"\([^)]*\)", "");
-                                extractedRIGNAME = extractedRIGNAME.Replace(")", "");
-                                extractedRIGNAME = extractedRIGNAME.Replace(";", "");
-                                extractedRIGNAME = extractedRIGNAME.Replace(",", "");
-                                extractedRIGNAME = extractedRIGNAME.Replace(" '' '' ", "");
-                                extractedRIGNAME = extractedRIGNAME.Replace("\"", "");
-                                int space1 = extractedRIGNAME.IndexOf(" ");
-                                Rigname = (extractedRIGNAME.Substring(0, space1));
-                                Rigname = Rigname.TrimStart();
-                                Rigname = Rigname.TrimEnd();
-                                Rigname = Rigname.Trim();
+                                extractedWELLNAME = Regex.Replace(extractedWELLNAME, @"\([^)]*\)", "");
+                                extractedWELLNAME = extractedWELLNAME.Replace(")", "");
+                                extractedWELLNAME = extractedWELLNAME.Replace(";", "");
+                                extractedWELLNAME = extractedWELLNAME.Replace(",", "");
+                                extractedWELLNAME = extractedWELLNAME.Replace(" '' '' ", "");
+                                extractedWELLNAME = extractedWELLNAME.Replace("\"", "");
+                                int space1 = extractedWELLNAME.IndexOf(" ");
+                                Wellname = (extractedWELLNAME.Substring(0, space1));
+                                Wellname = Wellname.TrimStart();
+                                Wellname = Wellname.TrimEnd();
+                                Wellname = Wellname.Trim();
 
                                 int From3 = FullData.LastIndexOf("MUD TREATMENT") + "MUD TREATMENT".Length;
                                 int To3 = FullData.LastIndexOf("BIT DATA");
@@ -156,72 +165,54 @@ namespace Oil_and_Gas_Software
                                 int From5 = FullData.IndexOf("Days Since Spud/Comm (Date)") + "Days Since Spud/Comm (Date)".Length;
                                 int To5 = FullData.IndexOf("Formation tops");
                                 DaysSince = FullData.Substring(From5, To5 - From5);
+
                                 DaysSince = DaysSince.TrimStart();
                                 DaysSince = DaysSince.TrimEnd();
                                 DaysSince = Regex.Replace(DaysSince, @"\s", "");
                                 /**  extracting DaysSince*/
 
-                                /*start extrat RIGNA**//***/
+                                ///*start extrat RIGNA**//***/
                                 string FinalString0 = "";
-
                                 int From6 = FullData.LastIndexOf("Wellbores:") + "Wellbores:".Length;
                                 int To6 = FullData.LastIndexOf("Foreman(s)");
+                              
+
                                 FinalString0 = FullData.Substring(From6, To6 - From6);
                                 List<string> EXtractRIGNAMELIST = FinalString0.Split('\n').ToList();
                                 EXtractRIGNAMELIST.RemoveAt(0);
                                 foreach (var word in EXtractRIGNAMELIST)
                                 {
-                                    extratcRIGNameNEWONE = word.ToString();
+                                    extratcRIGNO = word.ToString();
                                 }
-                                extratcRIGNameNEWONE = extratcRIGNameNEWONE.TrimStart();
-                                extratcRIGNameNEWONE = extratcRIGNameNEWONE.TrimEnd();
-                                extratcRIGNameNEWONE = extratcRIGNameNEWONE.Trim();
+                                extratcRIGNO = extratcRIGNO.TrimStart();
+                                extratcRIGNO = extratcRIGNO.TrimEnd();
+                                extratcRIGNO = extratcRIGNO.Trim();
+                                //   MessageBox.Show(extratcRIGNO);
+
+
                                 /*end extrat RIGNA**//***/
 
                                 /** start insert rig info contain mudtreatment*/
 
                                 using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                 {
-                                    //SqlCommand check_RIG1 = new SqlCommand("SELECT Count(*) FROM [Rigs] WHERE ([Rigname] = @C1 and RIGN = NULL)", con);
-                                    //con.Open();
-                                    //check_RIG1.Parameters.AddWithValue("@C1", Rigname);
-                                    //int RIGExist1 = (int)check_RIG1.ExecuteScalar();
-                                    //if (RIGExist1 == 0)
-                                    //{
-                                    //    SqlCommand cmd = new SqlCommand(" UPDATE [Rigs] SET [RIGN] = @C1 WHERE [Rigname] = @C2 ", con);
-                                    //    cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.VarChar));
-                                    //    cmd.Parameters["@C1"].Value = extratcRIGNameNEWONE.ToString();
-                                    //    cmd.Parameters.Add(new SqlParameter("@C2", SqlDbType.VarChar));
-                                    //    cmd.Parameters["@C2"].Value = Rigname.ToString();
-                                    //    cmd.ExecuteNonQuery();
-                                    //    con.Close();
-                                    //}
-
-                                    // date +
-                                    SqlCommand check_RIG2 = new SqlCommand("SELECT Count(*) FROM [Rigs] WHERE ([Rigname] = @C1 and RIGN= @C2 )", con);
+                                  
+                                    SqlCommand check_RIG2 = new SqlCommand("SELECT Count(*) FROM [Rigs] WHERE ([Rigname] = @C1  )", con);
                                     con.Open();
-                                    check_RIG2.Parameters.AddWithValue("@C1", Rigname);
-                                    check_RIG2.Parameters.AddWithValue("@C2", extratcRIGNameNEWONE.ToString());
+                                    check_RIG2.Parameters.AddWithValue("@C1", extratcRIGNO.ToString());
                                     int RIGExist2 = (int)check_RIG2.ExecuteScalar();
                                     if (RIGExist2 == 0)
                                     {
-                                        using (SqlCommand cmd = new SqlCommand("INSERT INTO Rigs (Rigname,Depth,last24,DaysSince,Contain,RIGN) VALUES (@C1,@C2,@C3,@C4,1,@C5)", con))
+                                        using (SqlCommand cmd = new SqlCommand("INSERT INTO Rigs (rigname) VALUES (@C1)", con))
                                         {
                                             cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.VarChar));
-                                            cmd.Parameters["@C1"].Value = Rigname.ToString();
-                                            cmd.Parameters.Add(new SqlParameter("@C2", SqlDbType.VarChar));
-                                            cmd.Parameters["@C2"].Value = Depth.ToString();
-                                            cmd.Parameters.Add(new SqlParameter("@C3", SqlDbType.VarChar));
-                                            cmd.Parameters["@C3"].Value = last24.ToString();
-                                            cmd.Parameters.Add(new SqlParameter("@C4", SqlDbType.VarChar));
-                                            cmd.Parameters["@C4"].Value = DaysSince.ToString();
-                                            cmd.Parameters.Add(new SqlParameter("@C5", SqlDbType.VarChar));
-                                            cmd.Parameters["@C5"].Value = extratcRIGNameNEWONE.ToString();
+                                            cmd.Parameters["@C1"].Value = extratcRIGNO.ToString();
+                                           
                                             cmd.ExecuteNonQuery();
-                                            using (SqlCommand cmd1 = new SqlCommand("SELECT (RigID)  FROM  Rigs WHERE Rigname=@C1", con))
+                                            using (SqlCommand cmd1 = new SqlCommand("SELECT (RigID)  FROM  Rigs WHERE rigname=@C1", con))
                                             {
                                                 cmd1.Parameters.Add(new SqlParameter("@C1", SqlDbType.VarChar));
-                                                cmd1.Parameters["@C1"].Value = Rigname.ToString();
+                                                cmd1.Parameters["@C1"].Value = extratcRIGNO.ToString();
 
                                                 RigID = (int)cmd1.ExecuteScalar();
                                             }
@@ -231,10 +222,10 @@ namespace Oil_and_Gas_Software
 
                                     else
                                     {
-                                        using (SqlCommand cmd = new SqlCommand("SELECT (RigID)  FROM  Rigs WHERE Rigname=@C1", con))
+                                        using (SqlCommand cmd = new SqlCommand("SELECT (RigID)  FROM  Rigs WHERE rigname=@C1", con))
                                         {
                                             cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.VarChar));
-                                            cmd.Parameters["@C1"].Value = Rigname.ToString();
+                                            cmd.Parameters["@C1"].Value = extratcRIGNO.ToString();
                                             RigID = (int)cmd.ExecuteScalar();
                                         }
 
@@ -243,6 +234,49 @@ namespace Oil_and_Gas_Software
                                 }
 
                                 ///** end insert rig info contain mudtreatment */
+                          
+                                /** start insert well info contain mudtreatment*/
+
+                                using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                                {
+
+                                    SqlCommand check_well2 = new SqlCommand("SELECT Count(*) FROM [wells] WHERE ([Wellname] = @C1  )", con);
+                                    con.Open();
+                                    check_well2.Parameters.AddWithValue("@C1", Wellname.ToString());
+                                    int WellExist2 = (int)check_well2.ExecuteScalar();
+                                    if (WellExist2 == 0)
+                                    {
+                                        using (SqlCommand cmd = new SqlCommand("INSERT INTO wells (wellname) VALUES (@C1)", con))
+                                        {
+                                            cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.VarChar));
+                                            cmd.Parameters["@C1"].Value = Wellname.ToString();
+
+                                            cmd.ExecuteNonQuery();
+                                            using (SqlCommand cmd1 = new SqlCommand("SELECT (Wellid)  FROM  wells WHERE wellname=@C1", con))
+                                            {
+                                                cmd1.Parameters.Add(new SqlParameter("@C1", SqlDbType.VarChar));
+                                                cmd1.Parameters["@C1"].Value = Wellname.ToString();
+
+                                                WellID = (int)cmd1.ExecuteScalar();
+                                            }
+                                            //   MessageBox.Show("The new Materials has been added successfully .", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                        using (SqlCommand cmd = new SqlCommand("SELECT (Wellid)  FROM  wells WHERE wellname=@C1", con))
+                                        {
+                                            cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.VarChar));
+                                            cmd.Parameters["@C1"].Value = Wellname.ToString();
+                                            WellID = (int)cmd.ExecuteScalar();
+                                        }
+
+                                    }
+                                    con.Close();
+                                }
+
+                                ///** end insert well info contain mudtreatment */
 
                                 /** start section (Mud Treatment )  */
                                 List<string> FinalString3LIST = extractedRIGDATA.Split('\n').ToList();
@@ -273,7 +307,10 @@ namespace Oil_and_Gas_Software
                                     string PackingQTY = result2.Groups[1].Value;
                                     string UnitName = result2.Groups[2].Value;
 
-                                    /*extract value between  brackets */
+                                    /*extract value between  materials */
+
+
+                                    /** extract material**/
                                     using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                     {
 
@@ -360,34 +397,46 @@ namespace Oil_and_Gas_Software
                                     }
                                     using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                     {
-                                        SqlCommand check_FILE = new SqlCommand(" SELECT Count(*) from REPORTS,MATERIALS where REPORTS.MATID=MATERIALS.MATID and" +
-                                            "  RigID=@C3 and date=@C4 and MATName=@C1", con);
+                                        SqlCommand check_FILE = new SqlCommand(" SELECT Count(*) from REPORTS,RIGS,WELLS where REPORTS.RIGID=RIGS.RIGID and  REPORTS.WELLID=WELLS.WELLID AND " +
+                                            "  REPORTS.WELLID=@C3 and date=@C4 and REPORTS.RIGID=@C1", con);
                                         con.Open();
-                                        check_FILE.Parameters.AddWithValue("@C1", keyword.ToString());
-                                        check_FILE.Parameters.AddWithValue("@C3", RigID.ToString());
+                                        check_FILE.Parameters.AddWithValue("@C1", RigID.ToString());
+                                        check_FILE.Parameters.AddWithValue("@C3", WellID.ToString());
                                         check_FILE.Parameters.AddWithValue("@C4", enter_date.ToString());
                                         int FILEExist = (int)check_FILE.ExecuteScalar();
                                         if (FILEExist == 0)
                                         {
 
-                                            using (SqlCommand cmd = new SqlCommand("INSERT INTO REPORTS(MATID,Val,RigID,Date,Contain) VALUES (@C1,@C2,@C3,@C4,'1')", con))
+                                            using (SqlCommand cmd = new SqlCommand("INSERT INTO REPORTS(Date,WellID,RIGID,DEPTH,DAYSSINCE,LAST24) VALUES (@C1,@C2,@C3,@C4,@C5,@C6)", con))
                                             {
 
-                                                cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
-                                                cmd.Parameters["@C1"].Value = MaterialID;
 
-                                                cmd.Parameters.Add(new SqlParameter("@C2", SqlDbType.NVarChar));
-                                                cmd.Parameters["@C2"].Value = MValue;
+                                                cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.Date));
+                                                cmd.Parameters["@C1"].Value = enter_date;
+
+                                                cmd.Parameters.Add(new SqlParameter("@C2", SqlDbType.Int));
+                                                cmd.Parameters["@C2"].Value = WellID;
 
                                                 cmd.Parameters.Add(new SqlParameter("@C3", SqlDbType.Int));
                                                 cmd.Parameters["@C3"].Value = RigID;
 
-                                                cmd.Parameters.Add(new SqlParameter("@C4", SqlDbType.Date));
-                                                cmd.Parameters["@C4"].Value = enter_date;
+                                                cmd.Parameters.Add(new SqlParameter("@C4", SqlDbType.NVarChar));
+                                                cmd.Parameters["@C4"].Value = Depth;
 
+                                                cmd.Parameters.Add(new SqlParameter("@C5", SqlDbType.NVarChar));
+                                                cmd.Parameters["@C5"].Value = DaysSince;
 
+                                                cmd.Parameters.Add(new SqlParameter("@C6", SqlDbType.NVarChar));
+                                                cmd.Parameters["@C6"].Value = last24;
                                                 cmd.ExecuteNonQuery();
-                                                //   MessageBox.Show(" inserted rig  " + RigID.ToString());
+                                             
+                                                
+                                                
+
+
+
+
+
 
                                             }
                                         }
@@ -395,6 +444,48 @@ namespace Oil_and_Gas_Software
                                         {
                                         }
                                     }
+                                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                                    {
+                                        con.Open();
+                                        /** get reprot id */
+                                        using (SqlCommand cmd1 = new SqlCommand("SELECT (REPORTID)  FROM  REPORTS WHERE wellid=@C1 and  rigid =@C2 and date = @C3 ", con))
+                                        {
+                                            cmd1.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
+                                            cmd1.Parameters["@C1"].Value = WellID.ToString();
+
+                                            cmd1.Parameters.Add(new SqlParameter("@C2", SqlDbType.Int));
+                                            cmd1.Parameters["@C2"].Value = RigID.ToString();
+
+                                            cmd1.Parameters.Add(new SqlParameter("@C3", SqlDbType.Date));
+                                            cmd1.Parameters["@C3"].Value = enter_date;
+
+                                            ReportID = (int)cmd1.ExecuteScalar();
+                                        }
+                                
+                                        using (SqlCommand cmd1 = new SqlCommand("insert into  MUD_TRATMENT ( REPORTID,MATID,QTY) values (@C1,@C2 ,@C3)  ", con))
+                                        {
+                                            cmd1.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
+                                            cmd1.Parameters["@C1"].Value = ReportID.ToString();
+
+                                            cmd1.Parameters.Add(new SqlParameter("@C2", SqlDbType.Int));
+                                            cmd1.Parameters["@C2"].Value = MaterialID.ToString();
+
+                                            cmd1.Parameters.Add(new SqlParameter("@C3", SqlDbType.NVarChar));
+                                            cmd1.Parameters["@C3"].Value = MValue.ToString();
+
+
+
+                                            cmd1.ExecuteNonQuery();
+
+                                        }
+                                        /** end data into mudtratment */
+
+
+                                    }
+
+
+
+
 
                                 }
                                 /** end  section (Mud Treatment )  */
@@ -422,19 +513,19 @@ namespace Oil_and_Gas_Software
 
                                 int From2 = FullData.IndexOf("Well No (Type) :") + "Well No (Type) :".Length;
                                 int To2 = FullData.IndexOf("Charge #");
-                                extractedRIGNAME = FullData.Substring(From2, To2 - From2);
+                                extractedWELLNAME = FullData.Substring(From2, To2 - From2);
                                 // remove between bractise /** to 
-                                extractedRIGNAME = Regex.Replace(extractedRIGNAME, @"\([^)]*\)", "");
-                                extractedRIGNAME = extractedRIGNAME.Replace(")", "");
-                                extractedRIGNAME = extractedRIGNAME.Replace(";", "");
-                                extractedRIGNAME = extractedRIGNAME.Replace(",", "");
-                                extractedRIGNAME = extractedRIGNAME.Replace(" '' '' ", "");
-                                extractedRIGNAME = extractedRIGNAME.Replace("\"", "");
-                                int space1 = extractedRIGNAME.IndexOf(" ");
-                                Rigname = (extractedRIGNAME.Substring(0, space1));
-                                Rigname = Rigname.TrimStart();
-                                Rigname = Rigname.TrimEnd();
-                                Rigname = Rigname.Trim();
+                                extractedWELLNAME = Regex.Replace(extractedWELLNAME, @"\([^)]*\)", "");
+                                extractedWELLNAME = extractedWELLNAME.Replace(")", "");
+                                extractedWELLNAME = extractedWELLNAME.Replace(";", "");
+                                extractedWELLNAME = extractedWELLNAME.Replace(",", "");
+                                extractedWELLNAME = extractedWELLNAME.Replace(" '' '' ", "");
+                                extractedWELLNAME = extractedWELLNAME.Replace("\"", "");
+                                int space1 = extractedWELLNAME.IndexOf(" ");
+                                Wellname = (extractedWELLNAME.Substring(0, space1));
+                                Wellname = Wellname.TrimStart();
+                                Wellname = Wellname.TrimEnd();
+                                Wellname = Wellname.Trim();
 
                                 /**  extracting last 24*/
                                 int From4 = FullData.IndexOf("Last 24 hr operations") + "Last 24 hr operations".Length;
@@ -484,11 +575,11 @@ namespace Oil_and_Gas_Software
                                 EXtractRIGNAMELIST.RemoveAt(0);
                                 foreach (var word in EXtractRIGNAMELIST)
                                 {
-                                    extratcRIGNameNEWONE = word.ToString();
+                                    extratcRIGNO = word.ToString();
                                 }
-                                extratcRIGNameNEWONE = extratcRIGNameNEWONE.TrimStart();
-                                extratcRIGNameNEWONE = extratcRIGNameNEWONE.TrimEnd();
-                                extratcRIGNameNEWONE = extratcRIGNameNEWONE.Trim();
+                                extratcRIGNO = extratcRIGNO.TrimStart();
+                                extratcRIGNO = extratcRIGNO.TrimEnd();
+                                extratcRIGNO = extratcRIGNO.Trim();
 
 
                                 /*end extrat RIGNA**//***/
@@ -500,60 +591,26 @@ namespace Oil_and_Gas_Software
 
 
 
-
-
-
-
-
-
-
-
                                 ///** start insert rig info non contain mudtreatment */
                                 using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                 {
-                                    //SqlCommand check_RIG1 = new SqlCommand("SELECT Count(*) FROM [Rigs] WHERE ([Rigname] = @C1 and RIGN = NULL)", con);
-                                    //con.Open();
-                                    //check_RIG1.Parameters.AddWithValue("@C1", Rigname);
-                                    //int RIGExist1 = (int)check_RIG1.ExecuteScalar();
-                                    //if (RIGExist1 == 0)
-                                    //{
-                                    //    SqlCommand cmd = new SqlCommand(" UPDATE [Rigs] SET [RIGN] = @C1 WHERE [Rigname] = @C2 ", con);
-                                    //    cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.VarChar));
-                                    //    cmd.Parameters["@C1"].Value = extratcRIGNameNEWONE.ToString();
-                                    //    cmd.Parameters.Add(new SqlParameter("@C2", SqlDbType.VarChar));
-                                    //    cmd.Parameters["@C2"].Value = Rigname.ToString();
-                                    //    cmd.ExecuteNonQuery();
-                                    //    con.Close();
-                                    //}
-
-
-
-
+                                  
                                     SqlCommand check_RIG = new SqlCommand("SELECT Count(*) FROM [Rigs] WHERE ([Rigname] = @C1)", con);
                                     con.Open();
-                                    check_RIG.Parameters.AddWithValue("@C1", Rigname);
+                                    check_RIG.Parameters.AddWithValue("@C1", extratcRIGNO);
                                     int RIGExist = (int)check_RIG.ExecuteScalar();
                                     if (RIGExist == 0)
                                     {
-                                        using (SqlCommand cmd = new SqlCommand("INSERT INTO Rigs (Rigname,Depth,last24,DaysSince,Contain,RIGN) VALUES (@C1,@C2,@C3,@C4,0,@C5)", con))
+                                        using (SqlCommand cmd = new SqlCommand("INSERT INTO Rigs (RIGN) VALUES (@C1)", con))
                                         {
+                                          
                                             cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.VarChar));
-                                            cmd.Parameters["@C1"].Value = Rigname.ToString();
-                                            cmd.Parameters.Add(new SqlParameter("@C2", SqlDbType.VarChar));
-                                            cmd.Parameters["@C2"].Value = Depth.ToString();
-                                            cmd.Parameters.Add(new SqlParameter("@C3", SqlDbType.VarChar));
-                                            cmd.Parameters["@C3"].Value = last24.ToString();
-                                            cmd.Parameters.Add(new SqlParameter("@C4", SqlDbType.VarChar));
-                                            cmd.Parameters["@C4"].Value = DaysSince.ToString();
-                                            cmd.Parameters.Add(new SqlParameter("@C5", SqlDbType.VarChar));
-                                            cmd.Parameters["@C5"].Value = extratcRIGNameNEWONE.ToString();
-
-
+                                            cmd.Parameters["@C1"].Value = extratcRIGNO.ToString();
                                             cmd.ExecuteNonQuery();
                                             using (SqlCommand cmd1 = new SqlCommand("SELECT (RigID)  FROM  Rigs WHERE Rigname=@C1", con))
                                             {
                                                 cmd1.Parameters.Add(new SqlParameter("@C1", SqlDbType.VarChar));
-                                                cmd1.Parameters["@C1"].Value = Rigname.ToString();
+                                                cmd1.Parameters["@C1"].Value = extratcRIGNO.ToString();
 
                                                 RigID = (int)cmd1.ExecuteScalar();
                                             }
@@ -565,32 +622,78 @@ namespace Oil_and_Gas_Software
                                         using (SqlCommand cmd = new SqlCommand("SELECT (RigID)  FROM  Rigs WHERE Rigname=@C1", con))
                                         {
                                             cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.VarChar));
-                                            cmd.Parameters["@C1"].Value = Rigname.ToString();
+                                            cmd.Parameters["@C1"].Value = extratcRIGNO.ToString();
                                             RigID = (int)cmd.ExecuteScalar();
                                         }
 
                                     }
                                 }
                                 ///** end insert rig info non contain mudtreatment */  
+                              
+                                ///** start insert well info non contain mudtreatment */
+                                using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                                {
+                                    SqlCommand check_well = new SqlCommand("SELECT Count(*) FROM [wells] WHERE ([Wellname] = @C1)", con);
+                                    con.Open();
+                                    check_well.Parameters.AddWithValue("@C1", Wellname);
+                                    int WELLExist = (int)check_well.ExecuteScalar();
+                                    if (WELLExist == 0)
+                                    {
+                                        using (SqlCommand cmd = new SqlCommand("INSERT INTO wells (Wellname) VALUES (@C1)", con))
+                                        {
+
+                                            cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.VarChar));
+                                            cmd.Parameters["@C1"].Value = Wellname.ToString();
+                                            cmd.ExecuteNonQuery();
+                                            using (SqlCommand cmd1 = new SqlCommand("SELECT (wellid)  FROM  wells WHERE Wellname=@C1", con))
+                                            {
+                                                cmd1.Parameters.Add(new SqlParameter("@C1", SqlDbType.VarChar));
+                                                cmd1.Parameters["@C1"].Value = Wellname.ToString();
+
+                                                WellID = (int)cmd1.ExecuteScalar();
+                                            }
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        using (SqlCommand cmd = new SqlCommand("SELECT (wellid)  FROM  wells WHERE Wellname=@C1", con))
+                                        {
+                                            cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.VarChar));
+                                            cmd.Parameters["@C1"].Value = Wellname.ToString();
+                                            WellID = (int)cmd.ExecuteScalar();
+                                        }
+
+                                    }
+                                }
+                                ///** end insert well info non contain mudtreatment */  
+
                                 using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                 {
                                     con.Open();
-                                    SqlCommand check_FILE = new SqlCommand(" SELECT Count(*) from files,Rigs where files.RigID=Rigs.RigID and" +
-                                          "  files.RigID=@C3 and date=@C4 ", con);
+                                    SqlCommand check_REPORT = new SqlCommand(" SELECT Count(*) from Reports,Rigs,wells where reports.RigID=Rigs.RigID and reports.wellid=wells.wellid   and " +
+                                          "  reports.RigID=@C3 and reports.wellid=@C4 and date=@C5 ", con);
 
-                                    check_FILE.Parameters.AddWithValue("@C3", RigID.ToString());
-                                    check_FILE.Parameters.AddWithValue("@C4", enter_date.ToString());
-                                    int FILEExist = (int)check_FILE.ExecuteScalar();
+                                    check_REPORT.Parameters.AddWithValue("@C3", RigID.ToString());
+                                    check_REPORT.Parameters.AddWithValue("@C4", WellID.ToString());
+                                    check_REPORT.Parameters.AddWithValue("@C5", enter_date.ToString());
+                                    int FILEExist = (int)check_REPORT.ExecuteScalar();
                                     if (FILEExist == 0)
                                     {
 
-                                        using (SqlCommand cmd = new SqlCommand("INSERT INTO Files(RigID,Date,Contain) VALUES (@C1,@C2,'0')", con))
+                                        using (SqlCommand cmd = new SqlCommand("INSERT INTO Reports(RigID,WellId,Date) VALUES (@C1,@C2,@C3)", con))
                                         {
                                             cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
-                                            cmd.Parameters["@C1"].Value = RigID;
+                                            cmd.Parameters["@C1"].Value = RigID; 
 
-                                            cmd.Parameters.Add(new SqlParameter("@C2", SqlDbType.Date));
-                                            cmd.Parameters["@C2"].Value = enter_date;
+                                            cmd.Parameters.Add(new SqlParameter("@C2", SqlDbType.Int));
+                                            cmd.Parameters["@C2"].Value = WellID;
+
+                                            cmd.Parameters.Add(new SqlParameter("@C3", SqlDbType.Date));
+                                            cmd.Parameters["@C3"].Value = enter_date;
+                                           
+                                            
+                                            
                                             cmd.ExecuteNonQuery();
                                             //   MessageBox.Show(" inserted rig  " + RigID.ToString());
                                         }
@@ -613,23 +716,18 @@ namespace Oil_and_Gas_Software
             }
             else
             {
-                //DialogResult res1 = MessageBox.Show("Are you sure you want to Delete", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-                //if (res1 == DialogResult.Cancel)
-                //{
-                //    MessageBox.Show("You have clicked Cancel Button");
-                //    //Some task…
-                //}
-
+              
             }
             MessageBox.Show("The data has been exported successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             //BindTotal();
             BindGV();
         }
-
+    
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
     }
 }
+
