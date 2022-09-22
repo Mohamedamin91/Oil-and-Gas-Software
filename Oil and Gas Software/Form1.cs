@@ -33,11 +33,8 @@ namespace Oil_and_Gas_Software
             dt.Rows.Clear();
             using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
             {
-                using (SqlCommand cmd = new SqlCommand(" SELECT * FROM REPORTS ", con))
-                //using (SqlCommand cmd = new SqlCommand("SELECT " +
-                //    " [MATName] as 'Material',[Val]as'Qty',PackingQTY as 'Packaging Quantity',UnitName as 'Unit',[Wellname] 'Well No (Type)',[Date] " +
-                //    "FROM [OILREPORT2].[dbo].[FILES],OILREPORT2.dbo.MATERIALS,OILREPORT2.dbo.Rigs" +
-                //    " where REPORTS.MATID = MATERIALS.MATID and FILES.RigID = Rigs.RigID  ", con))
+                using (SqlCommand cmd = new SqlCommand(" select rigs.Rigname 'Rig',WELLS.Wellname 'Well No',MATERIALS.MATName 'Materials', MUD_TRATMENT.QTY'QTY',MATERIALS.PackingQTY'PQTY',MATERIALS.UnitName 'Unit',reports.Date 'Date' from RIGS,WELLS,REPORTS,MUD_TRATMENT,MATERIALS where  REPORTS.RIGID = rigs.RIGID and reports.WELLID = WELLS.WELLID  and  MUD_TRATMENT .MATID = MATERIALS.MATID and  MUD_TRATMENT .REPORTID = REPORTS.REPORTID order by [Well No] ", con))
+              
                 {
 
                     using (SqlDataAdapter ada = new SqlDataAdapter(cmd))
@@ -58,7 +55,7 @@ namespace Oil_and_Gas_Software
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            BindGV();
         }
       
 
