@@ -94,6 +94,7 @@ namespace Oil_and_Gas_Software
                     string extratcRIGNO = "";
                     var Depth = "";
                     var Wellname = "";
+                    ReportID = 0;
                     RigID = 0;
                     WellID = 0;
                     var workbook = new Workbook(file.FullName);
@@ -350,6 +351,9 @@ namespace Oil_and_Gas_Software
                                             //  MessageBox.Show("Info : The Material already Exist", "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                         }
                                     }
+                                    /** extract material**/
+
+                                    /** Update Category and sub cat**/
                                     using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                     {
                                         SqlCommand cmd0 = new SqlCommand(" UPDATE [MATERIALS] SET [PackingQTY] = 1 WHERE [PackingQTY]= 0 ", con);
@@ -395,6 +399,9 @@ namespace Oil_and_Gas_Software
                                         cmd17.ExecuteNonQuery();
 
                                     }
+                                    /** Update Category and sub cat**/
+
+                                    /** check Dublicate Reports and insert new reports  **/
                                     using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                     {
                                         SqlCommand check_FILE = new SqlCommand(" SELECT Count(*) from REPORTS,RIGS,WELLS where REPORTS.RIGID=RIGS.RIGID and  REPORTS.WELLID=WELLS.WELLID AND " +
@@ -444,44 +451,92 @@ namespace Oil_and_Gas_Software
                                         {
                                         }
                                     }
+                                    /** check Dublicate Reports and insert new reports  **/
+
+                                    /** check Dublicate data in mudtreatment and insert new data in mudtreatment  **/
                                     using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                     {
                                         con.Open();
-                                        /** get reprot id */
-                                        using (SqlCommand cmd1 = new SqlCommand("SELECT (REPORTID)  FROM  REPORTS WHERE wellid=@C1 and  rigid =@C2 and date = @C3 ", con))
+                                        SqlCommand check_FILE = new SqlCommand(" SELECT REPORTID FROM  Reports WHERE wellid=@C1 and  rigid =@C2 and date =@C3", con);
+
+                                        check_FILE.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
+                                        check_FILE.Parameters["@C1"].Value = WellID.ToString();
+
+                                        check_FILE.Parameters.Add(new SqlParameter("@C2", SqlDbType.Int));
+                                        check_FILE.Parameters["@C2"].Value = RigID.ToString();
+
+                                        check_FILE.Parameters.Add(new SqlParameter("@C3", SqlDbType.Date));
+                                        check_FILE.Parameters["@C3"].Value = enter_date;
+
+                                        ReportID = (int)check_FILE.ExecuteScalar();
+
+                                        MessageBox.Show(" from db "+ReportID.ToString());
+                                      
+                                        int FILEExist = (int)check_FILE.ExecuteScalar();
+                                        if (FILEExist != 0)
                                         {
-                                            cmd1.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
-                                            cmd1.Parameters["@C1"].Value = WellID.ToString();
+                                            using (SqlConnection con1 = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                                            {
+                                                con1.Open();
+                                                /** get reprot id */
+                                                using (SqlCommand cmd1 = new SqlCommand("SELECT Count(*) from REPORTS,MUD_TRATMENT " +
+                                                    "where Reports.REPORTID = @C1 and MUD_TRATMENT.MATID = @C2 AND" +
+                                                    "  MUD_TRATMENT.QTY = @C3 and REPORTS.date = @C4 and Reports.reportid = MUD_TRATMENT.REPORTID", con1))
+                                                {
+                                                    cmd1.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
+                                                    cmd1.Parameters["@C1"].Value = ReportID.ToString();
 
-                                            cmd1.Parameters.Add(new SqlParameter("@C2", SqlDbType.Int));
-                                            cmd1.Parameters["@C2"].Value = RigID.ToString();
+                                                     
+                                                    MessageBox.Show("from code"+ReportID.ToString());
 
-                                            cmd1.Parameters.Add(new SqlParameter("@C3", SqlDbType.Date));
-                                            cmd1.Parameters["@C3"].Value = enter_date;
 
-                                            ReportID = (int)cmd1.ExecuteScalar();
+                                                    cmd1.Parameters.Add(new SqlParameter("@C2", SqlDbType.Int));
+                                                    cmd1.Parameters["@C2"].Value = MaterialID.ToString();
+
+                                                    cmd1.Parameters.Add(new SqlParameter("@C3", SqlDbType.NVarChar));
+                                                    cmd1.Parameters["@C3"].Value = MValue;
+
+                                                    cmd1.Parameters.Add(new SqlParameter("@C4", SqlDbType.Date));
+                                                    cmd1.Parameters["@C4"].Value = enter_date;
+
+                                                    int FILEExist2 = (int)cmd1.ExecuteScalar();
+                                                    if (FILEExist2 == 0)
+                                                    {
+                                                        using (SqlCommand cmd2 = new SqlCommand("insert into  MUD_TRATMENT ( REPORTID,MATID,QTY) values (@C1,@C2 ,@C3)  ", con1))
+                                                        {
+                                                            cmd2.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
+                                                            cmd2.Parameters["@C1"].Value = ReportID.ToString();
+
+                                                            cmd2.Parameters.Add(new SqlParameter("@C2", SqlDbType.Int));
+                                                            cmd2.Parameters["@C2"].Value = MaterialID.ToString();
+
+                                                            cmd2.Parameters.Add(new SqlParameter("@C3", SqlDbType.NVarChar));
+                                                            cmd2.Parameters["@C3"].Value = MValue.ToString();
+
+
+
+                                                            cmd2.ExecuteNonQuery();
+
+                                                        }
+                                                        /** end data into mudtratment */
+
+                                                    }
+                                                }
+
+                                        
+
+                                            }
+
                                         }
-                                
-                                        using (SqlCommand cmd1 = new SqlCommand("insert into  MUD_TRATMENT ( REPORTID,MATID,QTY) values (@C1,@C2 ,@C3)  ", con))
-                                        {
-                                            cmd1.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
-                                            cmd1.Parameters["@C1"].Value = ReportID.ToString();
-
-                                            cmd1.Parameters.Add(new SqlParameter("@C2", SqlDbType.Int));
-                                            cmd1.Parameters["@C2"].Value = MaterialID.ToString();
-
-                                            cmd1.Parameters.Add(new SqlParameter("@C3", SqlDbType.NVarChar));
-                                            cmd1.Parameters["@C3"].Value = MValue.ToString();
-
-
-
-                                            cmd1.ExecuteNonQuery();
-
-                                        }
-                                        /** end data into mudtratment */
-
-
+                                        else { }
                                     }
+                                    /** check Dublicate data in mudtreatment and insert new data in mudtreatment  **/
+
+
+
+
+
+
 
 
 

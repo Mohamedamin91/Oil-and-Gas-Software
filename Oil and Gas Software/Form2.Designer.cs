@@ -40,6 +40,10 @@ namespace Oil_and_Gas_Software
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.label6 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,6 +57,7 @@ namespace Oil_and_Gas_Software
             this.CatComboBox.Name = "CatComboBox";
             this.CatComboBox.Size = new System.Drawing.Size(261, 28);
             this.CatComboBox.TabIndex = 5;
+            this.CatComboBox.SelectionChangeCommitted += new System.EventHandler(this.CatComboBox_SelectionChangeCommitted);
             // 
             // SubCatComboBox
             // 
@@ -64,6 +69,7 @@ namespace Oil_and_Gas_Software
             this.SubCatComboBox.Name = "SubCatComboBox";
             this.SubCatComboBox.Size = new System.Drawing.Size(261, 28);
             this.SubCatComboBox.TabIndex = 6;
+            this.SubCatComboBox.SelectionChangeCommitted += new System.EventHandler(this.SubCatComboBox_SelectionChangeCommitted);
             // 
             // MatComboBox
             // 
@@ -101,9 +107,9 @@ namespace Oil_and_Gas_Software
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(353, 9);
+            this.dataGridView1.Location = new System.Drawing.Point(442, 22);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1444, 829);
+            this.dataGridView1.Size = new System.Drawing.Size(1351, 811);
             this.dataGridView1.TabIndex = 10;
             // 
             // label1
@@ -156,11 +162,55 @@ namespace Oil_and_Gas_Software
             this.label5.TabIndex = 15;
             this.label5.Text = "Well";
             // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePicker1.Location = new System.Drawing.Point(81, 325);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(116, 26);
+            this.dateTimePicker1.TabIndex = 16;
+            // 
+            // dateTimePicker2
+            // 
+            this.dateTimePicker2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePicker2.Location = new System.Drawing.Point(215, 325);
+            this.dateTimePicker2.Name = "dateTimePicker2";
+            this.dateTimePicker2.Size = new System.Drawing.Size(116, 26);
+            this.dateTimePicker2.TabIndex = 17;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(15, 325);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(44, 20);
+            this.label6.TabIndex = 18;
+            this.label6.Text = "Date";
+            // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(100, 386);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(179, 42);
+            this.button1.TabIndex = 19;
+            this.button1.Text = "Display";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1806, 845);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.dateTimePicker2);
+            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -192,5 +242,9 @@ namespace Oil_and_Gas_Software
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button button1;
     }
 }

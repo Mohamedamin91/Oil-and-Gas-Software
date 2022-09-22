@@ -164,9 +164,9 @@ namespace Oil_and_Gas_Software
         public void refreshdataRIGS()
         {
             DataRow dr;
-            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
-            SqlCommand cmd = new SqlCommand("select distinct RigID, RIGN from Rigs where RIGN !=''    ", con);
+            SqlCommand cmd = new SqlCommand("select distinct RigID, Rigname from Rigs where Rigname !=''    ", con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             sda.Fill(dt);
@@ -176,7 +176,7 @@ namespace Oil_and_Gas_Software
                 dr.ItemArray = new object[] { 0, "--Select Rigs--" };
                 dt.Rows.InsertAt(dr, 0);
                 RigComboBox.ValueMember = "RigID";
-                RigComboBox.DisplayMember = "RIGN";
+                RigComboBox.DisplayMember = "Rigname";
                 RigComboBox.DataSource = dt;
 
                 con.Close();
@@ -189,7 +189,7 @@ namespace Oil_and_Gas_Software
         public void refreshdataMaterialSubategory()
         {
             DataRow dr;
-            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
             SqlCommand cmd = new SqlCommand("select Subid,Subname from Subcatogory order by Subname", con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
@@ -258,7 +258,7 @@ namespace Oil_and_Gas_Software
         public void refreshdataMaterial()
         {
             DataRow dr;
-            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT1;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
             SqlCommand cmd = new SqlCommand("select KeywordID,KeywordName from KEYWORDS order by KeywordName", con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
@@ -285,7 +285,7 @@ namespace Oil_and_Gas_Software
             SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
 
-            SqlCommand cmd = new SqlCommand("select RigID,Rigname from Rigs where Rigname !='' order by Rigname ", con);
+            SqlCommand cmd = new SqlCommand("select WELLID,Wellname from wells where Wellname !='' order by Wellname ", con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             sda.Fill(dt);
@@ -293,10 +293,10 @@ namespace Oil_and_Gas_Software
             if (dt != null)
             {
 
-                dr.ItemArray = new object[] { 0, "All" };
+                dr.ItemArray = new object[] { 0, "Select Well" };
                 dt.Rows.InsertAt(dr, 0);
                 WellComboBox.ValueMember = "RigID";
-                WellComboBox.DisplayMember = "Rigname";
+                WellComboBox.DisplayMember = "Wellname";
                 /*clear white space in datatable*/
                 dt.AsEnumerable().ToList().ForEach(row =>
                 {
@@ -355,6 +355,61 @@ namespace Oil_and_Gas_Software
         private void Form2_Load(object sender, EventArgs e)
         {
             refreshdataMaterialCategory();
+        }
+
+        private void CatComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+            {
+                try
+                {
+                    string query = "select Subid,Subname from SUBCATEGORY where Catid= " + CatComboBox.SelectedValue + "  order by Subname";
+                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                    conn.Open();
+                    DataSet ds = new DataSet();
+                    da.Fill(ds, "SUBCATEGORY");
+                    SubCatComboBox.ValueMember = "Subid";
+                    SubCatComboBox.DisplayMember = "Subname";
+                    SubCatComboBox.DataSource = ds.Tables["SUBCATEGORY"];
+                }
+                catch (Exception ex)
+                {
+                    // write exception info to log or anything else
+                    MessageBox.Show("Error occured!");
+                }
+            }
+
+        }
+
+        private void SubCatComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+            {
+                try
+                {
+
+                    string query = "select MATID,MATName from MATERIALS where SubID= " + SubCatComboBox.SelectedValue + "  order by MATName";
+                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                    conn.Open();
+                    DataSet ds = new DataSet();
+                    da.Fill(ds, "MATERIALS");
+                    MatComboBox.ValueMember = "MATID";
+                    MatComboBox.DisplayMember = "MATName";
+                    MatComboBox.DataSource = ds.Tables["MATERIALS"];
+
+                }
+                catch (Exception ex)
+                {
+                    // write exception info to log or anything else
+                    MessageBox.Show("Error occured!");
+                }
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
