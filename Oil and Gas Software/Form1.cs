@@ -614,7 +614,6 @@ namespace Oil_and_Gas_Software
 
 
                                 DateTime enter_date;
-                                MessageBox.Show(extractedDATEONLY);
 
                                 if (extractedDATEONLY.Length<=0)
                                 {
