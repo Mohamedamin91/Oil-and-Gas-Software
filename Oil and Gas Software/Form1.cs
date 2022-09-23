@@ -313,12 +313,8 @@ namespace Oil_and_Gas_Software
                                         UnitName = word.Substring(From, To - From);
 
                                     }
-                                    //    MessageBox.Show("at the first " + UnitName);
-
 
                                     /*extract value between  materials */
-
-
                                     /** extract material**/
                                     using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                     {
@@ -618,8 +614,9 @@ namespace Oil_and_Gas_Software
 
 
                                 DateTime enter_date;
+                                MessageBox.Show(extractedDATEONLY);
 
-                                if (extractedDATEONLY.Contains(string.Empty))
+                                if (extractedDATEONLY.Length<=0)
                                 {
                                     string strDate = extractedDATEONLY;
                                     string[] dateString = strDate.Split('/');
@@ -752,7 +749,7 @@ namespace Oil_and_Gas_Software
                                     if (FILEExist == 0)
                                     {
 
-                                        using (SqlCommand cmd = new SqlCommand("INSERT INTO Reports(RigID,WellId,Date) VALUES (@C1,@C2,@C3)", con))
+                                        using (SqlCommand cmd = new SqlCommand("INSERT INTO Reports(RigID,WellId,Date,DEPTH,DAYSSINCE,LAST24) VALUES (@C1,@C2,@C3,@C4,@C5,@C6)", con))
                                         {
                                             cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
                                             cmd.Parameters["@C1"].Value = RigID; 
@@ -762,9 +759,21 @@ namespace Oil_and_Gas_Software
 
                                             cmd.Parameters.Add(new SqlParameter("@C3", SqlDbType.Date));
                                             cmd.Parameters["@C3"].Value = enter_date;
-                                           
-                                            
-                                            
+
+                                            cmd.Parameters.Add(new SqlParameter("@C4", SqlDbType.NVarChar));
+                                            cmd.Parameters["@C4"].Value = Depth;
+
+                                            cmd.Parameters.Add(new SqlParameter("@C5", SqlDbType.NVarChar));
+                                            cmd.Parameters["@C5"].Value = DaysSince;
+
+                                            cmd.Parameters.Add(new SqlParameter("@C6", SqlDbType.NVarChar));
+                                            cmd.Parameters["@C6"].Value = last24 ;
+
+
+
+
+
+
                                             cmd.ExecuteNonQuery();
                                             //   MessageBox.Show(" inserted rig  " + RigID.ToString());
                                         }
