@@ -299,14 +299,21 @@ namespace Oil_and_Gas_Software
                                     keyword = keyword.Trim();
 
                                     /*extract value between  brackets */
-                                    int start = word.IndexOf("(") + 1;
+                                    int start = word.LastIndexOf("(") + 1;
                                     int end = word.IndexOf(")", start);
                                     string brackets = word.Substring(start, end - start);
                                     Regex re = new Regex("([0-9]+)([A-Z]+)");
                                     Match result2 = re.Match(brackets);
                                     string PackingQTY = result2.Groups[1].Value;
                                     string UnitName = result2.Groups[2].Value;
-                                    MessageBox.Show("at the first " + UnitName);
+                                    if (PackingQTY.Length <= 0 || UnitName.Length <= 0)
+                                    {
+                                        int From = word.IndexOf("(") + "(".Length;
+                                        int To = word.IndexOf(")");
+                                        UnitName = word.Substring(From, To - From);
+
+                                    }
+                                    //    MessageBox.Show("at the first " + UnitName);
 
 
                                     /*extract value between  materials */
@@ -520,7 +527,7 @@ namespace Oil_and_Gas_Software
 
                                                             cmd2.Parameters.Add(new SqlParameter("@C5", SqlDbType.NVarChar));
                                                             cmd2.Parameters["@C5"].Value = PackingQTY.ToString();
-                                                            MessageBox.Show("at the end "+UnitName);
+                                                    //        MessageBox.Show("at the end "+UnitName);
 
 
 
