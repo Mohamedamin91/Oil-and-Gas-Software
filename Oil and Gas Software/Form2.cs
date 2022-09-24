@@ -26,24 +26,24 @@ namespace Oil_and_Gas_Software
         }
         //public void BindTotal()
         //{
-        //    SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT;Persist Security Info=True;User ID=sa;password=Ram72763@");
+        //    SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
         //    con.Open();
-        //    SqlCommand cmd1 = new SqlCommand(" select  COUNT(distinct KeywordName)'material' from KEYWORDS ", con);
-        //    SqlCommand cmd2 = new SqlCommand(" select  count (distinct Rign)  'RigNo' from Rigs  ", con);
-        //    SqlCommand cmd3 = new SqlCommand(" select  count (distinct Rigname) 'Well No' from Rigs ", con);
-        //    SqlCommand cmd4 = new SqlCommand(" select  COUNT(distinct Rigname)'Well No (type) Contain data' from rigs where Contain = 1 ", con);
-        //    SqlCommand cmd5 = new SqlCommand(" select  COUNT(distinct Rigname)'Well No (type) Non Contain data' from rigs where Contain = 0 ", con);
+        //    SqlCommand cmd1 = new SqlCommand(" select  COUNT(distinct matname)'material' from materials ", con);
+        //    SqlCommand cmd2 = new SqlCommand(" select  count (distinct Rigname)  'RigNo' from Rigs  ", con);
+        //    SqlCommand cmd3 = new SqlCommand(" select  count (distinct wellname) 'Well No' from well ", con);
+        //   // SqlCommand cmd4 = new SqlCommand(" select  COUNT(distinct Rigname)'Well No (type) Contain data' from rigs where Contain = 1 ", con);
+        //   // SqlCommand cmd5 = new SqlCommand(" select  COUNT(distinct Rigname)'Well No (type) Non Contain data' from rigs where Contain = 0 ", con);
         //    SqlCommand cmd6 = new SqlCommand(" select  COUNT(distinct CatID)'Category' from Category", con);
-        //    SqlCommand cmd7 = new SqlCommand(" select  COUNT( distinct Subid)'SubCategory' from Subcatogory", con);
-        //    SqlCommand cmd8 = new SqlCommand(" select  COUNT(distinct KeywordName)'Material Without' from KEYWORDS where CatID = 0 ", con);
+        //    SqlCommand cmd7 = new SqlCommand(" select  COUNT( distinct Subid)'SubCategory' from SUBCATEGORY", con);
+        //    SqlCommand cmd8 = new SqlCommand(" select  COUNT(distinct KeywordName)'Material Without' from materials where CatID = 0 ", con);
         //    SqlCommand cmd9 = new SqlCommand(" select COUNT ( distinct RigID) from FILES ", con);
 
 
         //    cmd1.ExecuteNonQuery();
         //    cmd2.ExecuteNonQuery();
         //    cmd3.ExecuteNonQuery();
-        //    cmd4.ExecuteNonQuery();
-        //    cmd5.ExecuteNonQuery();
+        //     //  cmd4.ExecuteNonQuery();
+        //    //cmd5.ExecuteNonQuery();
         //    cmd6.ExecuteNonQuery();
         //    cmd7.ExecuteNonQuery();
         //    cmd8.ExecuteNonQuery();
@@ -409,6 +409,9 @@ namespace Oil_and_Gas_Software
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string Mainqeury = "select distinct rigs.Rigname 'Rig',WELLS.Wellname 'Well No',MATERIALS.MATName ,CATEGORY.CatName 'Category',SUBCATEGORY.Subname 'Subcategory',MATERIALS.MATName 'Materials', MUD_TRATMENT.QTY'QTY', MUD_TRATMENT.PackingQTY'PQTY',MUD_TRATMENT.UnitName 'Unit',reports.Date 'Date' ,REPORTS.DEPTH ,LAST24,DAYSSINCE 'Days since' " +
+                "from RIGS,WELLS,REPORTS,MUD_TRATMENT,MATERIALS ,CATEGORY,SUBCATEGORY " +
+                "where  REPORTS.RIGID = rigs.RIGID and reports.WELLID = WELLS.WELLID  and  MUD_TRATMENT .MATID = MATERIALS.MATID and MUD_TRATMENT .REPORTID = REPORTS.REPORTID and CATEGORY.CatID = SUBCATEGORY.Catid and SUBCATEGORY.Catid = MATERIALS .SubID order by [Well No] " ;
 
         }
     }

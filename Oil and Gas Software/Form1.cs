@@ -311,7 +311,6 @@ namespace Oil_and_Gas_Software
                                         int From = word.IndexOf("(") + "(".Length;
                                         int To = word.IndexOf(")");
                                         UnitName = word.Substring(From, To - From);
-
                                     }
 
                                     /*extract value between  materials */
@@ -472,7 +471,6 @@ namespace Oil_and_Gas_Software
 
                                         ReportID = (int)check_FILE.ExecuteScalar();
 
-                                   //     MessageBox.Show(" from db "+ReportID.ToString());
                                       
                                         int FILEExist = (int)check_FILE.ExecuteScalar();
                                         if (FILEExist != 0)
@@ -523,11 +521,8 @@ namespace Oil_and_Gas_Software
 
                                                             cmd2.Parameters.Add(new SqlParameter("@C5", SqlDbType.NVarChar));
                                                             cmd2.Parameters["@C5"].Value = PackingQTY.ToString();
-                                                    //        MessageBox.Show("at the end "+UnitName);
-
-
-
-                                                          cmd2.ExecuteNonQuery();
+                                                 
+                                                            cmd2.ExecuteNonQuery();
 
                                                         }
                                                         /** end data into mudtratment */
@@ -543,22 +538,12 @@ namespace Oil_and_Gas_Software
                                         else { }
                                     }
                                     /** check Dublicate data in mudtreatment and insert new data in mudtreatment  **/
-
-
-
-
-
-
-
-
-
-
-
                                 }
                                 /** end  section (Mud Treatment )  */
                             }
                             else
                             {
+                                /** for check files with out mud treayment : select * from reports where dayssince = "0.0(@)"*/
                                 /** start insert rig info non contain mudtreatment*/
                                 /**  extracting Depth*/
                                 int From0 = FullData.IndexOf("Depth") + "Depth".Length;
