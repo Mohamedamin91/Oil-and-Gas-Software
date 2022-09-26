@@ -229,8 +229,8 @@ namespace Oil_and_Gas_Software
                 DataRow dr;
                 SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
                 con.Open();
-                SqlCommand cmd = new SqlCommand("select distinct CATEGORY.CatID,CATEGORY.CatName from  REPORTS,CATEGORY ,SUBCATEGORY,MATERIALS " +
-                    "where CATEGORY.CatID = SUBCATEGORY.Catid and SUBCATEGORY.Subid = MATERIALS.SubID and REPORTS.Date >= @C1 and REPORTS.Date <= @C2 ", con);
+                SqlCommand cmd = new SqlCommand("select distinct CATEGORY.CatID,CATEGORY.CatName from  REPORTS,CATEGORY ,SUBCATEGORY,MATERIALS,MUD_TRATMENT " +
+                    "where reports.reportid = MUD_TRATMENT.reportid and materials.matid=MUD_TRATMENT.matid and CATEGORY.CatID = SUBCATEGORY.Catid and SUBCATEGORY.Subid = MATERIALS.SubID and REPORTS.Date >= @C1 and REPORTS.Date <= @C2 ", con);
                 cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.Date));
                 cmd.Parameters["@C1"].Value = dateTimePicker1.Value;
 
@@ -385,9 +385,9 @@ namespace Oil_and_Gas_Software
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select distinct SUBCATEGORY.Subid,Subname from SUBCATEGORY,CATEGORY,reports,materials where CATEGORY.CatID = SUBCATEGORY.Catid and " +
+            cmd.CommandText = "select distinct SUBCATEGORY.Subid,Subname from SUBCATEGORY,CATEGORY,reports,materials,MUD_TRATMENT where reports.reportid = MUD_TRATMENT.reportid and materials.matid=MUD_TRATMENT.matid  and CATEGORY.CatID = SUBCATEGORY.Catid and " +
                 " SUBCATEGORY.subid = materials.subid " +
-                " and materials.Catid= @C1  and " +
+                " and CATEGORY.Catid= @C1  and " +
                 " reports.date >= @C2  and reports.date <= @C3  order by Subname";
 
             cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
@@ -426,8 +426,8 @@ namespace Oil_and_Gas_Software
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select distinct MATID,MATName from MATERIALS,SUBCATEGORY,CATEGORY,reports " +
-                "where CATEGORY.CatID  = SUBCATEGORY.Catid and SUBCATEGORY.subid = materials.subid " +
+            cmd.CommandText = "select distinct MATERIALS.MATID,MATName from MATERIALS,SUBCATEGORY,CATEGORY,reports,MUD_TRATMENT " +
+                "where CATEGORY.CatID  = SUBCATEGORY.Catid and SUBCATEGORY.subid = materials.subid and reports.reportid = MUD_TRATMENT.reportid and materials.matid=MUD_TRATMENT.matid " +
                 " and MATERIALS.SubID= @C1  and  reports.date >= @C2  and reports.date <= @C3   order by MATName";
 
         
@@ -476,7 +476,7 @@ namespace Oil_and_Gas_Software
                 "from RIGS,WELLS,REPORTS,MUD_TRATMENT,MATERIALS ,CATEGORY,SUBCATEGORY " +
                 "where  REPORTS.RIGID = rigs.RIGID and reports.WELLID = WELLS.WELLID  and " +
                 " MUD_TRATMENT .MATID = MATERIALS.MATID and MUD_TRATMENT .REPORTID = REPORTS.REPORTID and CATEGORY.CatID" +
-                " = SUBCATEGORY.Catid and SUBCATEGORY.Catid = MATERIALS .SubID  and  category.catid =@C1 and SUBCATEGORY.subid=@C2 and MUD_TRATMENT.matid=@C3 and reports.date >=@C4 and reports.date<=@C5" +
+                " = SUBCATEGORY.Catid and SUBCATEGORY.subid = MATERIALS .SubID  and  category.catid =@C1 and SUBCATEGORY.subid=@C2 and materials.matid=@C3 and reports.date >=@C4 and reports.date<=@C5" +
                 " order by WELLS.Wellname   ", con))
 
                     {
@@ -510,7 +510,7 @@ namespace Oil_and_Gas_Software
                                 this.dataGridView1.Columns[1].Visible = true;
                                 this.dataGridView1.Columns[2].Visible = true;
                                 this.dataGridView1.Columns[3].Visible = true;
-                                this.dataGridView1.Columns[10].Width = 350;
+                                this.dataGridView1.Columns[9].Width = 350;
                                 //dataGridView1.Columns[0].DisplayIndex = 1;
                                 //dataGridView1.Columns[1].DisplayIndex = 0;
                                 dataGridView1.Visible = true;
