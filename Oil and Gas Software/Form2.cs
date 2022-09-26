@@ -18,11 +18,8 @@ namespace Oil_and_Gas_Software
 {
     public partial class Form2 : MetroForm
     {
-        DataTable dt = new DataTable();
         SqlDataReader reader;
-        DateTime Datefrom;
-        DateTime DateTo;
-
+      
         public Form2()
         {
             InitializeComponent();
@@ -176,7 +173,7 @@ namespace Oil_and_Gas_Software
             dr = dt.NewRow();
             if (dt != null)
             {
-                dr.ItemArray = new object[] { 0, "--Select Rigs--" };
+                dr.ItemArray = new object[] { 0, "All" };
                 dt.Rows.InsertAt(dr, 0);
                 RigComboBox.ValueMember = "RigID";
                 RigComboBox.DisplayMember = "Rigname";
@@ -278,19 +275,19 @@ namespace Oil_and_Gas_Software
         public void refreshdataMaterial()
         {
             DataRow dr;
-            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT1;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
-            SqlCommand cmd = new SqlCommand("select KeywordID,KeywordName from KEYWORDS order by KeywordName", con);
+            SqlCommand cmd = new SqlCommand("select matid,matname from materials order by matname", con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             sda.Fill(dt);
             dr = dt.NewRow();
             if (dt != null)
             {
-                dr.ItemArray = new object[] { 0, "--Select Material--" };
+                dr.ItemArray = new object[] { 0, "All" };
                 dt.Rows.InsertAt(dr, 0);
-                MatComboBox.ValueMember = "KeywordID";
-                MatComboBox.DisplayMember = "KeywordName";
+                MatComboBox.ValueMember = "matid";
+                MatComboBox.DisplayMember = "matname";
                 MatComboBox.DataSource = dt;
                 con.Close();
             }
@@ -302,7 +299,7 @@ namespace Oil_and_Gas_Software
         public void refreshdataWell()
         {
             DataRow dr;
-            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
 
             SqlCommand cmd = new SqlCommand("select WELLID,Wellname from wells where Wellname !='' order by Wellname ", con);
@@ -313,9 +310,9 @@ namespace Oil_and_Gas_Software
             if (dt != null)
             {
 
-                dr.ItemArray = new object[] { 0, "Select Well" };
+                dr.ItemArray = new object[] { 0, "All" };
                 dt.Rows.InsertAt(dr, 0);
-                WellComboBox.ValueMember = "RigID";
+                WellComboBox.ValueMember = "Wellid";
                 WellComboBox.DisplayMember = "Wellname";
                 /*clear white space in datatable*/
                 dt.AsEnumerable().ToList().ForEach(row =>
@@ -375,13 +372,6 @@ namespace Oil_and_Gas_Software
         private void Form2_Load(object sender, EventArgs e)
         {
 
-            //if (MatComboBox.SelectedIndex == -1)
-            //{ (int)MatComboBox.SelectedValue = 0; }
-            //else if (RigComboBox.SelectedIndex == -1)
-            //{ RigComboBox.SelectedIndex = 0; }
-            //else if (WellComboBox.SelectedIndex == -1)
-            //{ WellComboBox.SelectedIndex = 0; }
-
         }
 
         private void CatComboBox_SelectionChangeCommitted(object sender, EventArgs e)
@@ -426,7 +416,9 @@ namespace Oil_and_Gas_Software
 
 
                 SubCatComboBox.DataSource = dt;
-
+                refreshdataMaterial();
+                refreshdataRIGS();
+                refreshdataWell();
 
 
 
@@ -478,10 +470,7 @@ namespace Oil_and_Gas_Software
 
                 MatComboBox.ValueMember = "MATID";
                 MatComboBox.DisplayMember = "MATName";
-                //if ((int)SubCatComboBox.SelectedValue == 0)
-                //{
-                //    MatComboBox.SelectedValue = 0;
-                //}
+               
 
                 MatComboBox.DataSource = dt;
             }
@@ -537,7 +526,7 @@ namespace Oil_and_Gas_Software
 
                         if ((int)SubCatComboBox.SelectedValue != 0)
                         {
-                            dt2.Rows.Clear();
+                              dt2.Rows.Clear();
 
                             SQuery = SQuery + " and SUBCATEGORY.subid = " + SubCatComboBox.SelectedValue;
 
@@ -560,12 +549,11 @@ namespace Oil_and_Gas_Software
                                     }
 
                                     con.Close();
-                                    dt2.Rows.Clear();
 
                                 }
                                 if ((int)MatComboBox.SelectedValue != 0)
                                 {
-                                    dt2.Rows.Clear();
+                                      dt2.Rows.Clear();
 
                                     SQuery = SQuery + " and materials.matid =  " + MatComboBox.SelectedValue;
                                     using (SqlCommand cmd2 = new SqlCommand(SQuery,con))
@@ -603,7 +591,7 @@ namespace Oil_and_Gas_Software
                 }
             }
 
-            else if ((int)RigComboBox.SelectedValue != 0)
+           else  if ((int)RigComboBox.SelectedValue != 0)
             {
                 DataTable dt2 = new DataTable();
                 dt2.Rows.Clear();
@@ -681,7 +669,7 @@ namespace Oil_and_Gas_Software
             else
             {
                 DataTable dt3 = new DataTable();
-
+                dt3.Rows.Clear();
                 using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                 {
                     using (SqlCommand cmd = new SqlCommand(SQuery, con))
@@ -703,7 +691,7 @@ namespace Oil_and_Gas_Software
                                 ada.Fill(dt3);
                                 dataGridView1.DataSource = dt3;
                             }
-                            dt3.Rows.Clear();
+                       //     dt3.Rows.Clear();
                             con.Close();
                         }
                     }
@@ -868,18 +856,45 @@ namespace Oil_and_Gas_Software
 
         private void button2_Click(object sender, EventArgs e)
         {
+            reset();
          
+        }
+        public void reset()
+        {
+            if (CatComboBox.SelectedIndex != 0)
+            {
+                CatComboBox.SelectedIndex = 0;
+            }
+            else
+            { }
 
-            CatComboBox.SelectedIndex = 0;
-            SubCatComboBox.SelectedIndex = 0;
-            MatComboBox.SelectedIndex = 0;
-            RigComboBox.SelectedIndex = 0;
-            WellComboBox.SelectedIndex = 0;
+            if (SubCatComboBox.SelectedIndex != 0)
+            {
+                SubCatComboBox.SelectedIndex = 0;
+            }
+            else { }
+
+            if (MatComboBox.SelectedIndex != 0)
+            {
+                MatComboBox.SelectedIndex = 0;
+            }
+            else { }
+            if (RigComboBox.SelectedIndex != 0)
+            {
+                RigComboBox.SelectedIndex = 0;
+            }
+            else { }
+            if (WellComboBox.SelectedIndex != 0)
+            {
+                WellComboBox.SelectedIndex = 0;
+            }
+            else { }
 
             dataGridView1.DataSource = null;
             RowsNuumlblNEW.Text = string.Empty;
             subtot.Text = string.Empty;
             SubTONEW.Text = string.Empty;
+
         }
     }
 }
