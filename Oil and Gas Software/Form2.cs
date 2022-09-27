@@ -631,6 +631,9 @@ namespace Oil_and_Gas_Software
                             {
                                 ada.Fill(dt2);
                                 dataGridView2.DataSource = dt2;
+                                this.dataGridView2.Columns[3].Width = 50;
+                                this.dataGridView2.Columns[1].Width = 70;
+
 
 
 
@@ -664,6 +667,9 @@ namespace Oil_and_Gas_Software
 
                                         ada.Fill(dt2);
                                         dataGridView2.DataSource = dt2;
+                                        this.dataGridView2.Columns[3].Width = 50;
+                                        this.dataGridView2.Columns[1].Width = 70;
+
                                     }
                                     con.Close();
                                 }
@@ -690,6 +696,9 @@ namespace Oil_and_Gas_Software
 
                                                 ada.Fill(dt2);
                                                 dataGridView2.DataSource = dt2;
+                                                  this.dataGridView2.Columns[3].Width = 50;
+                                                this.dataGridView2.Columns[1].Width = 70;
+
                                             }
                                             con.Close();
                                         }
@@ -734,6 +743,7 @@ namespace Oil_and_Gas_Software
                             {
                                 ada.Fill(dt4);
                                 dataGridView1.DataSource = dt4;
+
                             }
                             con.Close();
                         }
@@ -760,7 +770,6 @@ namespace Oil_and_Gas_Software
                         cmd1.Parameters.Add(new SqlParameter("@C3", SqlDbType.Date));
                         cmd1.Parameters["@C3"].Value = dateTimePicker2.Value;
                         con.Open();
-                        MessageBox.Show(SQuery2);
 
 
                         using (SqlDataAdapter ada = new SqlDataAdapter(cmd1))
@@ -769,6 +778,10 @@ namespace Oil_and_Gas_Software
                             {
                                 ada.Fill(dt42);
                                 dataGridView2.DataSource = dt42;
+                                this.dataGridView2.Columns[3].Width = 50;
+                                this.dataGridView2.Columns[1].Width = 70;
+
+
 
 
 
@@ -848,6 +861,10 @@ namespace Oil_and_Gas_Software
                             {
                                 ada.Fill(dt23);
                                 dataGridView2.DataSource = dt23;
+                                this.dataGridView2.Columns[3].Width = 50;
+                                this.dataGridView2.Columns[1].Width = 70;
+
+
 
 
 
@@ -873,9 +890,9 @@ namespace Oil_and_Gas_Software
 
 
 
-                 DataTable dt3 = new DataTable();
-                dataGridView1.DataSource = null;
-                dt3.Rows.Clear();
+                   DataTable dt3 = new DataTable();
+                   dataGridView1.DataSource = null;
+                   dt3.Rows.Clear();
                 using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                 {
                     using (SqlCommand cmd = new SqlCommand(SQuery, con))
@@ -1036,30 +1053,11 @@ namespace Oil_and_Gas_Software
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            //if (radioButton1.Checked == true)
-            //{
-            //    groupBox3.Enabled = true;
-            //}
-            //else 
-            //{
-            //    groupBox3.Enabled = false;
-
-
-            //}
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            //if (radioButton2.Checked == true)
-            //{
-            //    groupBox3.Enabled = true;
-            //}
-            //else
-            //{
-            //    groupBox3.Enabled = false;
-
-
-            //}
+           
         }
 
         private void button2_Click(object sender, EventArgs e)
