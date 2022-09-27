@@ -214,54 +214,57 @@ namespace Oil_and_Gas_Software
         public void refreshdataMaterialCategory()
         {
 
-            if (dateTimePicker1.Value != null || dateTimePicker2.Value != null)
+            if (dateTimePicker1.Value != null && dateTimePicker2.Value != null || (int)CatComboBox.SelectedValue != 0)
             {
-                DataRow dr;
-                CatComboBox.Items.Clear();
-              //  CatComboBox.Text = "";
-                SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
-                con.Open();
-                SqlCommand cmd = new SqlCommand("select distinct CATEGORY.CatID,CATEGORY.CatName from  REPORTS,CATEGORY ,SUBCATEGORY,MATERIALS,MUD_TRATMENT " +
-                    "where reports.reportid = MUD_TRATMENT.reportid and materials.matid=MUD_TRATMENT.matid and CATEGORY.CatID = SUBCATEGORY.Catid and SUBCATEGORY.Subid = " +
-                    " MATERIALS.SubID and REPORTS.Date >= @C1 and REPORTS.Date <= @C2 order by CATEGORY.CatName  ", con);
-                cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.Date));
-                cmd.Parameters["@C1"].Value = dateTimePicker1.Value;
+                
+                    DataRow dr;
 
-                cmd.Parameters.Add(new SqlParameter("@C2", SqlDbType.Date));
-                cmd.Parameters["@C2"].Value = dateTimePicker2.Value;
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                sda.Fill(dt);
-                dr = dt.NewRow();
-                if (dt != null)
-                {
+                    SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("select distinct CATEGORY.CatID,CATEGORY.CatName from  REPORTS,CATEGORY ,SUBCATEGORY,MATERIALS,MUD_TRATMENT " +
+                        "where reports.reportid = MUD_TRATMENT.reportid and materials.matid=MUD_TRATMENT.matid and CATEGORY.CatID = SUBCATEGORY.Catid and SUBCATEGORY.Subid = " +
+                        " MATERIALS.SubID and REPORTS.Date >= @C1 and REPORTS.Date <= @C2  order by CATEGORY.CatName  ", con);
+                    cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.Date));
+                    cmd.Parameters["@C1"].Value = dateTimePicker1.Value;
 
-                    dr.ItemArray = new object[] { 0, "All" };
-                    dt.Rows.InsertAt(dr, 0);
-                    this.CatComboBox.ValueMember = "CatID";
-                    this.CatComboBox.DisplayMember = "CatName";
-                    this.CatComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                    this.CatComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
-                    this.CatComboBox.DropDownStyle = ComboBoxStyle.DropDown;
-
-                    /*clear white space in datatable*/
-                    dt.AsEnumerable().ToList().ForEach(row =>
+                    cmd.Parameters.Add(new SqlParameter("@C2", SqlDbType.Date));
+                    cmd.Parameters["@C2"].Value = dateTimePicker2.Value;
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    dr = dt.NewRow();
+                    if (dt != null)
                     {
-                        var cellList = row.ItemArray.ToList();
-                        row.ItemArray = cellList.Select(x => x.ToString().Trim()).ToArray();
-                    });
-                    /*clear white space in datatable*/
-                    CatComboBox.DataSource = dt;
-                    con.Close();
-                }
-                else
-                {
-                    //    MessageBox.Show("Please choose a folder to import 'Materials'  ", "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+
+                        dr.ItemArray = new object[] { 0, "All" };
+                        dt.Rows.InsertAt(dr, 0);
+                        this.CatComboBox.ValueMember = "CatID";
+                        this.CatComboBox.DisplayMember = "CatName";
+                        this.CatComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                        this.CatComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+                        this.CatComboBox.DropDownStyle = ComboBoxStyle.DropDown;
+
+                        /*clear white space in datatable*/
+                        dt.AsEnumerable().ToList().ForEach(row =>
+                        {
+                            var cellList = row.ItemArray.ToList();
+                            row.ItemArray = cellList.Select(x => x.ToString().Trim()).ToArray();
+                        });
+                        /*clear white space in datatable*/
+                        CatComboBox.DataSource = dt;
+                        con.Close();
+                    }
+                    else
+                    {
+                        //    MessageBox.Show("Please choose a folder to import 'Materials'  ", "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                
+               
+
             }
             else
             {
-                MessageBox.Show("Please choose a Date   ", "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please choose a Date and Category   ", "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
 
             }
@@ -1107,6 +1110,16 @@ namespace Oil_and_Gas_Software
             RowsNuumlblNEW.Text = string.Empty;
             subtot.Text = string.Empty;
             SubTONEW.Text = string.Empty;
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
 
         }
     }
