@@ -3,6 +3,7 @@ namespace Oil_and_Gas_Software
 {
     partial class Form2
     {
+        
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -59,6 +60,7 @@ namespace Oil_and_Gas_Software
             this.label7 = new System.Windows.Forms.Label();
             this.Total = new MetroFramework.Controls.MetroCheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.subtot = new System.Windows.Forms.Label();
@@ -72,6 +74,7 @@ namespace Oil_and_Gas_Software
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -397,6 +400,7 @@ namespace Oil_and_Gas_Software
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.dataGridView2);
             this.groupBox2.Controls.Add(this.label23);
             this.groupBox2.Controls.Add(this.label24);
             this.groupBox2.Controls.Add(this.subtot);
@@ -409,17 +413,25 @@ namespace Oil_and_Gas_Software
             this.groupBox2.ForeColor = System.Drawing.Color.Black;
             this.groupBox2.Location = new System.Drawing.Point(16, 584);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(355, 473);
+            this.groupBox2.Size = new System.Drawing.Size(385, 473);
             this.groupBox2.TabIndex = 22;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Summary";
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(10, 21);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(369, 408);
+            this.dataGridView2.TabIndex = 8;
             // 
             // label23
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label23.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label23.Location = new System.Drawing.Point(89, 107);
+            this.label23.Location = new System.Drawing.Point(100, 137);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(12, 16);
             this.label23.TabIndex = 7;
@@ -429,7 +441,7 @@ namespace Oil_and_Gas_Software
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(15, 107);
+            this.label24.Location = new System.Drawing.Point(26, 137);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(11, 16);
             this.label24.TabIndex = 6;
@@ -440,7 +452,7 @@ namespace Oil_and_Gas_Software
             this.subtot.AutoSize = true;
             this.subtot.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.subtot.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.subtot.Location = new System.Drawing.Point(264, 69);
+            this.subtot.Location = new System.Drawing.Point(275, 99);
             this.subtot.Name = "subtot";
             this.subtot.Size = new System.Drawing.Size(12, 16);
             this.subtot.TabIndex = 5;
@@ -450,7 +462,7 @@ namespace Oil_and_Gas_Software
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(182, 69);
+            this.label22.Location = new System.Drawing.Point(193, 99);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(57, 16);
             this.label22.TabIndex = 4;
@@ -461,7 +473,7 @@ namespace Oil_and_Gas_Software
             this.SubTONEW.AutoSize = true;
             this.SubTONEW.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SubTONEW.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.SubTONEW.Location = new System.Drawing.Point(91, 69);
+            this.SubTONEW.Location = new System.Drawing.Point(102, 99);
             this.SubTONEW.Name = "SubTONEW";
             this.SubTONEW.Size = new System.Drawing.Size(12, 16);
             this.SubTONEW.TabIndex = 3;
@@ -471,7 +483,7 @@ namespace Oil_and_Gas_Software
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(4, 69);
+            this.label21.Location = new System.Drawing.Point(15, 99);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(72, 16);
             this.label21.TabIndex = 2;
@@ -482,7 +494,7 @@ namespace Oil_and_Gas_Software
             this.RowsNuumlblNEW.AutoSize = true;
             this.RowsNuumlblNEW.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RowsNuumlblNEW.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.RowsNuumlblNEW.Location = new System.Drawing.Point(94, 29);
+            this.RowsNuumlblNEW.Location = new System.Drawing.Point(105, 59);
             this.RowsNuumlblNEW.Name = "RowsNuumlblNEW";
             this.RowsNuumlblNEW.Size = new System.Drawing.Size(12, 16);
             this.RowsNuumlblNEW.TabIndex = 1;
@@ -492,7 +504,7 @@ namespace Oil_and_Gas_Software
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(7, 29);
+            this.label19.Location = new System.Drawing.Point(18, 59);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(81, 16);
             this.label19.TabIndex = 0;
@@ -529,7 +541,7 @@ namespace Oil_and_Gas_Software
             this.groupBox3.Controls.Add(this.dateTimePicker1);
             this.groupBox3.Location = new System.Drawing.Point(16, 153);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(355, 425);
+            this.groupBox3.Size = new System.Drawing.Size(385, 425);
             this.groupBox3.TabIndex = 27;
             this.groupBox3.TabStop = false;
             // 
@@ -550,6 +562,7 @@ namespace Oil_and_Gas_Software
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
@@ -598,5 +611,6 @@ namespace Oil_and_Gas_Software
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.DataGridView dataGridView2;
     }
 }
