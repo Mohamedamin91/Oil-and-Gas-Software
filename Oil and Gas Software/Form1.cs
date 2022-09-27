@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Tulpep.NotificationWindow;
 
 namespace Oil_and_Gas_Software
 {
@@ -562,6 +563,9 @@ namespace Oil_and_Gas_Software
                                 // delete the day and just keep the date
                                 extractedDATEONLY = extractedfullDATE.Substring(extractedfullDATE.Length - 15, 15);
                                 extractedDATEONLY = extractedDATEONLY.Replace("' ", "");
+                                extractedDATEONLY = extractedDATEONLY.TrimStart();
+                                extractedDATEONLY = extractedDATEONLY.TrimEnd();
+                                extractedDATEONLY = extractedDATEONLY.Trim();
 
                                 int From2 = FullData.IndexOf("Well No (Type) :") + "Well No (Type) :".Length;
                                 int To2 = FullData.IndexOf("Charge #");
@@ -613,7 +617,7 @@ namespace Oil_and_Gas_Software
                                 {
                                     string strDate = extractedDATEONLY;
                                     string[] dateString = strDate.Split('/');
-                                    enter_date = Convert.ToDateTime(dateString[1] + "/" + dateString[0] + "/" + dateString[2]);
+                                    enter_date = Convert.ToDateTime(dateString[0] + "/" + dateString[1] + "/" + dateString[2]);
 
                                 }
 
@@ -782,7 +786,13 @@ namespace Oil_and_Gas_Software
             {
               
             }
+            PopupNotifier popup = new PopupNotifier();
+            popup.TitleText = "Oil and Gas Software";
+            popup.ContentText = "The data has been exported successfully";
+            popup.Popup();// show
             MessageBox.Show("The data has been exported successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
 
             //BindTotal();
             BindGV();
@@ -790,6 +800,15 @@ namespace Oil_and_Gas_Software
     
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form2 frm2 = new Form2();
+            frm2.Show();
+            this.Close();
+
 
         }
     }

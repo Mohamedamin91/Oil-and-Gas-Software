@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Oil_and_Gas_Software
 {
-    public partial class Form2 : MetroForm
+    public partial class Form2 : Form
     {
         SqlDataReader reader;
 
@@ -159,7 +159,7 @@ namespace Oil_and_Gas_Software
             DataRow dr;
             SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
-            SqlCommand cmd = new SqlCommand("select distinct RigID, Rigname from Rigs where Rigname !=''    ", con);
+            SqlCommand cmd = new SqlCommand("select distinct RigID, Rigname from Rigs where Rigname !='' order by rigname   ", con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             sda.Fill(dt);
@@ -217,11 +217,13 @@ namespace Oil_and_Gas_Software
             if (dateTimePicker1.Value != null || dateTimePicker2.Value != null)
             {
                 DataRow dr;
+                CatComboBox.Items.Clear();
+              //  CatComboBox.Text = "";
                 SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
                 con.Open();
                 SqlCommand cmd = new SqlCommand("select distinct CATEGORY.CatID,CATEGORY.CatName from  REPORTS,CATEGORY ,SUBCATEGORY,MATERIALS,MUD_TRATMENT " +
                     "where reports.reportid = MUD_TRATMENT.reportid and materials.matid=MUD_TRATMENT.matid and CATEGORY.CatID = SUBCATEGORY.Catid and SUBCATEGORY.Subid = " +
-                    " MATERIALS.SubID and REPORTS.Date >= @C1 and REPORTS.Date <= @C2 ", con);
+                    " MATERIALS.SubID and REPORTS.Date >= @C1 and REPORTS.Date <= @C2 order by CATEGORY.CatName  ", con);
                 cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.Date));
                 cmd.Parameters["@C1"].Value = dateTimePicker1.Value;
 
@@ -364,6 +366,14 @@ namespace Oil_and_Gas_Software
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            // no smaller than design time size
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+
+            // no larger than screen size
+        //    this.MaximumSize = new System.Drawing.Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, (int)System.Windows.SystemParameters.PrimaryScreenHeight);
+
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 
         }
 
@@ -514,7 +524,7 @@ namespace Oil_and_Gas_Software
             /*Query builder **/
 
 
-            if ((int)CatComboBox.SelectedValue != 0)
+             if ((int)CatComboBox.SelectedValue != 0)
             {
                 SQuery = SQuery + " and CATEGORY.catid = " + CatComboBox.SelectedValue;
                 
@@ -759,7 +769,6 @@ namespace Oil_and_Gas_Software
                 SQuery2 = SQuery2.Replace(GroupQuery, " ");
                 GroupQuery = GroupQuery2;
                 SQuery2 = SQuery2 + " and rigs.rigid = " + RigComboBox.SelectedValue + GroupQuery;
-
                 using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                 {
                     using (SqlCommand cmd1 = new SqlCommand(SQuery2, con))
@@ -799,7 +808,7 @@ namespace Oil_and_Gas_Software
 
             }
 
-            if ((int)WellComboBox.SelectedValue != 0)
+             if ((int)WellComboBox.SelectedValue != 0)
             {
 
                 DataTable dt2 = new DataTable();
@@ -880,9 +889,6 @@ namespace Oil_and_Gas_Software
                 // dt2 sec();
 
 
-
-
-
             }
 
 
@@ -913,7 +919,7 @@ namespace Oil_and_Gas_Software
                             {
                                 ada.Fill(dt3);
                                 dataGridView1.DataSource = dt3;
-                            this.dataGridView1.Columns[7].Visible = false;
+                            this.dataGridView1.Columns[7].Visible = true;
 
                         }
                         //     dt3.Rows.Clear();
