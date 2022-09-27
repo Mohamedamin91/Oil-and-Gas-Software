@@ -497,18 +497,13 @@ namespace Oil_and_Gas_Software
                 " MUD_TRATMENT.REPORTID = REPORTS.REPORTID and " +
                 " CATEGORY.CatID = SUBCATEGORY.Catid and " +
                 " SUBCATEGORY.subid = MATERIALS.SubID and " +
-                " REPORTS.Date >= @C2 and REPORTS.Date <= @C3  "   ;
+                " REPORTS.Date >= @C2 and REPORTS.Date <= @C3  "    ;
           
-            
-            string SQuery3 = " SELECT MATERIALS.MATName 'Material', SUM(MUD_TRATMENT.QTY) as Total,MUD_TRATMENT.PackingQTY ,MUD_TRATMENT.UnitName 'Unit' " +
-               " FROM RIGS, WELLS, REPORTS, MUD_TRATMENT, MATERIALS, CATEGORY, SUBCATEGORY " +
-               " where REPORTS.RIGID = rigs.RIGID and " +
-               " reports.WELLID = WELLS.WELLID  and " +
-               " MUD_TRATMENT.MATID = MATERIALS.MATID and " +
-               " MUD_TRATMENT.REPORTID = REPORTS.REPORTID and " +
-               " CATEGORY.CatID = SUBCATEGORY.Catid and " +
-               " SUBCATEGORY.subid = MATERIALS.SubID and " +
-               " REPORTS.Date >= @C2 and REPORTS.Date <= @C3  " ;
+         
+
+            string GroupQuery = " GROUP BY MATERIALS.MATName,MUD_TRATMENT.PackingQTY,MUD_TRATMENT.UnitName ";
+            string GroupQuery2 = " GROUP BY MATERIALS.MATName,MUD_TRATMENT.PackingQTY,MUD_TRATMENT.UnitName ";
+
 
             // " GROUP BY  MATERIALS.MATName,MUD_TRATMENT.PackingQTY,MUD_TRATMENT.UnitName; ";
 
@@ -519,10 +514,11 @@ namespace Oil_and_Gas_Software
             /*Query builder **/
 
 
-             if ((int)CatComboBox.SelectedValue != 0)
+            if ((int)CatComboBox.SelectedValue != 0)
             {
                 SQuery = SQuery + " and CATEGORY.catid = " + CatComboBox.SelectedValue;
-                SQuery2 = SQuery2 + " and CATEGORY.catid = " + CatComboBox.SelectedValue+" GROUP BY MATERIALS.MATName,MUD_TRATMENT.PackingQTY,MUD_TRATMENT.UnitName ";
+                
+                SQuery2 = SQuery2 + " and CATEGORY.catid = " + CatComboBox.SelectedValue+ GroupQuery;
                 DataTable dt = new DataTable();
                 DataTable dt2 = new DataTable();
 
@@ -648,9 +644,10 @@ namespace Oil_and_Gas_Software
                         {
                             dt2.Rows.Clear();
 
-                            SQuery2 = SQuery3;
-                            SQuery2 = SQuery2 + " and CATEGORY.catid = " + CatComboBox.SelectedValue + " and SUBCATEGORY.subid = " + SubCatComboBox.SelectedValue+ " GROUP BY  MATERIALS.MATName,MUD_TRATMENT.PackingQTY,MUD_TRATMENT.UnitName";
-
+                            SQuery2 = SQuery2.Replace(GroupQuery, " ");
+                            GroupQuery = GroupQuery2;
+                            SQuery2 = SQuery2 +  " and SUBCATEGORY.subid = " + SubCatComboBox.SelectedValue+ GroupQuery;
+                            
                             using (SqlCommand cmd1 = new SqlCommand(SQuery2, con))
                             {
                                 cmd1.Parameters.Add(new SqlParameter("@C2", SqlDbType.Date));
@@ -674,8 +671,9 @@ namespace Oil_and_Gas_Software
                                 {
                                     dt2.Rows.Clear();
 
-                                    SQuery2 = SQuery3;
-                                    SQuery2 = SQuery2 = SQuery2 + " and CATEGORY.catid = " + CatComboBox.SelectedValue + " and SUBCATEGORY.subid = " + SubCatComboBox.SelectedValue + " and materials.matid = "+MatComboBox.SelectedValue+ " GROUP BY  MATERIALS.MATName,MUD_TRATMENT.PackingQTY,MUD_TRATMENT.UnitName"; ;
+                                    SQuery2 = SQuery2.Replace(GroupQuery, " ");
+                                    GroupQuery = GroupQuery2;
+                                    SQuery2 = SQuery2 +  " and materials.matid = "+ MatComboBox.SelectedValue+ GroupQuery ;
                                     using (SqlCommand cmd2 = new SqlCommand(SQuery2, con))
                                     {
                                         cmd2.Parameters.Add(new SqlParameter("@C2", SqlDbType.Date));
@@ -712,11 +710,13 @@ namespace Oil_and_Gas_Software
 
              if ((int)RigComboBox.SelectedValue != 0)
             {
-                DataTable dt2 = new DataTable();
+                DataTable dt4 = new DataTable();
                 dataGridView1.DataSource = null;
-                dt2.Rows.Clear();
+                dataGridView2.DataSource = null;
+                dt4.Rows.Clear();
                 SQuery = SQuery + " and rigs.rigid = " + RigComboBox.SelectedValue;
-                using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+
+              using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                 {
 
                     using (SqlCommand cmd = new SqlCommand(SQuery, con))
@@ -730,10 +730,10 @@ namespace Oil_and_Gas_Software
 
                         using (SqlDataAdapter ada = new SqlDataAdapter(cmd))
                         {
-                            using (dt2)
+                            using (dt4)
                             {
-                                ada.Fill(dt2);
-                                dataGridView1.DataSource = dt2;
+                                ada.Fill(dt4);
+                                dataGridView1.DataSource = dt4;
                             }
                             con.Close();
                         }
@@ -744,16 +744,58 @@ namespace Oil_and_Gas_Software
                 }
 
 
+                // dt2 sec();
+                DataTable dt42 = new DataTable();
+                SQuery2 = SQuery2.Replace(GroupQuery, " ");
+                GroupQuery = GroupQuery2;
+                SQuery2 = SQuery2 + " and rigs.rigid = " + RigComboBox.SelectedValue + GroupQuery;
+
+                using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                {
+                    using (SqlCommand cmd1 = new SqlCommand(SQuery2, con))
+                    {
+                        cmd1.Parameters.Add(new SqlParameter("@C2", SqlDbType.Date));
+                        cmd1.Parameters["@C2"].Value = dateTimePicker1.Value;
+
+                        cmd1.Parameters.Add(new SqlParameter("@C3", SqlDbType.Date));
+                        cmd1.Parameters["@C3"].Value = dateTimePicker2.Value;
+                        con.Open();
+                        MessageBox.Show(SQuery2);
+
+
+                        using (SqlDataAdapter ada = new SqlDataAdapter(cmd1))
+                        {
+                            using (dt42)
+                            {
+                                ada.Fill(dt42);
+                                dataGridView2.DataSource = dt42;
+
+
+
+                                con.Close();
+
+                            }
+                        }
+
+
+                    }
+
+                }
+                // dt2 sec();
+
+
             }
 
-             if ((int)WellComboBox.SelectedValue != 0)
+            if ((int)WellComboBox.SelectedValue != 0)
             {
 
                 DataTable dt2 = new DataTable();
+                DataTable dt23 = new DataTable();
                 dataGridView1.DataSource = null;
                 dt2.Rows.Clear();
 
-                SQuery = SQuery + " and wells.wellid = " + WellComboBox.SelectedValue;
+              
+                SQuery = SQuery+ " and wells.wellid = " + WellComboBox.SelectedValue;
                 using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                 {
 
@@ -783,11 +825,55 @@ namespace Oil_and_Gas_Software
                 }
 
 
+                // dt2 sec();
+                SQuery2 = SQuery2.Replace(GroupQuery, " ");
+                GroupQuery = GroupQuery2;
+                SQuery2 = SQuery2 + " and wells.wellid = " + WellComboBox.SelectedValue + GroupQuery;
+
+                using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                {
+                    using (SqlCommand cmd1 = new SqlCommand(SQuery2, con))
+                    {
+                        cmd1.Parameters.Add(new SqlParameter("@C2", SqlDbType.Date));
+                        cmd1.Parameters["@C2"].Value = dateTimePicker1.Value;
+
+                        cmd1.Parameters.Add(new SqlParameter("@C3", SqlDbType.Date));
+                        cmd1.Parameters["@C3"].Value = dateTimePicker2.Value;
+                        con.Open();
+
+
+                        using (SqlDataAdapter ada = new SqlDataAdapter(cmd1))
+                        {
+                            using (dt23)
+                            {
+                                ada.Fill(dt23);
+                                dataGridView2.DataSource = dt23;
+
+
+
+                                con.Close();
+
+                            }
+                        }
+
+
+                    }
+
+                }
+                // dt2 sec();
+
+
+
+
 
             }
 
-            
-                DataTable dt3 = new DataTable();
+
+
+
+
+
+                 DataTable dt3 = new DataTable();
                 dataGridView1.DataSource = null;
                 dt3.Rows.Clear();
                 using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
@@ -1013,6 +1099,7 @@ namespace Oil_and_Gas_Software
             else { }
 
             dataGridView1.DataSource = null;
+            dataGridView2.DataSource = null;
             RowsNuumlblNEW.Text = string.Empty;
             subtot.Text = string.Empty;
             SubTONEW.Text = string.Empty;
