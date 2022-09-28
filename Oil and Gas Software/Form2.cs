@@ -216,7 +216,6 @@ namespace Oil_and_Gas_Software
 
             if (dateTimePicker1.Value != null && dateTimePicker2.Value != null || (int)CatComboBox.SelectedValue != 0)
             {
-                
                     DataRow dr;
 
                     SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
@@ -238,14 +237,20 @@ namespace Oil_and_Gas_Software
 
                         dr.ItemArray = new object[] { 0, "All" };
                         dt.Rows.InsertAt(dr, 0);
-                        this.CatComboBox.ValueMember = "CatID";
-                        this.CatComboBox.DisplayMember = "CatName";
-                        this.CatComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                        this.CatComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
-                        this.CatComboBox.DropDownStyle = ComboBoxStyle.DropDown;
+                    this.CatComboBox.ValueMember = "CatID";
+                    this.CatComboBox.DisplayMember = "CatName";
+                    this.CatComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    this.CatComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+                    this.CatComboBox.DropDownStyle = ComboBoxStyle.DropDown;
+                    this.CatComboBox.CreateControl();
+                    this.CatComboBox.SelectedValue = 0;
 
-                        /*clear white space in datatable*/
-                        dt.AsEnumerable().ToList().ForEach(row =>
+
+
+
+
+                    /*clear white space in datatable*/
+                    dt.AsEnumerable().ToList().ForEach(row =>
                         {
                             var cellList = row.ItemArray.ToList();
                             row.ItemArray = cellList.Select(x => x.ToString().Trim()).ToArray();

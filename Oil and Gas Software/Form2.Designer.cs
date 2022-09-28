@@ -143,10 +143,10 @@ namespace Oil_and_Gas_Software
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(450, 153);
+            this.dataGridView1.Location = new System.Drawing.Point(447, 94);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.Size = new System.Drawing.Size(902, 665);
+            this.dataGridView1.Size = new System.Drawing.Size(879, 665);
             this.dataGridView1.TabIndex = 10;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -413,9 +413,9 @@ namespace Oil_and_Gas_Software
             this.groupBox2.Controls.Add(this.label19);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.Color.Black;
-            this.groupBox2.Location = new System.Drawing.Point(26, 566);
+            this.groupBox2.Location = new System.Drawing.Point(12, 546);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(418, 255);
+            this.groupBox2.Size = new System.Drawing.Size(418, 250);
             this.groupBox2.TabIndex = 22;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Summary";
@@ -429,7 +429,7 @@ namespace Oil_and_Gas_Software
             this.dataGridView2.Location = new System.Drawing.Point(3, 18);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidth = 51;
-            this.dataGridView2.Size = new System.Drawing.Size(412, 234);
+            this.dataGridView2.Size = new System.Drawing.Size(412, 229);
             this.dataGridView2.TabIndex = 8;
             // 
             // label23
@@ -545,7 +545,7 @@ namespace Oil_and_Gas_Software
             this.groupBox3.Controls.Add(this.dateTimePicker2);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.dateTimePicker1);
-            this.groupBox3.Location = new System.Drawing.Point(16, 153);
+            this.groupBox3.Location = new System.Drawing.Point(12, 142);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(425, 398);
             this.groupBox3.TabIndex = 27;
@@ -556,7 +556,7 @@ namespace Oil_and_Gas_Software
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1302, 667);
+            this.ClientSize = new System.Drawing.Size(1336, 701);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.Total);
