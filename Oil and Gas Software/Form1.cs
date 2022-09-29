@@ -70,7 +70,7 @@ namespace Oil_and_Gas_Software
 
         private void BrowseBtn_Click(object sender, EventArgs e)
         {
-            
+
             /**unzip process*/
             //string zipFilePath = opf.FileName;
             //string extractionPath = opf.FileName + " ";
@@ -327,7 +327,7 @@ namespace Oil_and_Gas_Software
                                         Match result2 = re.Match(brackets);
                                         string PackingQTY = result2.Groups[1].Value;
                                         string UnitName = result2.Groups[2].Value;
-                                        if (PackingQTY.Length <= 0 || UnitName.Length <= 0)
+                                        if ( UnitName.Length <= 0)
                                         {
                                             int From = word.IndexOf("(") + "(".Length;
                                             int To = word.IndexOf(")");
