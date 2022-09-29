@@ -394,7 +394,7 @@ namespace Oil_and_Gas_Software
                                             SqlCommand cmd13 = new SqlCommand("UPDATE [MATERIALS] SET [CatID] =13 /*,[SubID]=13 */ WHERE [MATName]= 'RESINEX II' or [MATName]= 'GMPRO-RX' or [MATName]= 'RENZI_SPNH' ", con);
                                             SqlCommand cmd14 = new SqlCommand("UPDATE [MATERIALS] SET [CatID] =14 /*,[SubID]=14*/  WHERE [MATName]= 'NACL' or [MATName]= 'NACL-SAR' or [MATName]= 'NACL-RY' or [MATName]= 'NACL-GC' or[MATName]= 'NACL-SEP' ", con);
                                             SqlCommand cmd15 = new SqlCommand("UPDATE [MATERIALS] SET [CatID] =15 /*,[SubID]=15*/  WHERE [MATName]= 'NACL-DEL' ", con);
-                                            SqlCommand cmd16 = new SqlCommand("UPDATE [MATERIALS] SET [CatID] =0 /*,[SubID]= 107*/ WHERE [CatID]  IS NULL /*or [SubID] IS NULL*/ ", con);
+                                            SqlCommand cmd16 = new SqlCommand("UPDATE [MATERIALS] SET [CatID] =16 /*,[SubID]= 107*/ WHERE [CatID]  IS NULL /*or [SubID] IS NULL*/ ", con);
                                             SqlCommand cmd17 = new SqlCommand("UPDATE MATERIALS SET MATERIALS.SubID = B.Subid FROM Category A, SUBCATEGORY B   WHERE  A.CatID = B.Catid and  a.CatID = MATERIALS.CatID ", con);
                                             /* for update subid in table keyword automaticly  regarding */
                                             /**       UPDATE MATERIALS SET MATERIALS.SubID = B.Subid FROM Category A, SUBCATEGORY B   WHERE  A.CatID = B.Catid and  a.CatID = MATERIALS.CatID*/

@@ -184,14 +184,14 @@ namespace Oil_and_Gas_Software
             DataRow dr;
             SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
-            SqlCommand cmd = new SqlCommand("select Subid,Subname from Subcatogory order by Subname", con);
+            SqlCommand cmd = new SqlCommand("select Subid,Subname from SUBCATEGORY order by Subname", con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             sda.Fill(dt);
             dr = dt.NewRow();
             if (dt != null)
             {
-                dr.ItemArray = new object[] { 0, "--Select Subcatogory--" };
+                dr.ItemArray = new object[] { 0, "All" };
                 dt.Rows.InsertAt(dr, 0);
                 SubCatComboBox.ValueMember = "Subid";
                 SubCatComboBox.DisplayMember = "Subname";
@@ -376,10 +376,18 @@ namespace Oil_and_Gas_Software
         {
             // no smaller than design time size
             this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+           
+            
+         
+                refreshdataMaterialSubategory();
+                refreshdataMaterial();
+                refreshdataRIGS();
+                refreshdataWell();
 
+            
             // no larger than screen size
-        //    this.MaximumSize = new System.Drawing.Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, (int)System.Windows.SystemParameters.PrimaryScreenHeight);
-
+            //    this.MaximumSize = new System.Drawing.Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, (int)System.Windows.SystemParameters.PrimaryScreenHeight);
+           
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 
@@ -1081,40 +1089,50 @@ namespace Oil_and_Gas_Software
         }
         public void reset()
         {
-            if (CatComboBox.SelectedIndex != 0)
+            if (CatComboBox.SelectedIndex == -1)
+
             {
-                CatComboBox.SelectedIndex = 0;
+                MessageBox.Show("Please choose a Date and Category   ", "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
             }
             else
-            { }
+            {
+                if (CatComboBox.SelectedIndex != 0)
+                {
+                    CatComboBox.SelectedIndex = 0;
+                }
+                else
+                { }
+                if (SubCatComboBox.SelectedIndex != 0)
+                {
+                    SubCatComboBox.SelectedIndex = 0;
+                }
+                else { }
 
-            if (SubCatComboBox.SelectedIndex != 0)
-            {
-                SubCatComboBox.SelectedIndex = 0;
-            }
-            else { }
+                if (MatComboBox.SelectedIndex != 0)
+                {
+                    MatComboBox.SelectedIndex = 0;
+                }
+                else { }
+                if (RigComboBox.SelectedIndex != 0)
+                {
+                    RigComboBox.SelectedIndex = 0;
+                }
+                else { }
+                if (WellComboBox.SelectedIndex != 0)
+                {
+                    WellComboBox.SelectedIndex = 0;
+                }
+                else { }
 
-            if (MatComboBox.SelectedIndex != 0)
-            {
-                MatComboBox.SelectedIndex = 0;
-            }
-            else { }
-            if (RigComboBox.SelectedIndex != 0)
-            {
-                RigComboBox.SelectedIndex = 0;
-            }
-            else { }
-            if (WellComboBox.SelectedIndex != 0)
-            {
-                WellComboBox.SelectedIndex = 0;
-            }
-            else { }
+                dataGridView1.DataSource = null;
+                dataGridView2.DataSource = null;
+                RowsNuumlblNEW.Text = string.Empty;
+                subtot.Text = string.Empty;
+                SubTONEW.Text = string.Empty;
 
-            dataGridView1.DataSource = null;
-            dataGridView2.DataSource = null;
-            RowsNuumlblNEW.Text = string.Empty;
-            subtot.Text = string.Empty;
-            SubTONEW.Text = string.Empty;
+            }
+         
 
         }
 
