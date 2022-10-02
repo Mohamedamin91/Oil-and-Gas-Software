@@ -835,11 +835,31 @@ namespace Oil_and_Gas_Software
 
         private void button1_Click(object sender, EventArgs e)
         {
+           
+
+
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
             Form2 frm2 = new Form2();
+            this.Hide();
             frm2.Show();
-            this.Close();
+        }
 
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            Form1 frm1 = new Form1();
+            this.Hide();
+            frm1.Show();
+           
+        }
 
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            Form3 frm3 = new Form3();
+            this.Hide();
+            frm3.Show();
         }
     }
 }
