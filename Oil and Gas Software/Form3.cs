@@ -14,6 +14,14 @@ namespace Oil_and_Gas_Software
         SqlDataAdapter adapt;
         SqlDataAdapter adapt2;
         SqlDataAdapter adapt3;
+        DataTable dt1 = new DataTable();
+        DataTable dt11 = new DataTable();
+
+        DataTable dt2 = new DataTable();
+        DataTable dt22 = new DataTable();
+        DataTable dt3 = new DataTable();
+
+
         //ID variable used in Updating and Deleting Record  
         int ID = 0;
         public Form3()
@@ -26,48 +34,45 @@ namespace Oil_and_Gas_Software
         }
         //Display Data in DataGridView  1
         private void DisplayData()
-        {
+        {    
             con.Open();
-            DataTable dt = new DataTable();
-            adapt = new SqlDataAdapter("select catid 'Category ID',catname 'Category Name' from CATEGORY", con);
-            adapt.Fill(dt);
-            dataGridView1.DataSource = dt;
+            adapt = new SqlDataAdapter("select distinct catid 'Category ID', catname 'Category_Name'  from CATEGORY", con);
+            adapt.Fill(dt1);
+            dataGridView1.DataSource = dt1;
             con.Close();
+            metroButton2.Enabled = true;
+            metroButton3.Enabled = false;
+         //   txt_Name.Visible = true;
         }
-       
-        //Display Data in DataGridView  2
+        //Display Data in DataGridView  2       
         private void DisplayData2()
         {
             con.Open();
-            DataTable dt = new DataTable();
-            adapt2 = new SqlDataAdapter("select Subid 'ID' ,Subname 'Subcategory',catname 'Category'  from SUBCATEGORY,category where category.catid = subcategory.catid " +
-                "  order by subid ", con);
-            adapt2.Fill(dt);
-            dataGridView2.DataSource = dt;
+            adapt2 = new SqlDataAdapter("select Subid 'ID' ,Subname 'Subcategory',catname 'Category'  from SUBCATEGORY,category where category.catid = subcategory.catid   order by subid", con);
+            adapt2.Fill(dt2);
+            dataGridView2.DataSource = dt2;
             con.Close();
         }
-      
         //Display Data in DataGridView 3
+ 
         private void DisplayData3()
         {
             con.Open();
-            DataTable dt = new DataTable();
-            adapt3 = new SqlDataAdapter("select matid 'ID' ,matname 'Material',subname 'Subcategory'  from SUBCATEGORY,materials where materials.subid = subcategory.subid " +
-                "  order by matid ", con);
-            adapt3.Fill(dt);
-            dataGridView3.DataSource = dt;
+            adapt3 = new SqlDataAdapter("select matid 'ID' ,matname 'Material',subname 'Subcategory'  from SUBCATEGORY,materials where materials.subid = subcategory.subid  order by matid ", con);
+            adapt3.Fill(dt3);
+            dataGridView3.DataSource = dt3;
             con.Close();
         }
-
         //Clear Data  
         private void ClearData()
         {
             txt_Name.Text = "";
+            txt_Name2.Text = "";
+            txt_Name3.Text = "";
             ID = 0;
         }
         private void Form3_Load(object sender, EventArgs e)
         {
-            DisplayData();
         }
         public void refreshdataCategory()
         {
@@ -77,23 +82,25 @@ namespace Oil_and_Gas_Software
             con.Open();
             SqlCommand cmd = new SqlCommand("select catid ,catname   from category  order by catname ", con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            sda.Fill(dt);
-            dr = dt.NewRow();
-            if (dt != null)
+            sda.Fill(dt11);
+            dr = dt11.NewRow();
+            if (dt11 != null)
             {
                 dr.ItemArray = new object[] { 0, "--Select Category--" };
-                dt.Rows.InsertAt(dr, 0);
+                dt11.Rows.InsertAt(dr, 0);
                 comboBox1.ValueMember = "catid";
                 comboBox1.DisplayMember = "catname";
                 /*clear white space in datatable*/
-                dt.AsEnumerable().ToList().ForEach(row =>
+                dt11.AsEnumerable().ToList().ForEach(row =>
                 {
                     var cellList = row.ItemArray.ToList();
                     row.ItemArray = cellList.Select(x => x.ToString().Trim()).ToArray();
                 });
                 /*clear white space in datatable*/
-                comboBox1.DataSource = dt;
+                comboBox1.DataSource = dt11;
+                comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+                comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
 
                 con.Close();
             }
@@ -110,23 +117,26 @@ namespace Oil_and_Gas_Software
             con.Open();
             SqlCommand cmd = new SqlCommand("select Subid,Subname from SUBCATEGORY order by Subname", con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
-            DataTable dt2 = new DataTable();
-            sda.Fill(dt2);
-            dr = dt2.NewRow();
-            if (dt2 != null)
+            sda.Fill(dt22);
+            dr = dt22.NewRow();
+            if (dt22 != null)
             {
                 dr.ItemArray = new object[] { 0, "--Select Subcategory--" };
-                dt2.Rows.InsertAt(dr, 0);
+                dt22.Rows.InsertAt(dr, 0);
                 comboBox2.ValueMember = "Subid";
                 comboBox2.DisplayMember = "Subname";
                 /*clear white space in datatable*/
-                dt2.AsEnumerable().ToList().ForEach(row =>
+                dt22.AsEnumerable().ToList().ForEach(row =>
                 {
                     var cellList = row.ItemArray.ToList();
                     row.ItemArray = cellList.Select(x => x.ToString().Trim()).ToArray();
                 });
                 /*clear white space in datatable*/
-                comboBox2.DataSource = dt2;
+                comboBox2.DataSource = dt22;
+                comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+                comboBox2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                comboBox2.AutoCompleteSource = AutoCompleteSource.ListItems;
+
 
                 con.Close();
             }
@@ -152,40 +162,13 @@ namespace Oil_and_Gas_Software
 
         private void metroCheckBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (metroCheckBox1.Checked == true)
-            {
-                dataGridView1.Visible = false;
-                dataGridView2.Visible = true;
-                label3.Visible = true;
-                label2.Enabled = true;
-                label1.Text = "Subcategory Name";
-                label3.Text = "* Please choose Category for all Subcategory operations";
-
-                comboBox1.Enabled = true;
-                comboBox1.Visible = true;
-                comboBox2.Visible = false;
-                refreshdataCategory();
-                DisplayData2();
-
-            }
-            else
-            {
-                dataGridView1.Visible = true;
-                dataGridView2.Visible = false;
-                dataGridView3.Visible = false;
-                comboBox2.Visible = false;
-                label3.Visible = false;
-                label1.Text = "Category Name";
-                DisplayData();
-                label2.Enabled = false;
-                comboBox1.Enabled = false;
-            }
+       
         }
         //Insert Record  
         private void metroButton1_Click(object sender, EventArgs e)
         {
 
-            if (metroCheckBox1.Checked == true)
+            if (metroRadioButton1.Checked == true)
             {
                 if (txt_Name.Text != "" && comboBox1.SelectedIndex != -1)
                 {
@@ -213,6 +196,7 @@ namespace Oil_and_Gas_Software
                     MessageBox.Show("Please Provide Details!");
                 }
             }
+                 
             else
             {
                 if (txt_Name.Text != "")
@@ -271,7 +255,7 @@ namespace Oil_and_Gas_Software
         private void metroButton2_Click(object sender, EventArgs e)
         {
 
-            if (metroCheckBox2.Checked == true)
+            if (metroRadioButton2.Checked == true)
             {
                 if (txt_Name.Text != "")
                 {
@@ -286,7 +270,7 @@ namespace Oil_and_Gas_Software
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Record Updated Successfully");
                         con.Close();
-                        DisplayData();
+                        DisplayData2();
                         ClearData();
                     }
                     else
@@ -326,7 +310,7 @@ namespace Oil_and_Gas_Software
                 }
             
             }
-              if (metroCheckBox1.Checked == true)
+              if (metroRadioButton1.Checked == true)
             {
                 if (txt_Name.Text != "")
                 {
@@ -388,7 +372,7 @@ namespace Oil_and_Gas_Software
        private void metroButton3_Click(object sender, EventArgs e)
             {
 
-                if (metroCheckBox1.Checked == true)
+                if (metroRadioButton1.Checked == true)
                 {
                 if (ID != 0)
                 {
@@ -401,7 +385,7 @@ namespace Oil_and_Gas_Software
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Record Deleted Successfully");
                         con.Close();
-                        DisplayData();
+                        DisplayData2();
                         ClearData();
                     }
                     else
@@ -449,69 +433,30 @@ namespace Oil_and_Gas_Software
 
       private void dataGridView2_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            // check null cells
+           // check null cells
             foreach (DataGridViewRow rw in this.dataGridView2.Rows)
+            {
+                for (int i = 0; i < rw.Cells.Count; i++)
                 {
-                    for (int i = 0; i < rw.Cells.Count; i++)
+                    if (rw.Cells[i].Value == null || rw.Cells[i].Value == DBNull.Value || String.IsNullOrWhiteSpace(rw.Cells[i].Value.ToString()))
                     {
-                        if (rw.Cells[i].Value == null || rw.Cells[i].Value == DBNull.Value || String.IsNullOrWhiteSpace(rw.Cells[i].Value.ToString()))
-                        {
-                            //   MessageBox.Show("ogg");       
-                        }
-                        else
-                        {
+                        //   MessageBox.Show("ogg");       
+                    }
+                    else
+                    {
 
                             ID = Convert.ToInt32(dataGridView2.Rows[e.RowIndex].Cells[0].Value.ToString());
-                            txt_Name.Text = dataGridView2.Rows[e.RowIndex].Cells[1].Value.ToString();
-                            comboBox1.DisplayMember = dataGridView2.Rows[e.RowIndex].Cells[2].Value.ToString();
-    
+                            txt_Name2.Text = dataGridView2.Rows[e.RowIndex].Cells[1].Value.ToString();
+                           // comboBox1.DisplayMember = dataGridView2.Rows[e.RowIndex].Cells[2].Value.ToString();
 
-                     }
-                   }
-                }
+
+        }
+    }
+}
         }
 
         private void metroCheckBox2_CheckedChanged(object sender, EventArgs e)
         {
-            if (metroCheckBox2.Checked == true)
-            {
-                metroButton1.Enabled = false;
-                metroButton3.Enabled = false;
-                dataGridView1.Visible = false;
-                dataGridView2.Visible = false;
-                dataGridView3.Visible = true;
-                label3.Visible = true;
-                label3.Text = "* Please choose Subacategory for all Materials operations";
-                label2.Enabled = true;
-                label1.Text = " Name";
-                label2.Text = "Subcategory";
-                comboBox1.Enabled = false;
-                comboBox1.Visible = false;
-                comboBox2.Visible = true;
-                comboBox2.Enabled = true;
-                refreshdatlSubategory();
-                DisplayData3();
-
-            }
-            else
-            {
-                metroButton1.Enabled = true;
-                metroButton3.Enabled = true;
-                dataGridView1.Visible = true;
-                dataGridView2.Visible = false;
-                dataGridView3.Visible = false;
-                comboBox1.Enabled = false;
-                comboBox1.Visible = true;
-                comboBox2.Visible = false;
-                comboBox2.Enabled = false;     
-                label3.Visible = false;
-                label2.Text = "Category";
-                label1.Text = "Category Name";
-
-                DisplayData();
-                label2.Enabled = false;
-              
-            }
         }
 
         private void dataGridView3_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -529,8 +474,8 @@ namespace Oil_and_Gas_Software
                     {
 
                         ID = Convert.ToInt32(dataGridView3.Rows[e.RowIndex].Cells[0].Value.ToString());
-                        txt_Name.Text = dataGridView3.Rows[e.RowIndex].Cells[1].Value.ToString();
-                        comboBox1.DisplayMember = dataGridView3.Rows[e.RowIndex].Cells[2].Value.ToString();
+                        txt_Name3.Text = dataGridView3.Rows[e.RowIndex].Cells[1].Value.ToString();
+                      //  comboBox1.DisplayMember = dataGridView3.Rows[e.RowIndex].Cells[2].Value.ToString();
 
 
                     }
@@ -542,6 +487,176 @@ namespace Oil_and_Gas_Software
         {
 
         }
+
+        private void dataGridView4_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void txt_Name_TextChanged(object sender, EventArgs e)
+        {
+            DataView dv = dt1.DefaultView;
+
+            dv.RowFilter = " Category_Name LIKE '" + txt_Name.Text + "%'";
+            dataGridView1.DataSource = dv;
+
+        }
+
+        private void metroRadioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (metroRadioButton2.Checked == true)
+            {
+                dataGridView1.Visible = false;
+                dataGridView2.Visible = false;
+                dataGridView3.Visible = true;
+                label3.Visible = true;
+                label3.Text = "* Please choose Subacategory for all Materials operations";
+                label2.Enabled = true;
+                label1.Text = "Material Name";
+                label2.Text = "Subcategory";
+                comboBox1.Enabled = false;
+                comboBox1.Visible = false;
+                comboBox2.Visible = true;
+                comboBox2.Enabled = true;
+                metroButton1.Enabled = false;
+                metroButton3.Enabled = false;
+                metroButton2.Enabled = true;
+                txt_Name3.Visible = true;
+                txt_Name2.Visible = false;
+                txt_Name.Visible = false;
+                refreshdatlSubategory();
+                DisplayData3();
+
+            }
+            else
+            {
+                metroButton1.Enabled = true;
+                metroButton3.Enabled = true;
+                dataGridView1.Visible = true;
+                dataGridView2.Visible = false;
+                dataGridView3.Visible = false;
+                comboBox1.Enabled = false;
+                comboBox1.Visible = true;
+                comboBox2.Visible = false;
+                comboBox2.Enabled = false;
+                label3.Visible = false;
+                label2.Text = "Category";
+                label1.Text = "Category Name";
+
+                DisplayData();
+                label2.Enabled = false;
+
+            }
+        }
+
+        private void metroRadioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (metroRadioButton1.Checked == true)
+            {
+                dataGridView1.Visible = false;
+                dataGridView2.Visible = true;
+                label3.Visible = true;
+                label2.Enabled = true;
+                label1.Text = "Subcategory Name";
+                label3.Text = "* Please choose Category for all Subcategory operations";
+
+                comboBox1.Enabled = true;
+                comboBox1.Visible = true;
+                comboBox2.Visible = false;
+                metroButton3.Enabled = false;
+                metroButton2.Enabled = true;
+                metroButton1.Enabled = true;
+                txt_Name3.Visible = false;
+                txt_Name2.Visible = true;
+                txt_Name.Visible = false;
+
+                refreshdataCategory();
+                DisplayData2();
+
+            }
+            else
+            {
+                dataGridView1.Visible = true;
+                dataGridView2.Visible = false;
+                dataGridView3.Visible = false;
+                comboBox2.Visible = false;
+                label3.Visible = false;
+                label1.Text = "Category Name";
+                DisplayData();
+                label2.Enabled = false;
+                comboBox1.Enabled = false;
+            }
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            comboBox2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBox2.AutoCompleteSource = AutoCompleteSource.ListItems;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
+
+        }
+
+        private void metroRadioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (metroRadioButton3.Checked == true)
+            {
+                dataGridView1.Visible = true;
+                dataGridView2.Visible = false;
+                dataGridView3.Visible = false;
+                comboBox2.Visible = false;
+                label3.Visible = false;
+                label1.Text = "Category Name";
+                DisplayData();
+                label2.Enabled = false;
+                comboBox1.Enabled = false;
+
+                metroButton3.Enabled = false;
+                metroButton2.Enabled = true;
+                metroButton1.Enabled = true;
+
+                txt_Name3.Visible = false;
+                txt_Name2.Visible = false;
+                txt_Name.Visible = true;
+            }
+        }
+
+        private void txt_Name2_TextChanged(object sender, EventArgs e)
+        {
+            DataView dv2 = dt2.DefaultView;
+
+            dv2.RowFilter = " Subcategory LIKE '" + txt_Name2.Text + "%'";
+            dataGridView2.DataSource = dv2;
+        }
+
+        private void txt_Name3_TextChanged(object sender, EventArgs e)
+        {
+            DataView dv3 = dt3.DefaultView;
+
+            dv3.RowFilter = " Material LIKE '" + txt_Name3.Text + "%'";
+            dataGridView3.DataSource = dv3;
+        }
+
+        private void comboBox1_MouseEnter(object sender, EventArgs e)
+        {
+            comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
+        }
+
+        private void comboBox2_MouseEnter(object sender, EventArgs e)
+        {
+            comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            comboBox2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBox2.AutoCompleteSource = AutoCompleteSource.ListItems;
+        }
     }
+
     }
 

@@ -526,7 +526,7 @@ namespace Oil_and_Gas_Software
                                                         int FILEExist2 = (int)cmd1.ExecuteScalar();
                                                         if (FILEExist2 == 0)
                                                         {
-                                                            using (SqlCommand cmd2 = new SqlCommand("insert into  MUD_TRATMENT ( REPORTID,MATID,QTY,UnitName,PackingQTY) values (@C1,@C2 ,@C3,@C4,@C5)  ", con1))
+                                                            using (SqlCommand cmd2 = new SqlCommand("insert into  MUD_TRATMENT ( REPORTID,MATID,QTY,UnitName,PackingQTY,UnitNewValue,PackingQTYNewValue) values (@C1,@C2 ,@C3,@C4,@C5,@C6,@C7)  ", con1))
                                                             {
                                                                 cmd2.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
                                                                 cmd2.Parameters["@C1"].Value = ReportID.ToString();
@@ -542,6 +542,12 @@ namespace Oil_and_Gas_Software
 
                                                                 cmd2.Parameters.Add(new SqlParameter("@C5", SqlDbType.NVarChar));
                                                                 cmd2.Parameters["@C5"].Value = PackingQTY.ToString();
+
+                                                                cmd2.Parameters.Add(new SqlParameter("@C6", SqlDbType.NVarChar));
+                                                                cmd2.Parameters["@C6"].Value = UnitName.ToString();
+
+                                                                cmd2.Parameters.Add(new SqlParameter("@C7", SqlDbType.NVarChar));
+                                                                cmd2.Parameters["@C7"].Value = PackingQTY.ToString();
 
                                                                 cmd2.ExecuteNonQuery();
 
