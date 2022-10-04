@@ -34,19 +34,20 @@ namespace Oil_and_Gas_Software
         }
         //Display Data in DataGridView  1
         private void DisplayData()
-        {    
+        {
+            dt1.Rows.Clear(); 
             con.Open();
             adapt = new SqlDataAdapter("select distinct catid 'Category ID', catname 'Category_Name'  from CATEGORY", con);
             adapt.Fill(dt1);
             dataGridView1.DataSource = dt1;
             con.Close();
-            metroButton2.Enabled = true;
-            metroButton3.Enabled = false;
-         //   txt_Name.Visible = true;
+          
         }
         //Display Data in DataGridView  2       
         private void DisplayData2()
         {
+            dt2.Rows.Clear();
+
             con.Open();
             adapt2 = new SqlDataAdapter("select Subid 'ID' ,Subname 'Subcategory',catname 'Category'  from SUBCATEGORY,category where category.catid = subcategory.catid   order by subid", con);
             adapt2.Fill(dt2);
@@ -57,6 +58,7 @@ namespace Oil_and_Gas_Software
  
         private void DisplayData3()
         {
+            dt3.Rows.Clear();
             con.Open();
             adapt3 = new SqlDataAdapter("select matid 'ID' ,matname 'Material',subname 'Subcategory'  from SUBCATEGORY,materials where materials.subid = subcategory.subid  order by matid ", con);
             adapt3.Fill(dt3);
@@ -67,6 +69,7 @@ namespace Oil_and_Gas_Software
         private void ClearData()
         {
             txt_Name.Text = "";
+            txt_Name1.Text = "";
             txt_Name2.Text = "";
             txt_Name3.Text = "";
             ID = 0;
@@ -76,8 +79,8 @@ namespace Oil_and_Gas_Software
         }
         public void refreshdataCategory()
         {
+            dt11.Rows.Clear();
             DataRow dr;
-            
             SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
             SqlCommand cmd = new SqlCommand("select catid ,catname   from category  order by catname ", con);
@@ -112,6 +115,7 @@ namespace Oil_and_Gas_Software
 
         public void refreshdatlSubategory()
         {
+            dt22.Rows.Clear();
             DataRow dr;
             SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
@@ -167,7 +171,38 @@ namespace Oil_and_Gas_Software
         //Insert Record  
         private void metroButton1_Click(object sender, EventArgs e)
         {
+            ///category 
+            if (metroRadioButton3.Checked == true)
+            {
 
+                if (txt_Name.Text != "")
+                {
+                    cmd = new SqlCommand("insert into CATEGORY(CatName) values(@name) ", con);
+                    con.Open();
+                    cmd.Parameters.AddWithValue("@name", txt_Name.Text);
+                    if (DialogResult.Yes == MessageBox.Show("Do You Want Insert this record ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                    {
+                        // do what u want
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        MessageBox.Show("Record Inserted Successfully");
+                        DisplayData();
+                        ClearData();
+                    }
+                    else
+                    {
+                        con.Close();
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("Please Provide Details!");
+                }
+
+            }
+
+            ///subategory 
             if (metroRadioButton1.Checked == true)
             {
                 if (txt_Name.Text != "" && comboBox1.SelectedIndex != -1)
@@ -195,34 +230,8 @@ namespace Oil_and_Gas_Software
                 {
                     MessageBox.Show("Please Provide Details!");
                 }
-            }
-                 
-            else
-            {
-                if (txt_Name.Text != "")
-                {
-                    cmd = new SqlCommand("insert into CATEGORY(CatName) values(@name)", con);
-                    con.Open();
-                    cmd.Parameters.AddWithValue("@name", txt_Name.Text);
-                    if (DialogResult.Yes == MessageBox.Show("Do You Want Insert this record ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
-                    {
-                        // do what u want
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                        MessageBox.Show("Record Inserted Successfully");
-                        DisplayData();
-                        ClearData();
-                    }
-                    else
-                    {
-                        con.Close();
-                    }
 
-                }
-                else
-                {
-                    MessageBox.Show("Please Provide Details!");
-                }
+
             }
 
         }
@@ -241,7 +250,7 @@ namespace Oil_and_Gas_Software
                     {
 
                         ID = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
-                        txt_Name.Text = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
+                        txt_Name1.Text = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
                     }
                 }
             }
@@ -254,15 +263,50 @@ namespace Oil_and_Gas_Software
         //Update Record  
         private void metroButton2_Click(object sender, EventArgs e)
         {
-
-            if (metroRadioButton2.Checked == true)
+            ///category 
+            if (metroRadioButton3.Checked == true)
             {
-                if (txt_Name.Text != "")
+
+                if (txt_Name1.Text != "")
                 {
-                    cmd = new SqlCommand("update materials set subid=@subid  where matid=@id", con);
+                    cmd = new SqlCommand("update CATEGORY set catname=@name where catid=@id", con);
                     con.Open();
                     cmd.Parameters.AddWithValue("@id", ID);
-                    cmd.Parameters.AddWithValue("@subid", comboBox2.SelectedValue);
+                    cmd.Parameters.AddWithValue("@name", txt_Name.Text);
+                    if (DialogResult.Yes == MessageBox.Show("Do You Want Update ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                    {
+                        // do what u want
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Record Updated Successfully");
+                        con.Close();
+                        DisplayData();
+                        ClearData();
+                    }
+                    else
+                    {
+                        con.Close();
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("Please Select Record to Update");
+                }
+
+            }
+
+
+            ///subcategory 
+            if (metroRadioButton1.Checked == true)
+            {
+
+                if (txt_Name2.Text != "")
+                {
+                    cmd = new SqlCommand("update subcategory set subname=@name , catid=@catid where subid=@id", con);
+                    con.Open();
+                    cmd.Parameters.AddWithValue("@id", ID);
+                    cmd.Parameters.AddWithValue("@name", txt_Name.Text);
+                    cmd.Parameters.AddWithValue("@catid", comboBox1.SelectedValue);
 
                     if (DialogResult.Yes == MessageBox.Show("Do You Want Update ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                     {
@@ -279,46 +323,22 @@ namespace Oil_and_Gas_Software
                     }
                 }
                 else
-                
                 {
-
-                    if (txt_Name.Text != "")
-                    {
-                        cmd = new SqlCommand("update CATEGORY set catname=@name where catid=@id", con);
-                        con.Open();
-                        cmd.Parameters.AddWithValue("@id", ID);
-                        cmd.Parameters.AddWithValue("@name", txt_Name.Text);
-                        if (DialogResult.Yes == MessageBox.Show("Do You Want Update ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
-                        {
-                            // do what u want
-                            cmd.ExecuteNonQuery();
-                            MessageBox.Show("Record Updated Successfully");
-                            con.Close();
-                            DisplayData();
-                            ClearData();
-                        }
-                        else
-                        {
-                            con.Close();
-                        }
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please Select Record to Update");
-                    }
+                    MessageBox.Show("Please Select Record to Update");
                 }
-            
+
             }
-              if (metroRadioButton1.Checked == true)
+
+
+            ///materials 
+            if (metroRadioButton2.Checked == true)
             {
-                if (txt_Name.Text != "")
+                if (txt_Name3.Text != "")
                 {
-                    cmd = new SqlCommand("update subcategory set subname=@name , catid=@catid where subid=@id", con);
+                    cmd = new SqlCommand("update materials set subid=@subid  where matid=@id", con);
                     con.Open();
                     cmd.Parameters.AddWithValue("@id", ID);
-                    cmd.Parameters.AddWithValue("@name", txt_Name.Text);
-                    cmd.Parameters.AddWithValue("@catid", comboBox1.SelectedValue);
+                    cmd.Parameters.AddWithValue("@subid", comboBox2.SelectedValue);
 
                     if (DialogResult.Yes == MessageBox.Show("Do You Want Update ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                     {
@@ -326,7 +346,7 @@ namespace Oil_and_Gas_Software
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Record Updated Successfully");
                         con.Close();
-                        DisplayData();
+                        DisplayData3();
                         ClearData();
                     }
                     else
@@ -335,44 +355,49 @@ namespace Oil_and_Gas_Software
                     }
                 }
                 else
-
                 {
-                    if (txt_Name.Text != "")
-                    {
-                        cmd = new SqlCommand("update CATEGORY set catname=@name where catid=@id", con);
-                        con.Open();
-                        cmd.Parameters.AddWithValue("@id", ID);
-                        cmd.Parameters.AddWithValue("@name", txt_Name.Text);
-                        if (DialogResult.Yes == MessageBox.Show("Do You Want Update ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
-                        {
-                            // do what u want
-                            cmd.ExecuteNonQuery();
-                            MessageBox.Show("Record Updated Successfully");
-                            con.Close();
-                            DisplayData();
-                            ClearData();
-                        }
-                        else
-                        {
-                            con.Close();
-                        }
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please Select Record to Update");
-                    }
-
+                    MessageBox.Show("Please Select Record to Update");
 
                 }
-
-            }
+            }    
         }
             //Delete Record  
        private void metroButton3_Click(object sender, EventArgs e)
             {
+            ///category 
+            if (metroRadioButton3.Checked == true)
+            {
 
-                if (metroRadioButton1.Checked == true)
+                if (ID != 0)
+                {
+                    cmd = new SqlCommand("delete CATEGORY where catid=@id", con);
+                    con.Open();
+                    cmd.Parameters.AddWithValue("@id", ID);
+                    if (DialogResult.Yes == MessageBox.Show("Do You Want Delete ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                    {
+                        // do what u want
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Record Deleted Successfully");
+                        con.Close();
+                        DisplayData();
+                        ClearData();
+                    }
+                    else
+                    {
+                        con.Close();
+
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("Please Select Record to Delete");
+                }
+
+            }
+
+            ///subcategory
+            if (metroRadioButton1.Checked == true)
                 {
                 if (ID != 0)
                 {
@@ -400,38 +425,40 @@ namespace Oil_and_Gas_Software
                     MessageBox.Show("Please Select Record to Delete");
                 }
             }
-                else
+
+            ///materials
+            if (metroRadioButton1.Checked == true)
+            {
+                if (ID != 0)
                 {
-                    if (ID != 0)
+                    cmd = new SqlCommand("delete materials where matid=@id", con);
+                    con.Open();
+                    cmd.Parameters.AddWithValue("@id", ID);
+                    if (DialogResult.Yes == MessageBox.Show("Do You Want Delete ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                     {
-                        cmd = new SqlCommand("delete CATEGORY where catid=@id", con);
-                        con.Open();
-                        cmd.Parameters.AddWithValue("@id", ID);
-                        if (DialogResult.Yes == MessageBox.Show("Do You Want Delete ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
-                        {
-                            // do what u want
-                            cmd.ExecuteNonQuery();
-                            MessageBox.Show("Record Deleted Successfully");
-                            con.Close();
-                            DisplayData();
-                            ClearData();
-                        }
-                        else
-                        {
-                            con.Close();
-
-                        }
-
+                        // do what u want
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Record Deleted Successfully");
+                        con.Close();
+                        DisplayData3();
+                        ClearData();
                     }
                     else
                     {
-                        MessageBox.Show("Please Select Record to Delete");
-                    }
-                }
+                        con.Close();
 
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("Please Select Record to Delete");
+                }
             }
 
-      private void dataGridView2_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        }
+
+        private void dataGridView2_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
            // check null cells
             foreach (DataGridViewRow rw in this.dataGridView2.Rows)
@@ -497,7 +524,7 @@ namespace Oil_and_Gas_Software
         {
             DataView dv = dt1.DefaultView;
 
-            dv.RowFilter = " Category_Name LIKE '" + txt_Name.Text + "%'";
+            dv.RowFilter = " Category_Name LIKE '" + txt_Name1.Text + "%'";
             dataGridView1.DataSource = dv;
 
         }
@@ -523,7 +550,8 @@ namespace Oil_and_Gas_Software
                 metroButton2.Enabled = true;
                 txt_Name3.Visible = true;
                 txt_Name2.Visible = false;
-                txt_Name.Visible = false;
+                txt_Name1.Visible = false;
+                txt_Name.Enabled = false;
                 refreshdatlSubategory();
                 DisplayData3();
 
@@ -568,7 +596,7 @@ namespace Oil_and_Gas_Software
                 metroButton1.Enabled = true;
                 txt_Name3.Visible = false;
                 txt_Name2.Visible = true;
-                txt_Name.Visible = false;
+                txt_Name1.Visible = false;
 
                 refreshdataCategory();
                 DisplayData2();
@@ -617,13 +645,15 @@ namespace Oil_and_Gas_Software
                 label2.Enabled = false;
                 comboBox1.Enabled = false;
 
-                metroButton3.Enabled = false;
+                metroButton3.Enabled = true;
                 metroButton2.Enabled = true;
                 metroButton1.Enabled = true;
 
                 txt_Name3.Visible = false;
                 txt_Name2.Visible = false;
-                txt_Name.Visible = true;
+                txt_Name1.Visible = true;
+                txt_Name.Enabled = true;
+
             }
         }
 

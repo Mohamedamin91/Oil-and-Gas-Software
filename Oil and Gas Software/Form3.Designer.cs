@@ -38,7 +38,7 @@ namespace Oil_and_Gas_Software
             this.txt_Name3 = new System.Windows.Forms.TextBox();
             this.metroRadioButton2 = new MetroFramework.Controls.MetroRadioButton();
             this.metroRadioButton1 = new MetroFramework.Controls.MetroRadioButton();
-            this.txt_Name = new System.Windows.Forms.TextBox();
+            this.txt_Name1 = new System.Windows.Forms.TextBox();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
@@ -60,6 +60,10 @@ namespace Oil_and_Gas_Software
             this.label6 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.txt_Name = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -68,6 +72,7 @@ namespace Oil_and_Gas_Software
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox2
@@ -94,11 +99,15 @@ namespace Oil_and_Gas_Software
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.pictureBox3);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.txt_Name);
+            this.groupBox1.Controls.Add(this.textBox3);
             this.groupBox1.Controls.Add(this.txt_Name2);
             this.groupBox1.Controls.Add(this.txt_Name3);
             this.groupBox1.Controls.Add(this.metroRadioButton3);
             this.groupBox1.Controls.Add(this.metroRadioButton2);
-            this.groupBox1.Controls.Add(this.txt_Name);
+            this.groupBox1.Controls.Add(this.txt_Name1);
             this.groupBox1.Controls.Add(this.metroRadioButton1);
             this.groupBox1.Controls.Add(this.dataGridView3);
             this.groupBox1.Controls.Add(this.dataGridView2);
@@ -111,16 +120,16 @@ namespace Oil_and_Gas_Software
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(228, 109);
+            this.groupBox1.Location = new System.Drawing.Point(149, 109);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(591, 635);
+            this.groupBox1.Size = new System.Drawing.Size(670, 667);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "CATandSUB";
             // 
             // txt_Name2
             // 
-            this.txt_Name2.Location = new System.Drawing.Point(112, 23);
+            this.txt_Name2.Location = new System.Drawing.Point(150, 28);
             this.txt_Name2.Name = "txt_Name2";
             this.txt_Name2.Size = new System.Drawing.Size(196, 20);
             this.txt_Name2.TabIndex = 15;
@@ -130,7 +139,7 @@ namespace Oil_and_Gas_Software
             // metroRadioButton3
             // 
             this.metroRadioButton3.AutoSize = true;
-            this.metroRadioButton3.Location = new System.Drawing.Point(330, 25);
+            this.metroRadioButton3.Location = new System.Drawing.Point(402, 30);
             this.metroRadioButton3.Name = "metroRadioButton3";
             this.metroRadioButton3.Size = new System.Drawing.Size(71, 15);
             this.metroRadioButton3.TabIndex = 14;
@@ -141,7 +150,7 @@ namespace Oil_and_Gas_Software
             // 
             // txt_Name3
             // 
-            this.txt_Name3.Location = new System.Drawing.Point(112, 23);
+            this.txt_Name3.Location = new System.Drawing.Point(150, 28);
             this.txt_Name3.Name = "txt_Name3";
             this.txt_Name3.Size = new System.Drawing.Size(196, 20);
             this.txt_Name3.TabIndex = 16;
@@ -151,7 +160,7 @@ namespace Oil_and_Gas_Software
             // metroRadioButton2
             // 
             this.metroRadioButton2.AutoSize = true;
-            this.metroRadioButton2.Location = new System.Drawing.Point(502, 25);
+            this.metroRadioButton2.Location = new System.Drawing.Point(574, 30);
             this.metroRadioButton2.Name = "metroRadioButton2";
             this.metroRadioButton2.Size = new System.Drawing.Size(71, 15);
             this.metroRadioButton2.TabIndex = 13;
@@ -163,7 +172,7 @@ namespace Oil_and_Gas_Software
             // metroRadioButton1
             // 
             this.metroRadioButton1.AutoSize = true;
-            this.metroRadioButton1.Location = new System.Drawing.Point(407, 25);
+            this.metroRadioButton1.Location = new System.Drawing.Point(479, 30);
             this.metroRadioButton1.Name = "metroRadioButton1";
             this.metroRadioButton1.Size = new System.Drawing.Size(89, 15);
             this.metroRadioButton1.TabIndex = 12;
@@ -172,21 +181,21 @@ namespace Oil_and_Gas_Software
             this.metroRadioButton1.UseVisualStyleBackColor = true;
             this.metroRadioButton1.CheckedChanged += new System.EventHandler(this.metroRadioButton1_CheckedChanged);
             // 
-            // txt_Name
+            // txt_Name1
             // 
-            this.txt_Name.Location = new System.Drawing.Point(112, 23);
-            this.txt_Name.Name = "txt_Name";
-            this.txt_Name.Size = new System.Drawing.Size(196, 20);
-            this.txt_Name.TabIndex = 0;
-            this.txt_Name.WordWrap = false;
-            this.txt_Name.TextChanged += new System.EventHandler(this.txt_Name_TextChanged);
+            this.txt_Name1.Location = new System.Drawing.Point(150, 28);
+            this.txt_Name1.Name = "txt_Name1";
+            this.txt_Name1.Size = new System.Drawing.Size(196, 20);
+            this.txt_Name1.TabIndex = 0;
+            this.txt_Name1.WordWrap = false;
+            this.txt_Name1.TextChanged += new System.EventHandler(this.txt_Name_TextChanged);
             // 
             // dataGridView3
             // 
             this.dataGridView3.AllowUserToAddRows = false;
             this.dataGridView3.AllowUserToDeleteRows = false;
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Location = new System.Drawing.Point(22, 178);
+            this.dataGridView3.Location = new System.Drawing.Point(41, 201);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.Size = new System.Drawing.Size(554, 446);
             this.dataGridView3.TabIndex = 8;
@@ -198,7 +207,7 @@ namespace Oil_and_Gas_Software
             this.dataGridView2.AllowUserToAddRows = false;
             this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(22, 178);
+            this.dataGridView2.Location = new System.Drawing.Point(41, 201);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.Size = new System.Drawing.Size(554, 446);
             this.dataGridView2.TabIndex = 7;
@@ -209,7 +218,7 @@ namespace Oil_and_Gas_Software
             // 
             this.comboBox2.Enabled = false;
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(112, 61);
+            this.comboBox2.Location = new System.Drawing.Point(150, 97);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(289, 21);
             this.comboBox2.TabIndex = 11;
@@ -222,7 +231,7 @@ namespace Oil_and_Gas_Software
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(22, 178);
+            this.dataGridView1.Location = new System.Drawing.Point(41, 201);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(554, 446);
             this.dataGridView1.TabIndex = 6;
@@ -234,7 +243,7 @@ namespace Oil_and_Gas_Software
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label3.Location = new System.Drawing.Point(36, 145);
+            this.label3.Location = new System.Drawing.Point(83, 172);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(365, 16);
             this.label3.TabIndex = 9;
@@ -243,7 +252,8 @@ namespace Oil_and_Gas_Software
             // 
             // metroButton3
             // 
-            this.metroButton3.Location = new System.Drawing.Point(364, 105);
+            this.metroButton3.Enabled = false;
+            this.metroButton3.Location = new System.Drawing.Point(337, 136);
             this.metroButton3.Name = "metroButton3";
             this.metroButton3.Size = new System.Drawing.Size(75, 23);
             this.metroButton3.TabIndex = 8;
@@ -252,7 +262,7 @@ namespace Oil_and_Gas_Software
             // 
             // metroButton2
             // 
-            this.metroButton2.Location = new System.Drawing.Point(255, 105);
+            this.metroButton2.Location = new System.Drawing.Point(228, 136);
             this.metroButton2.Name = "metroButton2";
             this.metroButton2.Size = new System.Drawing.Size(75, 23);
             this.metroButton2.TabIndex = 7;
@@ -261,18 +271,18 @@ namespace Oil_and_Gas_Software
             // 
             // metroButton1
             // 
-            this.metroButton1.Location = new System.Drawing.Point(143, 105);
+            this.metroButton1.Location = new System.Drawing.Point(116, 136);
             this.metroButton1.Name = "metroButton1";
             this.metroButton1.Size = new System.Drawing.Size(75, 23);
             this.metroButton1.TabIndex = 6;
-            this.metroButton1.Text = "Insert";
+            this.metroButton1.Text = "Create";
             this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
             // 
             // comboBox1
             // 
             this.comboBox1.Enabled = false;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(112, 61);
+            this.comboBox1.Location = new System.Drawing.Point(150, 97);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(289, 21);
             this.comboBox1.TabIndex = 5;
@@ -283,7 +293,7 @@ namespace Oil_and_Gas_Software
             // 
             this.label2.AutoSize = true;
             this.label2.Enabled = false;
-            this.label2.Location = new System.Drawing.Point(6, 69);
+            this.label2.Location = new System.Drawing.Point(45, 105);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(49, 13);
             this.label2.TabIndex = 3;
@@ -292,7 +302,7 @@ namespace Oil_and_Gas_Software
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 32);
+            this.label1.Location = new System.Drawing.Point(50, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 2;
@@ -311,7 +321,7 @@ namespace Oil_and_Gas_Software
             this.groupBox2.Enabled = false;
             this.groupBox2.Location = new System.Drawing.Point(853, 109);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(591, 635);
+            this.groupBox2.Size = new System.Drawing.Size(591, 667);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Important materials";
@@ -321,7 +331,7 @@ namespace Oil_and_Gas_Software
             this.dataGridView6.AllowUserToAddRows = false;
             this.dataGridView6.AllowUserToDeleteRows = false;
             this.dataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView6.Location = new System.Drawing.Point(22, 178);
+            this.dataGridView6.Location = new System.Drawing.Point(22, 201);
             this.dataGridView6.Name = "dataGridView6";
             this.dataGridView6.Size = new System.Drawing.Size(554, 446);
             this.dataGridView6.TabIndex = 6;
@@ -396,6 +406,43 @@ namespace Oil_and_Gas_Software
             this.label4.TabIndex = 9;
             this.label4.Text = "*Coming Soon";
             // 
+            // txt_Name
+            // 
+            this.txt_Name.Location = new System.Drawing.Point(150, 66);
+            this.txt_Name.Name = "txt_Name";
+            this.txt_Name.Size = new System.Drawing.Size(196, 20);
+            this.txt_Name.TabIndex = 17;
+            this.txt_Name.WordWrap = false;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(150, 66);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(196, 20);
+            this.textBox3.TabIndex = 18;
+            this.textBox3.WordWrap = false;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.Navy;
+            this.label7.Location = new System.Drawing.Point(45, 69);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(99, 13);
+            this.label7.TabIndex = 19;
+            this.label7.Text = "New/Update Value";
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(6, 19);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(38, 32);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 10;
+            this.pictureBox3.TabStop = false;
+            // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -420,6 +467,7 @@ namespace Oil_and_Gas_Software
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -431,7 +479,7 @@ namespace Oil_and_Gas_Software
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txt_Name;
+        private System.Windows.Forms.TextBox txt_Name1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private MetroFramework.Controls.MetroButton metroButton3;
@@ -456,5 +504,9 @@ namespace Oil_and_Gas_Software
         private MetroFramework.Controls.MetroRadioButton metroRadioButton3;
         private System.Windows.Forms.TextBox txt_Name3;
         private System.Windows.Forms.TextBox txt_Name2;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txt_Name;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.PictureBox pictureBox3;
     }
 }
