@@ -536,7 +536,7 @@ namespace Oil_and_Gas_Software
                                 using (dt)
                                 {
                                     ada.Fill(dt);
-                                    dataGridView1.DataSource = dt;
+                                    dataGridView2.DataSource = dt;
                                     con.Close();
 
                                 }
@@ -564,7 +564,7 @@ namespace Oil_and_Gas_Software
                                         {
 
                                             ada.Fill(dt);
-                                            dataGridView1.DataSource = dt;
+                                            dataGridView2.DataSource = dt;
                                         }
                                         con.Close();
                                     }
@@ -588,7 +588,7 @@ namespace Oil_and_Gas_Software
                                                 {
 
                                                     ada.Fill(dt);
-                                                    dataGridView1.DataSource = dt;
+                                                    dataGridView2.DataSource = dt;
 
                                                 }
                                                 con.Close();
@@ -747,7 +747,7 @@ namespace Oil_and_Gas_Software
                                 using (dt4)
                                 {
                                     ada.Fill(dt4);
-                                    dataGridView1.DataSource = dt4;
+                                    dataGridView2.DataSource = dt4;
 
                                 }
                                 con.Close();
@@ -812,7 +812,7 @@ namespace Oil_and_Gas_Software
 
                     DataTable dt2 = new DataTable();
                     DataTable dt23 = new DataTable();
-                    dataGridView1.DataSource = null;
+                    dataGridView2.DataSource = null;
                   dt2.Rows.Clear();
 
 
@@ -835,7 +835,7 @@ namespace Oil_and_Gas_Software
                                 using (dt2)
                                 {
                                     ada.Fill(dt2);
-                                    dataGridView1.DataSource = dt2;
+                                    dataGridView2.DataSource = dt2;
                                 }
                                 con.Close();
                             }
