@@ -1,7 +1,12 @@
-﻿using MetroFramework.Forms;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using MetroFramework.Forms;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -30,7 +35,7 @@ namespace Oil_and_Gas_Software
         {
             txt_NamePQTY.Text = "";
             txt_NameUnitName.Text = "";
-           
+
             ID = 0;
         }
 
@@ -257,7 +262,7 @@ namespace Oil_and_Gas_Software
                 }
                 else { }
                 dataGridView1.DataSource = null;
-             
+
 
             }
 
@@ -266,6 +271,7 @@ namespace Oil_and_Gas_Software
 
         private void button1_Click(object sender, EventArgs e)
         {
+              //dataGridView1.Columns[2].Visible = false;
             if (CatComboBox.SelectedIndex == -1)
 
             {
@@ -289,7 +295,7 @@ namespace Oil_and_Gas_Software
                     " SUBCATEGORY.subid = MATERIALS.SubID and " +
                     "reports.date >= @C2  and  reports.date <= @C3   ";
 
-                string SQuery2 = " SELECT materials.matid,MATERIALS.MATName 'Material', SUM(MUD_TRATMENT.QTY) as Total,MUD_TRATMENT.PackingQTY 'PQTy' ,MUD_TRATMENT.UnitName 'Unit' , PackingQTYNewValue 'PQTy NValue', UnitNewValue 'Unit Nvalue '   " +
+                string SQuery2 = " SELECT materials.matid,MATERIALS.MATName 'Material', SUM(MUD_TRATMENT.QTY) as Total,MUD_TRATMENT.PackingQTY 'P-QTy' ,MUD_TRATMENT.UnitName 'UnitT' , PackingQTYNewValue 'PQTY ', UnitNewValue 'Unit'   " +
                     " FROM RIGS, WELLS, REPORTS, MUD_TRATMENT, MATERIALS, CATEGORY, SUBCATEGORY " +
                     " where REPORTS.RIGID = rigs.RIGID and " +
                     " reports.WELLID = WELLS.WELLID  and " +
@@ -338,12 +344,14 @@ namespace Oil_and_Gas_Software
                                 using (dt2)
                                 {
                                     ada.Fill(dt2);
-                                  
+
 
                                     dataGridView1.DataSource = dt2;
                                     //this.dataGridView2.Columns[3].Width = 50;
                                     //this.dataGridView2.Columns[1].Width = 70;
-
+                                    this.dataGridView1.Columns["matid"].Visible = false;
+                                    this.dataGridView1.Columns["P-QTy"].Visible = false;
+                                    this.dataGridView1.Columns["UnitT"].Visible = false;
 
 
 
@@ -383,6 +391,9 @@ namespace Oil_and_Gas_Software
                                             dataGridView1.DataSource = dt2;
                                             //this.dataGridView2.Columns[3].Width = 50;
                                             //this.dataGridView2.Columns[1].Width = 70;
+                                            this.dataGridView1.Columns["matid"].Visible = false;
+                                            this.dataGridView1.Columns["P-QTy"].Visible = false;
+                                            this.dataGridView1.Columns["UnitT"].Visible = false;
 
                                         }
                                         con.Close();
@@ -416,6 +427,9 @@ namespace Oil_and_Gas_Software
                                                     dataGridView1.DataSource = dt2;
                                                     //this.dataGridView2.Columns[3].Width = 50;
                                                     //this.dataGridView2.Columns[1].Width = 70;
+                                                    this.dataGridView1.Columns["matid"].Visible = false;
+                                                    this.dataGridView1.Columns["P-QTy"].Visible = false;
+                                                    this.dataGridView1.Columns["UnitT"].Visible = false;
 
                                                 }
                                                 con.Close();
@@ -579,9 +593,23 @@ namespace Oil_and_Gas_Software
                     //    }
 
                     //}
+                //    MessageBox.Show("Please choose Category", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
 
                 }
 
+                int a = 0;
+                foreach (DataGridViewRow r in dataGridView1.Rows)
+                {
+                    {
+                        a += Convert.ToInt32(r.Cells[2].Value);
+                        totqty.Text = a.ToString();
+                        this.dataGridView1.Columns["matid"].Visible = false;
+                        this.dataGridView1.Columns["P-QTy"].Visible = false;
+                        this.dataGridView1.Columns["UnitT"].Visible = false;
+
+                    }
+                }
 
             }
         }
@@ -789,40 +817,40 @@ namespace Oil_and_Gas_Software
 
         }
 
-       // update
+        // update
         private void button4_Click(object sender, EventArgs e)
         {
             ///category 
-           
 
-                if (txt_NamePQTY.Text != ""|| txt_NameUnitName.Text !="" )
-                {
-                    cmd = new SqlCommand("update MUD_TRATMENT set PackingQTYNewValue=@qty, UnitNewValue=@unit where matid=@id", con);
-                    con.Open();
-                    cmd.Parameters.AddWithValue("@id", ID);
+
+            if (txt_NamePQTY.Text != "" || txt_NameUnitName.Text != "")
+            {
+                cmd = new SqlCommand("update MUD_TRATMENT set PackingQTYNewValue=@qty, UnitNewValue=@unit where matid=@id", con);
+                con.Open();
+                cmd.Parameters.AddWithValue("@id", ID);
                 cmd.Parameters.AddWithValue("@qty", txt_NamePQTY.Text);
                 cmd.Parameters.AddWithValue("@unit", txt_NameUnitName.Text);
                 if (DialogResult.Yes == MessageBox.Show("Do You Want Update ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
-                    {
-                        // do what u want
-                        cmd.ExecuteNonQuery();
-                        MessageBox.Show("Record Updated Successfully");
-                        con.Close();
-                      //  DisplayData();
-                        ClearData();
-                    }
-                    else
-                    {
-                        con.Close();
-                    }
-
+                {
+                    // do what u want
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Record Updated Successfully");
+                    con.Close();
+                    button1.PerformClick();
+                    ClearData();
                 }
                 else
                 {
-                    MessageBox.Show("Please Select Record to Update");
+                    con.Close();
                 }
 
             }
+            else
+            {
+                MessageBox.Show("Please Select Record to Update");
+            }
+
+        }
 
         private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -840,13 +868,54 @@ namespace Oil_and_Gas_Software
 
                         ID = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
                         txt_NamePQTY.Text = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
-                         txt_NameUnitName.Text = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
+                        txt_NameUnitName.Text = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
 
 
                     }
                 }
             }
         }
+
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+           
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+           
+            PrintPreviewDialog ppd = new PrintPreviewDialog();
+
+            PrintDocument pd = new PrintDocument();
+
+            pd.PrintPage += new PrintPageEventHandler(print);
+
+            ppd.Document = pd;
+
+            ppd.ShowDialog();
+
+        }
+        void print(object sender, PrintPageEventArgs e)
+        {
+
+
+            int width = 1000;
+            int height = 1800;
+
+            //bill_groupbox.Width,bill_groupbox.Height
+
+            Bitmap bmp = new Bitmap(width, height);
+
+            System.Drawing.Rectangle rec = new System.Drawing.Rectangle(0, 0, groupBox2.Width, height);
+
+            groupBox2.DrawToBitmap(bmp, rec);
+
+
+            e.Graphics.DrawImage(bmp, rec);
+
+        }
+
+
     }
-    }
+}
 

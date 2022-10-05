@@ -54,20 +54,22 @@ namespace Oil_and_Gas_Software
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.totqty = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // button4
             // 
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button4.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(583, 21);
+            this.button4.Location = new System.Drawing.Point(619, 24);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(77, 28);
             this.button4.TabIndex = 28;
@@ -77,7 +79,7 @@ namespace Oil_and_Gas_Software
             // 
             // txt_NamePQTY
             // 
-            this.txt_NamePQTY.Location = new System.Drawing.Point(204, 27);
+            this.txt_NamePQTY.Location = new System.Drawing.Point(230, 30);
             this.txt_NamePQTY.Name = "txt_NamePQTY";
             this.txt_NamePQTY.Size = new System.Drawing.Size(100, 22);
             this.txt_NamePQTY.TabIndex = 17;
@@ -86,15 +88,15 @@ namespace Oil_and_Gas_Software
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.Location = new System.Drawing.Point(324, 33);
+            this.label25.Location = new System.Drawing.Point(362, 33);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(99, 16);
+            this.label25.Size = new System.Drawing.Size(94, 16);
             this.label25.TabIndex = 18;
-            this.label25.Text = "Unit New Value";
+            this.label25.Text = "Unit new value";
             // 
             // txt_NameUnitName
             // 
-            this.txt_NameUnitName.Location = new System.Drawing.Point(429, 27);
+            this.txt_NameUnitName.Location = new System.Drawing.Point(500, 30);
             this.txt_NameUnitName.Name = "txt_NameUnitName";
             this.txt_NameUnitName.Size = new System.Drawing.Size(100, 22);
             this.txt_NameUnitName.TabIndex = 19;
@@ -104,17 +106,17 @@ namespace Oil_and_Gas_Software
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(85, 33);
+            this.label20.Location = new System.Drawing.Point(84, 36);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(113, 16);
+            this.label20.Size = new System.Drawing.Size(108, 16);
             this.label20.TabIndex = 16;
-            this.label20.Text = "PQTY New Value";
+            this.label20.Text = "PQTY new value";
             // 
             // button2
             // 
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(75, 359);
+            this.button2.Location = new System.Drawing.Point(107, 241);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(74, 42);
             this.button2.TabIndex = 26;
@@ -142,7 +144,7 @@ namespace Oil_and_Gas_Software
             this.groupBox3.Controls.Add(this.dateTimePicker1);
             this.groupBox3.Location = new System.Drawing.Point(8, 80);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(422, 445);
+            this.groupBox3.Size = new System.Drawing.Size(422, 305);
             this.groupBox3.TabIndex = 34;
             this.groupBox3.TabStop = false;
             // 
@@ -150,19 +152,20 @@ namespace Oil_and_Gas_Software
             // 
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(262, 359);
+            this.button3.Location = new System.Drawing.Point(301, 241);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(74, 42);
             this.button3.TabIndex = 27;
             this.button3.Text = "Print";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Visible = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(170, 359);
+            this.button1.Location = new System.Drawing.Point(208, 241);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(74, 42);
             this.button1.TabIndex = 19;
@@ -216,6 +219,7 @@ namespace Oil_and_Gas_Software
             this.WellComboBox.Name = "WellComboBox";
             this.WellComboBox.Size = new System.Drawing.Size(261, 28);
             this.WellComboBox.TabIndex = 8;
+            this.WellComboBox.Visible = false;
             // 
             // RigComboBox
             // 
@@ -227,6 +231,7 @@ namespace Oil_and_Gas_Software
             this.RigComboBox.Name = "RigComboBox";
             this.RigComboBox.Size = new System.Drawing.Size(261, 28);
             this.RigComboBox.TabIndex = 9;
+            this.RigComboBox.Visible = false;
             this.RigComboBox.SelectionChangeCommitted += new System.EventHandler(this.RigComboBox_SelectionChangeCommitted);
             // 
             // label1
@@ -278,6 +283,7 @@ namespace Oil_and_Gas_Software
             this.label4.Size = new System.Drawing.Size(33, 20);
             this.label4.TabIndex = 14;
             this.label4.Text = "Rig";
+            this.label4.Visible = false;
             // 
             // dateTimePicker2
             // 
@@ -298,6 +304,7 @@ namespace Oil_and_Gas_Software
             this.label5.Size = new System.Drawing.Size(39, 20);
             this.label5.TabIndex = 15;
             this.label5.Text = "Well";
+            this.label5.Visible = false;
             // 
             // dateTimePicker1
             // 
@@ -321,6 +328,8 @@ namespace Oil_and_Gas_Software
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.totqty);
+            this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.dataGridView1);
             this.groupBox2.Controls.Add(this.button4);
             this.groupBox2.Controls.Add(this.txt_NamePQTY);
@@ -331,10 +340,42 @@ namespace Oil_and_Gas_Software
             this.groupBox2.ForeColor = System.Drawing.Color.Black;
             this.groupBox2.Location = new System.Drawing.Point(476, 80);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1206, 624);
+            this.groupBox2.Size = new System.Drawing.Size(1206, 710);
             this.groupBox2.TabIndex = 33;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Summary";
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(17, 89);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(1170, 509);
+            this.dataGridView1.TabIndex = 29;
+            this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
+            this.dataGridView1.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
+            // 
+            // totqty
+            // 
+            this.totqty.AutoSize = true;
+            this.totqty.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.totqty.ForeColor = System.Drawing.Color.DarkRed;
+            this.totqty.Location = new System.Drawing.Point(510, 651);
+            this.totqty.Name = "totqty";
+            this.totqty.Size = new System.Drawing.Size(14, 20);
+            this.totqty.TabIndex = 36;
+            this.totqty.Text = "!";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(408, 651);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(48, 20);
+            this.label7.TabIndex = 35;
+            this.label7.Text = "Total:";
             // 
             // pictureBox1
             // 
@@ -345,16 +386,6 @@ namespace Oil_and_Gas_Software
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 28;
             this.pictureBox1.TabStop = false;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(17, 89);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1170, 509);
-            this.dataGridView1.TabIndex = 29;
-            this.dataGridView1.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
             // 
             // Form4
             // 
@@ -373,8 +404,8 @@ namespace Oil_and_Gas_Software
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -406,5 +437,7 @@ namespace Oil_and_Gas_Software
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Label totqty;
+        private System.Windows.Forms.Label label7;
     }
 }

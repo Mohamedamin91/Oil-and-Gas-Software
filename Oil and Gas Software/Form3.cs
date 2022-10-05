@@ -76,6 +76,27 @@ namespace Oil_and_Gas_Software
         }
         private void Form3_Load(object sender, EventArgs e)
         {
+            dataGridView1.Visible = false;
+            dataGridView2.Visible = false;
+            dataGridView3.Visible = true;
+            label3.Visible = true;
+            label3.Text = "* Please choose Subacategory for all Materials operations";
+            label2.Enabled = true;
+            label1.Text = "Material Name";
+            label2.Text = "Subcategory";
+            comboBox1.Enabled = false;
+            comboBox1.Visible = false;
+            comboBox2.Visible = true;
+            comboBox2.Enabled = true;
+            metroButton1.Enabled = false;
+            metroButton3.Enabled = false;
+            metroButton2.Enabled = true;
+            txt_Name3.Visible = true;
+            txt_Name2.Visible = false;
+            txt_Name1.Visible = false;
+            txt_Name.Enabled = false;
+            refreshdatlSubategory();
+            DisplayData3();
         }
         public void refreshdataCategory()
         {
@@ -512,6 +533,44 @@ namespace Oil_and_Gas_Software
 
         private void comboBox2_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            DataRow dr;
+
+
+            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "select  CATEGORY.catid,CATEGORY.catname from SUBCATEGORY,CATEGORY  " +
+                "  where  CATEGORY.CatID  = SUBCATEGORY.Catid  and SUBCATEGORY.SubID= @C1 order by  CATEGORY.catid";
+
+
+
+            cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
+            cmd.Parameters["@C1"].Value = comboBox2.SelectedValue;
+
+          
+            //Creating Sql Data Adapter
+            cmd.ExecuteNonQuery();
+            DataTable dt = new DataTable();
+            SqlDataAdapter Da = new SqlDataAdapter(cmd);
+            Da.Fill(dt);
+            dr = dt.NewRow();
+
+            if (dt != null && dt.Rows.Count >= 0)
+            {
+                dr.ItemArray = new object[] { 0, "All" };
+                dt.Rows.InsertAt(dr, 0);
+
+
+                comboBox3.ValueMember = "catid";
+                comboBox3.DisplayMember = "catname";
+
+
+                comboBox3.DataSource = dt;
+            }
+            conn.Close();
 
         }
 
@@ -570,6 +629,7 @@ namespace Oil_and_Gas_Software
                 label3.Visible = false;
                 label2.Text = "Category";
                 label1.Text = "Category Name";
+                
 
                 DisplayData();
                 label2.Enabled = false;
@@ -685,6 +745,147 @@ namespace Oil_and_Gas_Software
             comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
             comboBox2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBox2.AutoCompleteSource = AutoCompleteSource.ListItems;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox2_Enter(object sender, EventArgs e)
+        {
+            DataRow dr;
+
+
+            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "select  CATEGORY.catid,CATEGORY.catname from SUBCATEGORY,CATEGORY  " +
+                "  where  CATEGORY.CatID  = SUBCATEGORY.Catid  and SUBCATEGORY.SubID= @C1 order by  CATEGORY.catid";
+
+
+
+            cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
+            cmd.Parameters["@C1"].Value = comboBox2.SelectedValue;
+
+
+            //Creating Sql Data Adapter
+            cmd.ExecuteNonQuery();
+            DataTable dt = new DataTable();
+            SqlDataAdapter Da = new SqlDataAdapter(cmd);
+            Da.Fill(dt);
+            dr = dt.NewRow();
+
+            if (dt != null && dt.Rows.Count >= 0)
+            {
+                dr.ItemArray = new object[] { 0, "All" };
+                dt.Rows.InsertAt(dr, 0);
+
+
+                comboBox3.ValueMember = "catid";
+                comboBox3.DisplayMember = "catname";
+
+
+                comboBox3.DataSource = dt;
+            }
+            conn.Close();
+        }
+
+        private void comboBox2_MouseClick(object sender, MouseEventArgs e)
+        {
+          
+        }
+
+        private void comboBox2_DragEnter(object sender, DragEventArgs e)
+        {
+            DataRow dr;
+
+
+            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "select  CATEGORY.catid,CATEGORY.catname from SUBCATEGORY,CATEGORY  " +
+                "  where  CATEGORY.CatID  = SUBCATEGORY.Catid  and SUBCATEGORY.SubID= @C1 order by  CATEGORY.catid";
+
+
+
+            cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
+            cmd.Parameters["@C1"].Value = comboBox2.SelectedValue;
+
+
+            //Creating Sql Data Adapter
+            cmd.ExecuteNonQuery();
+            DataTable dt = new DataTable();
+            SqlDataAdapter Da = new SqlDataAdapter(cmd);
+            Da.Fill(dt);
+            dr = dt.NewRow();
+
+            if (dt != null && dt.Rows.Count >= 0)
+            {
+                dr.ItemArray = new object[] { 0, "All" };
+                dt.Rows.InsertAt(dr, 0);
+
+
+                comboBox3.ValueMember = "catid";
+                comboBox3.DisplayMember = "catname";
+
+
+                comboBox3.DataSource = dt;
+            }
+            conn.Close();
+        }
+
+        private void comboBox2_DisplayMemberChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox2_TabIndexChanged(object sender, EventArgs e)
+        {
+            DataRow dr;
+
+
+            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "select  CATEGORY.catid,CATEGORY.catname from SUBCATEGORY,CATEGORY  " +
+                "  where  CATEGORY.CatID  = SUBCATEGORY.Catid  and SUBCATEGORY.SubID= @C1 order by  CATEGORY.catid";
+
+
+
+            cmd.Parameters.Add(new SqlParameter("@C1", SqlDbType.Int));
+            cmd.Parameters["@C1"].Value = comboBox2.SelectedValue;
+
+
+            //Creating Sql Data Adapter
+            cmd.ExecuteNonQuery();
+            DataTable dt = new DataTable();
+            SqlDataAdapter Da = new SqlDataAdapter(cmd);
+            Da.Fill(dt);
+            dr = dt.NewRow();
+
+            if (dt != null && dt.Rows.Count >= 0)
+            {
+                dr.ItemArray = new object[] { 0, "All" };
+                dt.Rows.InsertAt(dr, 0);
+
+
+                comboBox3.ValueMember = "catid";
+                comboBox3.DisplayMember = "catname";
+
+
+                comboBox3.DataSource = dt;
+            }
+            conn.Close();
         }
     }
 
