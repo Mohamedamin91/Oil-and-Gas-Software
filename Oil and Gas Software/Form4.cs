@@ -933,6 +933,13 @@ namespace Oil_and_Gas_Software
             this.Hide();
             frm3.Show();
         }
+
+        private void pictureBox2_Click_1(object sender, EventArgs e)
+        {
+            Form2 frm2 = new Form2();
+            this.Hide();
+            frm2.Show();
+        }
     }
 }
 

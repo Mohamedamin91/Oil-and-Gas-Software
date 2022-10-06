@@ -476,8 +476,8 @@ namespace Oil_and_Gas_Software
 
                 string SQuery = "select  rigs.Rigname  'Rig',WELLS.Wellname 'Well No'," +
                     " CATEGORY.CatName 'Category',SUBCATEGORY.Subname 'Subcategory', MATERIALS.MATName 'Materials'," +
-                    " MUD_TRATMENT.QTY'QTY'," +
-                    " MUD_TRATMENT.PackingQTY'P-QTY',MUD_TRATMENT.UnitName 'Unitt',PackingQTYNewValue 'PQTY',UnitNewValue 'Unit', REPORTS.DEPTH ,LAST24,DAYSSINCE 'Days since' , reports.Date 'Date' " +
+                    " MUD_TRATMENT.QTY'QTY', " +
+                    " PackingQTYNewValue 'PQTY',UnitNewValue 'Unit', REPORTS.DEPTH ,LAST24,DAYSSINCE 'Days since' , reports.Date 'Date' " +
                     " from " +
                     "RIGS, WELLS, REPORTS, MUD_TRATMENT, MATERIALS, CATEGORY, SUBCATEGORY where " +
                     "REPORTS.RIGID = rigs.RIGID and " +
@@ -488,7 +488,7 @@ namespace Oil_and_Gas_Software
                     " SUBCATEGORY.subid = MATERIALS.SubID and " +
                     "reports.date >= @C2  and  reports.date <= @C3   ";
 
-                string SQuery2 = " SELECT MATERIALS.MATName 'Material', SUM(MUD_TRATMENT.QTY) as Total,MUD_TRATMENT.PackingQTY 'P-QTY' ,MUD_TRATMENT.UnitName 'Unitt' , PackingQTYNewValue 'PQTY', UnitNewValue 'Unit'   " +
+                string SQuery2 = " SELECT MATERIALS.MATName 'Material', SUM(MUD_TRATMENT.QTY) as Total   , PackingQTYNewValue 'PQTY', UnitNewValue 'Unit'   " +
                     " FROM RIGS, WELLS, REPORTS, MUD_TRATMENT, MATERIALS, CATEGORY, SUBCATEGORY " +
                     " where REPORTS.RIGID = rigs.RIGID and " +
                     " reports.WELLID = WELLS.WELLID  and " +
@@ -500,8 +500,8 @@ namespace Oil_and_Gas_Software
 
 
 
-                string GroupQuery = " GROUP BY MATERIALS.MATName,MUD_TRATMENT.PackingQTY,MUD_TRATMENT.UnitName ,PackingQTYNewValue,UnitNewValue ";
-                string GroupQuery2 = " GROUP BY MATERIALS.MATName,MUD_TRATMENT.PackingQTY,MUD_TRATMENT.UnitName,PackingQTYNewValue,UnitNewValue ";
+                string GroupQuery = " GROUP BY MATERIALS.MATName ,PackingQTYNewValue,UnitNewValue ";
+                string GroupQuery2 = " GROUP BY MATERIALS.MATName,PackingQTYNewValue,UnitNewValue ";
 
 
                 // " GROUP BY  MATERIALS.MATName,MUD_TRATMENT.PackingQTY,MUD_TRATMENT.UnitName; ";
@@ -934,10 +934,10 @@ namespace Oil_and_Gas_Software
 
                 }
 
-                this.dataGridView1.Columns["P-QTY"].Visible = false;
-                this.dataGridView1.Columns["unitt"].Visible = false; 
-                this.dataGridView2.Columns["P-QTY"].Visible = false;
-                this.dataGridView2.Columns["unitt"].Visible = false;
+                //this.dataGridView1.Columns["P-QTY"].Visible = false;
+                //this.dataGridView1.Columns["unitt"].Visible = false; 
+                //this.dataGridView2.Columns["P-QTY"].Visible = false;
+                //this.dataGridView2.Columns["unitt"].Visible = false;
             }
         }
 
