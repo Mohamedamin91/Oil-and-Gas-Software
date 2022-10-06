@@ -26,8 +26,7 @@ namespace Oil_and_Gas_Software.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;User ID=sa;Password=Ram72763" +
-            "@")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;User ID=sa;Password=Ram72763@")]
         public string OILREPORT2ConnectionString {
             get {
                 return ((string)(this["OILREPORT2ConnectionString"]));

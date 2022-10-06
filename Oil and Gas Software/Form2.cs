@@ -21,7 +21,7 @@ namespace Oil_and_Gas_Software
         }
         public void BindTotal()
         {
-            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
             SqlCommand cmd1 = new SqlCommand(" select  COUNT(distinct matname)'material' from materials ", con);
             SqlCommand cmd2 = new SqlCommand(" select  count (distinct Rigname)  'RigNo' from Rigs  ", con);
@@ -114,7 +114,7 @@ namespace Oil_and_Gas_Software
         }
         public void refreshdataMaterialWithout()
         {
-            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
             SqlCommand cmd = new SqlCommand("SELECT KeywordName FROM [OILREPORT].[dbo].KEYWORDS where CatID= 0", con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
@@ -131,7 +131,7 @@ namespace Oil_and_Gas_Software
         public void refreshdataRIGS()
         {
             DataRow dr;
-            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
             SqlCommand cmd = new SqlCommand("select distinct RigID, Rigname from Rigs where Rigname !='' order by rigname   ", con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
@@ -156,7 +156,7 @@ namespace Oil_and_Gas_Software
         public void refreshdataMaterialSubategory()
         {
             DataRow dr;
-            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
             SqlCommand cmd = new SqlCommand("select Subid,Subname from SUBCATEGORY order by Subname", con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
@@ -192,7 +192,7 @@ namespace Oil_and_Gas_Software
             {
                     DataRow dr;
 
-                    SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+                    SqlConnection con = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
                     con.Open();
                     SqlCommand cmd = new SqlCommand("select distinct CATEGORY.CatID,CATEGORY.CatName from  REPORTS,CATEGORY ,SUBCATEGORY,MATERIALS,MUD_TRATMENT , rigs ,wells " +
                         " where rigs.rigid =reports.rigid and wells.wellid=reports.wellid and reports.reportid = MUD_TRATMENT.reportid and materials.matid=MUD_TRATMENT.matid and CATEGORY.CatID = SUBCATEGORY.Catid and SUBCATEGORY.Subid = " +
@@ -252,7 +252,7 @@ namespace Oil_and_Gas_Software
         public void refreshdataMaterial()
         {
             DataRow dr;
-            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
             SqlCommand cmd = new SqlCommand("select matid,matname from materials order by matname", con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
@@ -276,7 +276,7 @@ namespace Oil_and_Gas_Software
         public void refreshdataWell()
         {
             DataRow dr;
-            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
 
             SqlCommand cmd = new SqlCommand("select WELLID,Wellname from wells where Wellname !='' order by Wellname ", con);
@@ -309,7 +309,7 @@ namespace Oil_and_Gas_Software
         public void BindRigsNonContainData()
         {
             DataTable dt2 = new DataTable();
-            using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+            using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT;Persist Security Info=True;User ID=sa;password=Ram72763@"))
             {
                 using (SqlCommand cmd = new SqlCommand("select distinct  [Rigname],[Depth] ,[last24],[DaysSince]from FILES,Rigs where FILES.RigID = Rigs.RigID and FILES.Contain='0'", con))
                 {
@@ -358,7 +358,7 @@ namespace Oil_and_Gas_Software
 
 
             DataRow dr;
-            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
 
 
             conn.Open();
@@ -416,7 +416,7 @@ namespace Oil_and_Gas_Software
             DataRow dr;
 
 
-            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
 
 
             conn.Open();
@@ -522,7 +522,7 @@ namespace Oil_and_Gas_Software
                     DataTable dt2 = new DataTable();
 
                     // dt main();
-                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                     {
                         using (SqlCommand cmd = new SqlCommand(SQuery, con))
                         {
@@ -608,7 +608,7 @@ namespace Oil_and_Gas_Software
                     // dt main();
 
                     // dt2 sec();
-                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                     {
                         using (SqlCommand cmd = new SqlCommand(SQuery2, con))
                         {
@@ -732,7 +732,7 @@ namespace Oil_and_Gas_Software
                     dt4.Rows.Clear();
                     SQuery = SQuery + " and rigs.rigid = " + RigComboBox.SelectedValue;
 
-                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                     {
 
                         using (SqlCommand cmd = new SqlCommand(SQuery, con))
@@ -766,7 +766,7 @@ namespace Oil_and_Gas_Software
                     SQuery2 = SQuery2.Replace(GroupQuery, " ");
                     GroupQuery = GroupQuery2;
                     SQuery2 = SQuery2 + " and rigs.rigid = " + RigComboBox.SelectedValue + GroupQuery;
-                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                     {
                         using (SqlCommand cmd1 = new SqlCommand(SQuery2, con))
                         {
@@ -819,7 +819,7 @@ namespace Oil_and_Gas_Software
 
 
                     SQuery = SQuery + " and wells.wellid = " + WellComboBox.SelectedValue;
-                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                     {
 
                         using (SqlCommand cmd = new SqlCommand(SQuery, con))
@@ -853,7 +853,7 @@ namespace Oil_and_Gas_Software
                     GroupQuery = GroupQuery2;
                     SQuery2 = SQuery2 + " and wells.wellid = " + WellComboBox.SelectedValue + GroupQuery;
 
-                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                     {
                         using (SqlCommand cmd1 = new SqlCommand(SQuery2, con))
                         {
@@ -904,7 +904,7 @@ namespace Oil_and_Gas_Software
                 DataTable dt3 = new DataTable();
                 dataGridView1.DataSource = null;
                 dt3.Rows.Clear();
-                using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                 {
                     using (SqlCommand cmd = new SqlCommand(SQuery, con))
                     {
@@ -967,7 +967,7 @@ namespace Oil_and_Gas_Software
         private void MatComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
             DataRow dr;
-            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -1010,7 +1010,7 @@ namespace Oil_and_Gas_Software
         private void RigComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
             DataRow dr;
-            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -1185,6 +1185,13 @@ namespace Oil_and_Gas_Software
             Form3 frm3 = new Form3();
             this.Hide();
             frm3.Show();
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            Form4 frm4 = new Form4();
+            this.Hide();
+            frm4.Show();
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Oil_and_Gas_Software
         public void BindGV()
         {
             dt.Rows.Clear();
-            using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+            using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
             {
                 using (SqlCommand cmd = new SqlCommand(" select rigs.Rigname 'Rig',WELLS.Wellname 'Well No',MATERIALS.MATName 'Materials', MUD_TRATMENT.QTY'QTY'," +
                     "MUD_TRATMENT.PackingQTY'PQTY',MUD_TRATMENT.UnitName 'Unit',reports.Date 'Date' from RIGS,WELLS,REPORTS,MUD_TRATMENT,MATERIALS" +
@@ -215,7 +215,7 @@ namespace Oil_and_Gas_Software
 
                                     /** start insert rig info contain mudtreatment*/
 
-                                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                     {
 
                                         SqlCommand check_RIG2 = new SqlCommand("SELECT Count(*) FROM [Rigs] WHERE ([Rigname] = @C1  )", con);
@@ -258,7 +258,7 @@ namespace Oil_and_Gas_Software
 
                                     /** start insert well info contain mudtreatment*/
 
-                                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                     {
 
                                         SqlCommand check_well2 = new SqlCommand("SELECT Count(*) FROM [wells] WHERE ([Wellname] = @C1  )", con);
@@ -336,7 +336,7 @@ namespace Oil_and_Gas_Software
 
                                         /*extract value between  materials */
                                         /** extract material**/
-                                        using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                                        using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                         {
 
                                             SqlCommand check_KEYWORD = new SqlCommand("SELECT Count(*) FROM [MATERIALS] WHERE ([MATName] = @C1)", con);
@@ -375,7 +375,7 @@ namespace Oil_and_Gas_Software
                                         /** extract material**/
 
                                         /** Update Category and sub cat**/
-                                        using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                                        using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                         {
                                             // updating pQTY =1 where pQTY =0 
                                             SqlCommand cmd0 = new SqlCommand(" UPDATE [MUD_TRATMENT] SET [PackingQTY] = 1 WHERE [PackingQTY]= 0 ", con);
@@ -424,7 +424,7 @@ namespace Oil_and_Gas_Software
                                         /** Update Category and sub cat**/
 
                                         /** check Dublicate Reports and insert new reports  **/
-                                        using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                                        using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                         {
                                             SqlCommand check_FILE = new SqlCommand(" SELECT Count(*) from REPORTS,RIGS,WELLS where REPORTS.RIGID=RIGS.RIGID and  REPORTS.WELLID=WELLS.WELLID AND " +
                                                 "  REPORTS.WELLID=@C3 and date=@C4 and REPORTS.RIGID=@C1", con);
@@ -476,7 +476,7 @@ namespace Oil_and_Gas_Software
                                         /** check Dublicate Reports and insert new reports  **/
 
                                         /** check Dublicate data in mudtreatment and insert new data in mudtreatment  **/
-                                        using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                                        using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                         {
                                             con.Open();
                                             SqlCommand check_FILE = new SqlCommand(" SELECT REPORTID FROM  Reports WHERE wellid=@C1 and  rigid =@C2 and date =@C3", con);
@@ -496,7 +496,7 @@ namespace Oil_and_Gas_Software
                                             int FILEExist = (int)check_FILE.ExecuteScalar();
                                             if (FILEExist != 0)
                                             {
-                                                using (SqlConnection con1 = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                                                using (SqlConnection con1 = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                                 {
                                                     con1.Open();
                                                     /** get reprot id */
@@ -674,7 +674,7 @@ namespace Oil_and_Gas_Software
 
 
                                     ///** start insert rig info non contain mudtreatment */
-                                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                     {
 
                                         SqlCommand check_RIG = new SqlCommand("SELECT Count(*) FROM [Rigs] WHERE ([Rigname] = @C1)", con);
@@ -713,7 +713,7 @@ namespace Oil_and_Gas_Software
                                     ///** end insert rig info non contain mudtreatment */  
 
                                     ///** start insert well info non contain mudtreatment */
-                                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                     {
                                         SqlCommand check_well = new SqlCommand("SELECT Count(*) FROM [wells] WHERE ([Wellname] = @C1)", con);
                                         con.Open();
@@ -750,7 +750,7 @@ namespace Oil_and_Gas_Software
                                     }
                                     ///** end insert well info non contain mudtreatment */  
 
-                                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
                                     {
                                         con.Open();
                                         SqlCommand check_REPORT = new SqlCommand(" SELECT Count(*) from Reports,Rigs,wells where reports.RigID=Rigs.RigID and reports.wellid=wells.wellid   and " +
@@ -866,6 +866,13 @@ namespace Oil_and_Gas_Software
             Form3 frm3 = new Form3();
             this.Hide();
             frm3.Show();
+        }
+
+        private void pictureBox1_Click_1(object sender, EventArgs e)
+        {
+            Form4 frm4 = new Form4();
+            this.Hide();
+            frm4.Show();
         }
     }
 }

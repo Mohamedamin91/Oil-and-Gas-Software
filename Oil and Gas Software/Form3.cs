@@ -9,7 +9,7 @@ namespace Oil_and_Gas_Software
 {
     public partial class Form3 : MetroForm
     {
-        SqlConnection con = new SqlConnection("Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+        SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
         SqlCommand cmd;
         SqlDataAdapter adapt;
         SqlDataAdapter adapt2;
@@ -102,7 +102,7 @@ namespace Oil_and_Gas_Software
         {
             dt11.Rows.Clear();
             DataRow dr;
-            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
             SqlCommand cmd = new SqlCommand("select catid ,catname   from category  order by catname ", con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
@@ -138,7 +138,7 @@ namespace Oil_and_Gas_Software
         {
             dt22.Rows.Clear();
             DataRow dr;
-            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection con = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
             con.Open();
             SqlCommand cmd = new SqlCommand("select Subid,Subname from SUBCATEGORY order by Subname", con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
@@ -536,7 +536,7 @@ namespace Oil_and_Gas_Software
             DataRow dr;
 
 
-            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
 
 
             conn.Open();
@@ -757,7 +757,7 @@ namespace Oil_and_Gas_Software
             DataRow dr;
 
 
-            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
 
 
             conn.Open();
@@ -804,7 +804,7 @@ namespace Oil_and_Gas_Software
             DataRow dr;
 
 
-            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
 
 
             conn.Open();
@@ -851,7 +851,7 @@ namespace Oil_and_Gas_Software
             DataRow dr;
 
 
-            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.105;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
+            SqlConnection conn = new SqlConnection(@"Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@");
 
 
             conn.Open();
@@ -886,6 +886,13 @@ namespace Oil_and_Gas_Software
                 comboBox3.DataSource = dt;
             }
             conn.Close();
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            Form4 frm4 = new Form4();
+            this.Hide();
+            frm4.Show();
         }
     }
 
