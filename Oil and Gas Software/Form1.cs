@@ -816,22 +816,23 @@ namespace Oil_and_Gas_Software
                     Console.WriteLine(ex.Message);
                 }
 
+                PopupNotifier popup = new PopupNotifier();
+                popup.TitleText = "Oil and Gas Software";
+                popup.ContentText = "The data has been exported successfully";
+                popup.Popup();// show
+                MessageBox.Show("The data has been exported successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+
+                //BindTotal();
+                BindGV();
             }
 
             else
             {
 
             }
-            PopupNotifier popup = new PopupNotifier();
-            popup.TitleText = "Oil and Gas Software";
-            popup.ContentText = "The data has been exported successfully";
-            popup.Popup();// show
-            MessageBox.Show("The data has been exported successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
-
-            //BindTotal();
-            BindGV();
+         
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
