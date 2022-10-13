@@ -307,8 +307,10 @@ namespace Oil_and_Gas_Software
                                         MaterialID = 0;
                                         string strDate = extractedDATEONLY;
                                         string[] dateString = strDate.Split('/');
-                                        DateTime enter_date = Convert.ToDateTime(dateString[0] + "/" + dateString[1] + "/" + dateString[2]);
-                                        var newenter_date = enter_date.ToShortDateString();
+                                          DateTime enter_date = Convert.ToDateTime(dateString[0] + "/" + dateString[1] + "/" + dateString[2]);
+                                          enter_date.ToShortDateString();
+
+                                          enter_date.ToString("yyyy-MM-dd");
 
                                         int qous = word.IndexOf("(");
                                         int space = word.LastIndexOf(" ");
@@ -644,6 +646,8 @@ namespace Oil_and_Gas_Software
                                         string strDate = extractedDATEONLY;
                                         string[] dateString = strDate.Split('/');
                                         enter_date = Convert.ToDateTime(dateString[0] + "/" + dateString[1] + "/" + dateString[2]);
+                                        enter_date.ToShortDateString();
+                                        enter_date.ToString("yyyy-MM-dd");
 
                                     }
 
