@@ -53,6 +53,31 @@ namespace Oil_and_Gas_Software
         {
             BindGV();
         }
+        Rectangle BoundRect;
+        Rectangle OldRect = Rectangle.Empty;
+
+        private void EnableMouse()
+        {
+            Cursor.Clip = OldRect;
+            Cursor.Show();
+           // Application.RemoveMessageFilter(this.panel1);
+        }
+        public bool PreFilterMessage(ref Message m)
+        {
+            if (m.Msg == 0x201 || m.Msg == 0x202 || m.Msg == 0x203) return true;
+            if (m.Msg == 0x204 || m.Msg == 0x205 || m.Msg == 0x206) return true;
+            return false;
+        }
+        private void DisableMouse()
+        {
+            OldRect = Cursor.Clip;
+            // Arbitrary location.
+            BoundRect = new Rectangle(50, 50, 1, 1);
+            Cursor.Clip = BoundRect;
+            Cursor.Hide();
+           // Application.AddMessageFilter(this);
+        }
+
 
         private void BrowseBtn_Click(object sender, EventArgs e)
         {
@@ -75,8 +100,10 @@ namespace Oil_and_Gas_Software
                 {
                     var allFiles
                       = Directory.EnumerateFiles(sourceDirectory, "*", SearchOption.AllDirectories);
-                    panel1.Click -= panel1_Click;
-                    panel1.Enabled = false;
+                 
+                    DisableMouse();
+
+
                     foreach (string currentFile in allFiles)
                     {
                       
@@ -711,9 +738,10 @@ namespace Oil_and_Gas_Software
                     PopupNotifier popup = new PopupNotifier();
                     popup.TitleText = "Oil and Gas Software";
                     popup.ContentText = "The data has been exported successfully";
-                 
-                    panel1.Click += panel1_Click;
-                    panel1.Enabled = true;
+
+                  
+                    EnableMouse();
+
 
 
                     popup.Popup();// show
@@ -727,13 +755,17 @@ namespace Oil_and_Gas_Software
                 }
                 catch (Exception ex)
                 {
-                MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message);
+                    EnableMouse();
+
+
+
                 }
 
-            
+
 
                 //BindTotal();
-               
+
             }
 
 
