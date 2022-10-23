@@ -25,6 +25,7 @@ namespace Oil_and_Gas_Software
 
         private void Form4_Load(object sender, EventArgs e)
         {
+            pictureBox1.Enabled = false;
             refreshdataMaterialSubategory();
             refreshdataMaterial();
             refreshdataRIGS();

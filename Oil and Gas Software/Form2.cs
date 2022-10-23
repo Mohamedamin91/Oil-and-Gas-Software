@@ -337,7 +337,7 @@ namespace Oil_and_Gas_Software
         {
                  // no smaller than design time size
                  this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
-           
+            pictureBox1.Enabled = false;
            
                 refreshdataMaterialSubategory();
                 refreshdataMaterial();
@@ -462,7 +462,8 @@ namespace Oil_and_Gas_Software
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (CatComboBox.SelectedIndex == -1)
+            
+              if (CatComboBox.SelectedIndex == -1)
 
             {
                 MessageBox.Show("Please choose a Date and Category   ", "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -472,7 +473,7 @@ namespace Oil_and_Gas_Software
             {
               //  crystalReportViewer1.Visible = false;
                 dataGridView1.Visible = true;
-           
+             
 
                 string SQuery = "select  rigs.Rigname  'Rig',WELLS.Wellname 'Well No'," +
                     " CATEGORY.CatName 'Category',SUBCATEGORY.Subname 'Subcategory', MATERIALS.MATName 'Materials'," +
@@ -498,6 +499,8 @@ namespace Oil_and_Gas_Software
                     " SUBCATEGORY.subid = MATERIALS.SubID and " +
                     " REPORTS.Date >= @C2 and REPORTS.Date <= @C3  ";
 
+                string SQuery3 = "WITH Emp_CTE (DateSequence) AS  (SELECT @MinDate  UNION ALL SELECT DATEADD(DD,1,DateSequence) FROM Emp_CTE WHERE DateSequence < @MaxDate )SELECT EC.DateSequence AS 'Missing Days' FROM Emp_CTE EC  LEFT JOIN REPORTS E ON EC.DateSequence = E.Date  WHERE E.Date IS NULL order by E.Date Option (MAXRECURSION 0) ";
+
 
 
                 string GroupQuery = " GROUP BY MATERIALS.MATName ,PackingQTYNewValue,UnitNewValue ";
@@ -520,6 +523,7 @@ namespace Oil_and_Gas_Software
                     SQuery2 = SQuery2 + " and CATEGORY.catid = " + CatComboBox.SelectedValue + GroupQuery;
                     DataTable dt = new DataTable();
                     DataTable dt2 = new DataTable();
+                    DataTable dt33 = new DataTable();
 
                     // dt main();
                     using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
@@ -721,7 +725,116 @@ namespace Oil_and_Gas_Software
                     }
                     // dt2 sec();
 
+                    // dt33 third();
+                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                    {
+                        using (SqlCommand cmd = new SqlCommand(SQuery3, con))
+                        {
+                            cmd.Parameters.Add(new SqlParameter("@MinDate", SqlDbType.Date));
+                            cmd.Parameters["@MinDate"].Value = dateTimePicker1.Value;
 
+                            cmd.Parameters.Add(new SqlParameter("@MaxDate", SqlDbType.Date));
+                            cmd.Parameters["@MaxDate"].Value = dateTimePicker2.Value;
+                            con.Open();
+
+
+                            using (SqlDataAdapter ada = new SqlDataAdapter(cmd))
+                            {
+                                using (dt33)
+                                {
+                                    ada.Fill(dt33);
+                                    //ds2.Tables.Add(dt2);
+                                    //ds2.WriteXmlSchema("Summary.xml");
+
+
+                                    dataGridView3.DataSource = dt33;
+                                    int numRows = dataGridView3.Rows.Count;
+                                    missingdayslbl.Text = numRows.ToString();
+
+
+
+
+
+                                    con.Close();
+
+                                }
+                            }
+
+
+                            if ((int)SubCatComboBox.SelectedValue != 0)
+                            {
+                                dt33.Rows.Clear();
+
+                            
+                                using (SqlCommand cmd1 = new SqlCommand(SQuery3, con))
+                                {
+                                    cmd.Parameters.Add(new SqlParameter("@MinDate", SqlDbType.Date));
+                                    cmd.Parameters["@MinDate"].Value = dateTimePicker1.Value;
+
+                                    cmd.Parameters.Add(new SqlParameter("@MaxDate", SqlDbType.Date));
+                                    cmd.Parameters["@MaxDate"].Value = dateTimePicker2.Value;
+                                    con.Open();
+
+                                    using (SqlDataAdapter ada = new SqlDataAdapter(cmd1))
+                                    {
+                                        using (dt33)
+                                        {
+
+                                            ada.Fill(dt33);
+                                            //ds2.Tables.Add(dt2);
+                                            //ds2.WriteXmlSchema("Summary.xml");
+
+
+                                            dataGridView3.DataSource = dt33;
+                                            int numRows = dataGridView3.Rows.Count;
+                                            missingdayslbl.Text = numRows.ToString();
+
+
+                                        }
+                                        con.Close();
+                                    }
+                                    if ((int)MatComboBox.SelectedValue != 0)
+                                    {
+                                        dt33.Rows.Clear();
+
+                                      
+                                        using (SqlCommand cmd2 = new SqlCommand(SQuery3, con))
+                                        {
+                                            cmd.Parameters.Add(new SqlParameter("@MinDate", SqlDbType.Date));
+                                            cmd.Parameters["@MinDate"].Value = dateTimePicker1.Value;
+
+                                            cmd.Parameters.Add(new SqlParameter("@MaxDate", SqlDbType.Date));
+                                            cmd.Parameters["@MaxDate"].Value = dateTimePicker2.Value;
+                                            con.Open();
+
+                                            using (SqlDataAdapter ada = new SqlDataAdapter(cmd2))
+                                            {
+                                                using (dt33)
+                                                {
+
+                                                    ada.Fill(dt33);
+                                                  
+
+
+                                                    dataGridView3.DataSource = dt33;
+                                                    int numRows = dataGridView3.Rows.Count;
+                                                    missingdayslbl.Text = numRows.ToString();
+
+
+                                                }
+                                                con.Close();
+                                            }
+
+                                        }
+
+                                    }
+
+                                }
+                            }
+                        }
+
+                    }
+                    // dt33 third();
                 }
 
                 if ((int)RigComboBox.SelectedValue != 0)
@@ -806,6 +919,44 @@ namespace Oil_and_Gas_Software
                     }
                     // dt2 sec();
 
+                    // dt43 third();
+                    DataTable dt43 = new DataTable();     
+                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                    {
+                        using (SqlCommand cmd1 = new SqlCommand(SQuery3, con))
+                        {
+                            cmd1.Parameters.Add(new SqlParameter("@MinDate", SqlDbType.Date));
+                            cmd1.Parameters["@MinDate"].Value = dateTimePicker1.Value;
+
+                            cmd1.Parameters.Add(new SqlParameter("@MaxDate", SqlDbType.Date));
+                            cmd1.Parameters["@MaxDate"].Value = dateTimePicker2.Value;
+                            con.Open();
+
+
+                            using (SqlDataAdapter ada = new SqlDataAdapter(cmd1))
+                            {
+                                using (dt43)
+                                {
+                                    ada.Fill(dt43);
+                                   
+
+                                    dataGridView3.DataSource = dt43;
+                                    int numRows = dataGridView3.Rows.Count;
+                                    missingdayslbl.Text = numRows.ToString();
+
+                                    con.Close();
+
+                                }
+                            }
+
+
+                        }
+
+                    }
+                    // dt43 third();
+
+
+
 
                 }
 
@@ -814,8 +965,9 @@ namespace Oil_and_Gas_Software
 
                     DataTable dt2 = new DataTable();
                     DataTable dt23 = new DataTable();
+                    DataTable dt24 = new DataTable();
                     dataGridView2.DataSource = null;
-                  dt2.Rows.Clear();
+                    dt2.Rows.Clear();
 
 
                     SQuery = SQuery + " and wells.wellid = " + WellComboBox.SelectedValue;
@@ -848,7 +1000,7 @@ namespace Oil_and_Gas_Software
                     }
 
 
-                    // dt2 sec();
+                    // dt23 sec();
                     SQuery2 = SQuery2.Replace(GroupQuery, " ");
                     GroupQuery = GroupQuery2;
                     SQuery2 = SQuery2 + " and wells.wellid = " + WellComboBox.SelectedValue + GroupQuery;
@@ -891,17 +1043,49 @@ namespace Oil_and_Gas_Software
                         }
 
                     }
-                    // dt2 sec();
+                    // dt23 sec();
+
+                    // dt24 third();
+                    using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                    {
+                        using (SqlCommand cmd1 = new SqlCommand(SQuery3, con))
+                        {
+                            cmd1.Parameters.Add(new SqlParameter("@MinDate", SqlDbType.Date));
+                            cmd1.Parameters["@MinDate"].Value = dateTimePicker1.Value;
+
+                            cmd1.Parameters.Add(new SqlParameter("@MaxDate", SqlDbType.Date));
+                            cmd1.Parameters["@MaxDate"].Value = dateTimePicker2.Value;
+                            con.Open();
+
+
+                            using (SqlDataAdapter ada = new SqlDataAdapter(cmd1))
+                            {
+                                using (dt24)
+                                {
+                                    ada.Fill(dt24);
+
+
+                                    dataGridView3.DataSource = dt24;
+                                    int numRows = dataGridView3.Rows.Count;
+                                    missingdayslbl.Text = numRows.ToString();
+
+                                    con.Close();
+
+                                }
+                            }
+
+
+                        }
+
+                    }
+                    // dt24 third();
+
 
 
                 }
 
-
-
-
-
-
                 DataTable dt3 = new DataTable();
+                DataTable dt30 = new DataTable();
                 dataGridView1.DataSource = null;
                 dt3.Rows.Clear();
                 using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
@@ -915,6 +1099,7 @@ namespace Oil_and_Gas_Software
                         cmd.Parameters.Add(new SqlParameter("@C3", SqlDbType.Date));
                         cmd.Parameters["@C3"].Value = dateTimePicker2.Value;
                         con.Open();
+
                         //  MessageBox.Show(SQuery);
 
                         using (SqlDataAdapter ada = new SqlDataAdapter(cmd))
@@ -934,10 +1119,52 @@ namespace Oil_and_Gas_Software
 
                 }
 
-                //this.dataGridView1.Columns["P-QTY"].Visible = false;
-                //this.dataGridView1.Columns["unitt"].Visible = false; 
-                //this.dataGridView2.Columns["P-QTY"].Visible = false;
-                //this.dataGridView2.Columns["unitt"].Visible = false;
+
+                // dt30 sec();
+                using (SqlConnection con = new SqlConnection("Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@"))
+                {
+                    using (SqlCommand cmd1 = new SqlCommand(SQuery3, con))
+                    {
+                        cmd1.Parameters.Add(new SqlParameter("@MinDate", SqlDbType.Date));
+                        cmd1.Parameters["@MinDate"].Value = dateTimePicker1.Value;
+
+                        cmd1.Parameters.Add(new SqlParameter("@MaxDate", SqlDbType.Date));
+                        cmd1.Parameters["@MaxDate"].Value = dateTimePicker2.Value;
+                        con.Open();
+
+
+
+                        using (SqlDataAdapter ada = new SqlDataAdapter(cmd1))
+                        {
+                            using (dt30)
+                            {
+                                ada.Fill(dt30);
+
+
+                                dataGridView3.DataSource = dt30;
+                                int numRows = dataGridView3.Rows.Count;
+                                missingdayslbl.Text = numRows.ToString();
+
+                                con.Close();
+
+                            }
+                        }
+
+
+                    }
+
+                }
+                // dt30 sec();
+
+
+
+
+
+
+
+
+
+              
             }
         }
 

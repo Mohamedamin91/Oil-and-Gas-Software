@@ -21,16 +21,16 @@ namespace Oil_and_Gas_Software
 {
     public partial class Form1 : MetroForm
     {
-        OpenFileDialog opf = new OpenFileDialog();
-        SaveFileDialog svg = new SaveFileDialog();
         FolderBrowserDialog fbd = new FolderBrowserDialog();
         DataTable dt = new DataTable();
-        SqlDataReader reader;
         SQLCONNECTION SQLCONN = new SQLCONNECTION();
+
+
 
         public Form1()
         {
             InitializeComponent();
+
         }
         public void BindGV()
         {
@@ -45,7 +45,7 @@ namespace Oil_and_Gas_Software
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            BindGV();
+         //   BindGV();
         }
 
 
@@ -55,6 +55,8 @@ namespace Oil_and_Gas_Software
         }
         Rectangle BoundRect;
         Rectangle OldRect = Rectangle.Empty;
+     
+
 
         private void EnableMouse()
         {
@@ -81,8 +83,7 @@ namespace Oil_and_Gas_Software
 
         private void BrowseBtn_Click(object sender, EventArgs e)
         {
-
-            /**unzip process*/
+           /**unzip process*/
             //string zipFilePath = opf.FileName;
             //string extractionPath = opf.FileName + " ";
             //extractionPath = extractionPath.Replace(".zip", "");
@@ -92,21 +93,34 @@ namespace Oil_and_Gas_Software
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
 
-
                 string sourceDirectory = fbd.SelectedPath;
                 txtfilepath.Text = fbd.SelectedPath;
+                this.WindowState = FormWindowState.Minimized;
+
+                SQLCONN.OpenConection();
+
+        //        var watch3 = System.Diagnostics.Stopwatch.StartNew();
+
 
                 try
                 {
+
                     var allFiles
                       = Directory.EnumerateFiles(sourceDirectory, "*", SearchOption.AllDirectories);
-                 
-                    DisableMouse();
+
+
+                    //  DisableMouse();
+
+
+               //     var watch = System.Diagnostics.Stopwatch.StartNew();
+              //      watch.Restart();
+              //      var watch2 = System.Diagnostics.Stopwatch.StartNew();
+              //      watch2.Restart();
 
 
                     foreach (string currentFile in allFiles)
                     {
-                      
+
 
                         string fileName = currentFile.Substring(sourceDirectory.Length + 1);
                         int MaterialID;
@@ -130,10 +144,18 @@ namespace Oil_and_Gas_Software
                         ReportID = 0;
                         RigID = 0;
                         WellID = 0;
-                         //  MessageBox.Show(currentFile);
+
+                //        watch3.Start();
+                  //      watch.Start();
+                        //* count convert and extract for mcontain mud */
+                        for (int i = 0; i < 1000; i++)
+                        {
+                            Console.Write(i);
+                            //label3.Text = i.ToString();
+                        }
+                        //**/
                         var workbook = new Workbook(currentFile);
                         workbook.Save(currentFile + ".txt");
-                        SQLCONN.OpenConection();
 
                         using (var sr1 = new StreamReader(currentFile, true))
                         {
@@ -226,11 +248,29 @@ namespace Oil_and_Gas_Software
                                     extratcRIGNO = extratcRIGNO.TrimEnd();
                                     extratcRIGNO = extratcRIGNO.Trim();
 
+                                    //watch.Stop();
+                                    //watch3.Stop();
+                                    //label3.Text = watch.Elapsed.ToString();
+
+                                    /**start caluclate insert date in sql for mudreatment*/
+                                    /**calcltate for extract non contain data*/
+                                   
+                                    //if (!watch.IsRunning) // checks if it is not running
+                                    //    watch.Start();  // Start the counter from where it stopped
+
+                                    //for (int j = 0; j < 100; j++)
+                                    //{
+                                    //    // label3.Text=j.ToString();
+                                    //    Console.WriteLine(j);
+
+                                    //}
+
+
 
                                     /*end extrat RIGNA**//***/
 
 
-                          //          AutoClosingMessageBox.Show("Extracting", "Caption", 1000);
+                                    //          AutoClosingMessageBox.Show("Extracting", "Caption", 1000);
 
 
 
@@ -255,7 +295,7 @@ namespace Oil_and_Gas_Software
                                         dr.Close();
 
                                     }
-                                    else 
+                                    else
                                     {
                                         dr.Dispose();
                                         dr.Close();
@@ -275,13 +315,13 @@ namespace Oil_and_Gas_Software
 
                                     ///**opt*/
                                     SqlParameter paramWellname = new SqlParameter("@C2", SqlDbType.NVarChar);
-                                    paramWellname.Value = Wellname;  
+                                    paramWellname.Value = Wellname;
 
-                                  
+
 
                                     dr = SQLCONN.DataReader("SELECT Wellid FROM [wells] WHERE [wellname]= '" + Wellname + "'");
                                     dr.Read();
-                                    if (dr.HasRows )
+                                    if (dr.HasRows)
                                     {
                                         dr.Dispose();
                                         dr.Close();
@@ -303,12 +343,12 @@ namespace Oil_and_Gas_Software
                                         dr.Dispose();
                                         dr.Close();
                                     }
-                                        /**opt*/
-                                        ///** end insert well info contain mudtreatment */
-                                    
-                                    
+                                    /**opt*/
+                                    ///** end insert well info contain mudtreatment */
+
+
                                     /** start section (Mud Treatment )  */
-                                        List<string> FinalString3LIST = extractedRIGDATA.Split('\n').ToList();
+                                    List<string> FinalString3LIST = extractedRIGDATA.Split('\n').ToList();
                                     foreach (var word in FinalString3LIST)
                                     {
                                         //  MessageBox.Show(word);
@@ -351,7 +391,7 @@ namespace Oil_and_Gas_Software
                                         /** opt */
                                         SqlParameter paramkeyword = new SqlParameter("@C3", SqlDbType.NVarChar);
                                         paramkeyword.Value = keyword;
-                                       
+
                                         dr = SQLCONN.DataReader("SELECT (MATID)  FROM  MATERIALS WHERE MATName= '" + keyword + "'");
                                         dr.Read();
                                         if (dr.HasRows)
@@ -376,17 +416,17 @@ namespace Oil_and_Gas_Software
                                             dr.Dispose();
                                             dr.Close();
                                         }
-    
+
 
 
                                         /** opt */
                                         /** extract material**/
 
                                         /** Update Category and sub cat**/
-                                
+
                                         /** opt */
 
-    
+
                                         SQLCONN.ExecuteQueries("UPDATE [MUD_TRATMENT] SET [PackingQTY] = 1 WHERE [PackingQTY]= 0");
                                         SQLCONN.ExecuteQueries("UPDATE [MATERIALS] SET [CatID] = 1 /*,[SubID]=1 */ WHERE [MATName]= 'BARITE' or [MATName]= 'BA-NF' or [MATName]= 'BA-AM' or [MATName]= 'BA-AL'  or [MATName]= 'BA-AF' or [MATName]= 'BA-OR' or [MATName]= 'KI-BARITE' or [MATName]= 'BA-PERF' or [MATName]= 'BA-ESNAAD' or [MATName]= 'BA-BAR'  or[MATName]= 'BA-IBC' or [MATName]= 'BA-OM'  or[MATName]= 'BA-AGMED' or [MATName]= 'BA-MID'  or[MATName]= 'BA-POUR' or [MATName]= 'BA-ATAD'  or[MATName]= 'BA' ");
                                         SQLCONN.ExecuteQueries(" UPDATE [MATERIALS] SET [CatID] = 2 /*,[SubID]=2*/   WHERE [MATName]= 'BA-NF-BULK' or [MATName]= 'BA-BA-BULK' or [MATName]= 'BA-AR-BULK' or [MATName]= 'BA-DMF-BULK'or[MATName]= 'BA BULK'");
@@ -427,7 +467,7 @@ namespace Oil_and_Gas_Software
                                         paramDAYSSINCE.Value = DaysSince;
                                         SqlParameter paramLAST24 = new SqlParameter("@C7", SqlDbType.NVarChar);
                                         paramLAST24.Value = last24;
-                                    
+
                                         SqlParameter paramQty = new SqlParameter("@C9", SqlDbType.NVarChar);
                                         paramQty.Value = MValue;
 
@@ -441,7 +481,7 @@ namespace Oil_and_Gas_Software
                                         SqlParameter paramPackingQTY2 = new SqlParameter("@C14", SqlDbType.NVarChar);
                                         paramPackingQTY2.Value = PackingQTY;
 
-    
+
                                         dr = SQLCONN.DataReader("SELECT REPORTS.WELLID,REPORTS.RIGID,date from REPORTS,RIGS,WELLS where REPORTS.RIGID=RIGS.RIGID and  REPORTS.WELLID=WELLS.WELLID AND " +
                                                 "  REPORTS.WELLID='" + WellID + "' and date='" + enter_date + "'and REPORTS.RIGID= '" + RigID + "'");
                                         dr.Read();
@@ -460,14 +500,14 @@ namespace Oil_and_Gas_Software
                                             dr.Dispose();
                                             dr.Close();
                                         }
-    
+
                                         /** opt */
                                         /** check Dublicate Reports and insert new reports  **/
 
                                         /** check Dublicate data in mudtreatment and insert new data in mudtreatment  **/
-                                                   
+
                                         /**opt*/
-    
+
                                         dr = SQLCONN.DataReader("SELECT REPORTID FROM  Reports WHERE wellid='" + WellID + "'and REPORTS.RIGID= '" + RigID + "'and date= '" + enter_date + "'");
                                         dr.Read();
                                         ReportID = int.Parse(dr["REPORTID"].ToString());
@@ -485,10 +525,11 @@ namespace Oil_and_Gas_Software
                                                 dr.Dispose();
                                                 dr.Close();
                                             }
-                                            else {
+                                            else
+                                            {
                                                 dr.Dispose();
                                                 dr.Close();
-                                                SQLCONN.ExecuteQueries("insert into  MUD_TRATMENT ( REPORTID,MATID,QTY,UnitName,PackingQTY,UnitNewValue,PackingQTYNewValue) values (@C8,@C33,@C9,@C10,@C12,@C13,@C14)",paramReportID,paramkeywordID,paramQty,paramunit,paramPackingQTY,paramunit2,paramPackingQTY2);
+                                                SQLCONN.ExecuteQueries("insert into  MUD_TRATMENT ( REPORTID,MATID,QTY,UnitName,PackingQTY,UnitNewValue,PackingQTYNewValue) values (@C8,@C33,@C9,@C10,@C12,@C13,@C14)", paramReportID, paramkeywordID, paramQty, paramunit, paramPackingQTY, paramunit2, paramPackingQTY2);
                                             }
 
 
@@ -498,15 +539,33 @@ namespace Oil_and_Gas_Software
                                             dr.Dispose();
                                             dr.Close();
                                         }
-    
+
                                         /**opt*/
 
                                         /** check Dublicate data in mudtreatment and insert new data in mudtreatment  **/
                                     }
                                     /** end  section (Mud Treatment )  */
+                                    //watch.Stop();
+                                    //label4.Text = watch.Elapsed.ToString();
+
+
+
+
                                 }
                                 else
                                 {
+
+                                    /**calcltate for extract non contain data*/
+                                    /**calcltate for extract non contain data*/
+                                  
+                                    //if (!watch2.IsRunning) // checks if it is not running
+                                    //    watch2.Start(); // Start the counter from where it stopped
+
+                                    //for (int j = 0; j < 1000; j++)
+                                    //{
+                                    //    Console.Write(j);
+                                    //}
+
                                     /** for check files with out mud treayment : select * from reports where dayssince = "0.0(@)"*/
                                     /** start insert rig info non contain mudtreatment*/
                                     /**  extracting Depth*/
@@ -602,13 +661,25 @@ namespace Oil_and_Gas_Software
                                     extratcRIGNO = extratcRIGNO.TrimEnd();
                                     extratcRIGNO = extratcRIGNO.Trim();
 
+                                    //watch2.Stop();
+                                
+                                    // label5.Text = watch2.Elapsed.ToString();
 
                                     /*end extrat RIGNA**//***/
-                                 
+                                    /** calcute insert non contain */
+                                    /**calcltate for extract non contain data*/
+                                
+                                    //if (!watch2.IsRunning) // checks if it is not running
+                                    //watch2.Start(); // Start the counter from where it stopped
 
+                                    //for (int j = 0; j < 1000; j++)
+                                    //{
+                                    //    Console.Write(j);
+
+                                    //}
 
                                     ///** start insert rig info non contain mudtreatment */
-                                 
+
                                     ///**opt*/
                                     SqlParameter paramextratcRIGNO1 = new SqlParameter("@C1", SqlDbType.NVarChar);
                                     paramextratcRIGNO1.Value = extratcRIGNO;
@@ -638,7 +709,7 @@ namespace Oil_and_Gas_Software
 
                                     }
 
-                                   /**opt*/
+                                    /**opt*/
                                     ///** end insert rig info non contain mudtreatment */  
                                     ///
                                     ///** start insert well info non contain mudtreatment */
@@ -687,7 +758,7 @@ namespace Oil_and_Gas_Software
                                     paramDAYSSINCE.Value = DaysSince;
                                     SqlParameter paramLAST24 = new SqlParameter("@C7", SqlDbType.NVarChar);
                                     paramLAST24.Value = last24;
-                                  
+
 
 
 
@@ -722,31 +793,40 @@ namespace Oil_and_Gas_Software
 
 
 
+                                //    watch2.Stop();
 
+
+                                //    label6.Text = watch2.Elapsed.ToString();
 
                                 }
-                            }
+                              
+
+
+                        }
 
                             File.Delete(workbook.FileName);
 
                         }
-
-                        SQLCONN.CloseConnection();
+                        Application.DoEvents();
 
                     }
-                
+
+
+
                     PopupNotifier popup = new PopupNotifier();
                     popup.TitleText = "Oil and Gas Software";
                     popup.ContentText = "The data has been exported successfully";
+                    this.WindowState = FormWindowState.Maximized;
 
-                  
-                    EnableMouse();
+
+
+                    //  EnableMouse();
 
 
 
                     popup.Popup();// show
 
-                    MessageBox.Show("The data has been exported successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   MessageBox.Show("The data has been exported successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
 
@@ -755,25 +835,33 @@ namespace Oil_and_Gas_Software
                 }
                 catch (Exception ex)
                 {
+                    this.WindowState = FormWindowState.Maximized;
+
                     MessageBox.Show(ex.Message);
-                    EnableMouse();
 
 
 
                 }
-
-
-
                 //BindTotal();
+                SQLCONN.CloseConnection();
 
+                //watch3.Stop();
+                //label13.Text = watch3.Elapsed.ToString();
             }
-
-
             else
             {
 
             }
+
+
+            var watch4 = System.Diagnostics.Stopwatch.StartNew();
+
             BindGV();
+
+            watch4.Stop();
+            label5.Text = watch4.Elapsed.ToString();
+
+
 
         }
 
@@ -853,6 +941,16 @@ namespace Oil_and_Gas_Software
         }
 
         private void panel1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtfilepath_TextChanged(object sender, EventArgs e)
         {
 
         }

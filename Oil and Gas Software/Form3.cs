@@ -76,6 +76,7 @@ namespace Oil_and_Gas_Software
         }
         private void Form3_Load(object sender, EventArgs e)
         {
+            pictureBox1.Enabled = false;
             dataGridView1.Visible = false;
             dataGridView2.Visible = false;
             dataGridView3.Visible = true;

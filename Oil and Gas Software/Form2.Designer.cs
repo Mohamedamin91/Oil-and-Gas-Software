@@ -79,6 +79,9 @@ namespace Oil_and_Gas_Software
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.label20 = new System.Windows.Forms.Label();
+            this.missingdayslbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -87,6 +90,7 @@ namespace Oil_and_Gas_Software
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.SuspendLayout();
             // 
             // CatComboBox
@@ -451,7 +455,7 @@ namespace Oil_and_Gas_Software
             this.groupBox2.ForeColor = System.Drawing.Color.Black;
             this.groupBox2.Location = new System.Drawing.Point(12, 546);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(463, 357);
+            this.groupBox2.Size = new System.Drawing.Size(463, 281);
             this.groupBox2.TabIndex = 22;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Summary";
@@ -464,7 +468,7 @@ namespace Oil_and_Gas_Software
             this.dataGridView2.Location = new System.Drawing.Point(4, 21);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidth = 51;
-            this.dataGridView2.Size = new System.Drawing.Size(451, 260);
+            this.dataGridView2.Size = new System.Drawing.Size(451, 244);
             this.dataGridView2.TabIndex = 8;
             // 
             // label23
@@ -633,14 +637,48 @@ namespace Oil_and_Gas_Software
             this.pictureBox4.TabStop = false;
             this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
             // 
+            // dataGridView3
+            // 
+            this.dataGridView3.AllowUserToAddRows = false;
+            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView3.Location = new System.Drawing.Point(12, 833);
+            this.dataGridView3.Name = "dataGridView3";
+            this.dataGridView3.RowHeadersWidth = 51;
+            this.dataGridView3.Size = new System.Drawing.Size(463, 160);
+            this.dataGridView3.TabIndex = 9;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(490, 858);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(114, 20);
+            this.label20.TabIndex = 16;
+            this.label20.Text = "Missings Days:\r\n";
+            // 
+            // missingdayslbl
+            // 
+            this.missingdayslbl.AutoSize = true;
+            this.missingdayslbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.missingdayslbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.missingdayslbl.Location = new System.Drawing.Point(610, 863);
+            this.missingdayslbl.Name = "missingdayslbl";
+            this.missingdayslbl.Size = new System.Drawing.Size(11, 13);
+            this.missingdayslbl.TabIndex = 24;
+            this.missingdayslbl.Text = "!";
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1546, 908);
+            this.Controls.Add(this.missingdayslbl);
             this.Controls.Add(this.pictureBox4);
+            this.Controls.Add(this.label20);
             this.Controls.Add(this.pictureBox3);
+            this.Controls.Add(this.dataGridView3);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.groupBox2);
@@ -661,6 +699,7 @@ namespace Oil_and_Gas_Software
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -712,6 +751,9 @@ namespace Oil_and_Gas_Software
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.Label missingdayslbl;
+        private System.Windows.Forms.Label label20;
         //    private SummaryCrystalReport SummaryCrystalReport1;
     }
 }
