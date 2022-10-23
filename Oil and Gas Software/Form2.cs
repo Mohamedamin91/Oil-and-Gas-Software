@@ -499,7 +499,7 @@ namespace Oil_and_Gas_Software
                     " SUBCATEGORY.subid = MATERIALS.SubID and " +
                     " REPORTS.Date >= @C2 and REPORTS.Date <= @C3  ";
 
-                string SQuery3 = "WITH Emp_CTE (DateSequence) AS  (SELECT @MinDate  UNION ALL SELECT DATEADD(DD,1,DateSequence) FROM Emp_CTE WHERE DateSequence < @MaxDate )SELECT EC.DateSequence AS 'Missing Days' FROM Emp_CTE EC  LEFT JOIN REPORTS E ON EC.DateSequence = E.Date  WHERE E.Date IS NULL order by E.Date Option (MAXRECURSION 0) ";
+                string SQuery3 = "WITH Emp_CTE (DateSequence) AS  (SELECT @MinDate  UNION ALL SELECT DATEADD(DD,1,DateSequence) FROM Emp_CTE WHERE DateSequence < @MaxDate )SELECT EC.DateSequence AS 'Missing Days' FROM Emp_CTE EC  LEFT JOIN REPORTS E ON EC.DateSequence = E.Date  WHERE E.Date IS NULL order by EC.DateSequence Option (MAXRECURSION 0) ";
 
 
 
