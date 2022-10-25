@@ -22,6 +22,7 @@ namespace Oil_and_Gas_Software
     public partial class Form1 : MetroForm
     {
         FolderBrowserDialog fbd = new FolderBrowserDialog();
+        OpenFileDialog opf = new OpenFileDialog();
         DataTable dt = new DataTable();
         SQLCONNECTION SQLCONN = new SQLCONNECTION();
 
@@ -83,19 +84,24 @@ namespace Oil_and_Gas_Software
 
         private void BrowseBtn_Click(object sender, EventArgs e)
         {
-           /**unzip process*/
-            //string zipFilePath = opf.FileName;
-            //string extractionPath = opf.FileName + " ";
-            //extractionPath = extractionPath.Replace(".zip", "");
-            //ZipFile.ExtractToDirectory(zipFilePath, extractionPath);
-            /**unzip process*/
+          
 
-            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (opf.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                ///**unzip process*/
+                string zipFilePath = opf.FileName;
+                string extractionPath = opf.FileName + " ";
+                extractionPath = extractionPath.Replace(".zip", "");
+                extractionPath = extractionPath.Trim();
+                extractionPath = extractionPath.TrimStart();
+                extractionPath = extractionPath.TrimEnd();
 
-                string sourceDirectory = fbd.SelectedPath;
-                txtfilepath.Text = fbd.SelectedPath;
-                this.WindowState = FormWindowState.Minimized;
+                ZipFile.ExtractToDirectory(zipFilePath, extractionPath);
+                ///**unzip process*/
+                string sourceDirectory =extractionPath;
+                txtfilepath.Text = extractionPath;
+                // this.WindowState = FormWindowState.Minimized;
+               
 
                 SQLCONN.OpenConection();
 
@@ -108,27 +114,24 @@ namespace Oil_and_Gas_Software
                     var allFiles
                       = Directory.EnumerateFiles(sourceDirectory, "*", SearchOption.AllDirectories);
 
-
+                   
                     //  DisableMouse();
 
 
-               //     var watch = System.Diagnostics.Stopwatch.StartNew();
-              //      watch.Restart();
-              //      var watch2 = System.Diagnostics.Stopwatch.StartNew();
-              //      watch2.Restart();
-
+                 
 
                     foreach (string currentFile in allFiles)
                     {
 
 
                         string fileName = currentFile.Substring(sourceDirectory.Length + 1);
+                      
                         int MaterialID;
                         int RigID;
                         int WellID;
                         int ReportID;
 
-                        DirectoryInfo dir = new DirectoryInfo(fbd.SelectedPath);
+                      DirectoryInfo dir = new DirectoryInfo(sourceDirectory);
 
 
                         string extractedfullDATE = "";
@@ -145,17 +148,12 @@ namespace Oil_and_Gas_Software
                         RigID = 0;
                         WellID = 0;
 
-                //        watch3.Start();
-                  //      watch.Start();
                         //* count convert and extract for mcontain mud */
-                        for (int i = 0; i < 1000; i++)
-                        {
-                            Console.Write(i);
-                            //label3.Text = i.ToString();
-                        }
+                      
                         //**/
-                        var workbook = new Workbook(currentFile);
-                        workbook.Save(currentFile + ".txt");
+                       var workbook = new Workbook(currentFile);
+                      
+                       workbook.Save(currentFile + ".txt");
 
                         using (var sr1 = new StreamReader(currentFile, true))
                         {
@@ -248,29 +246,12 @@ namespace Oil_and_Gas_Software
                                     extratcRIGNO = extratcRIGNO.TrimEnd();
                                     extratcRIGNO = extratcRIGNO.Trim();
 
-                                    //watch.Stop();
-                                    //watch3.Stop();
-                                    //label3.Text = watch.Elapsed.ToString();
-
-                                    /**start caluclate insert date in sql for mudreatment*/
-                                    /**calcltate for extract non contain data*/
-                                   
-                                    //if (!watch.IsRunning) // checks if it is not running
-                                    //    watch.Start();  // Start the counter from where it stopped
-
-                                    //for (int j = 0; j < 100; j++)
-                                    //{
-                                    //    // label3.Text=j.ToString();
-                                    //    Console.WriteLine(j);
-
-                                    //}
-
+                               
 
 
                                     /*end extrat RIGNA**//***/
 
 
-                                    //          AutoClosingMessageBox.Show("Extracting", "Caption", 1000);
 
 
 
@@ -854,12 +835,12 @@ namespace Oil_and_Gas_Software
             }
 
 
-            var watch4 = System.Diagnostics.Stopwatch.StartNew();
+          //  var watch4 = System.Diagnostics.Stopwatch.StartNew();
 
             BindGV();
 
-            watch4.Stop();
-            label5.Text = watch4.Elapsed.ToString();
+         //   watch4.Stop();
+         //   label5.Text = watch4.Elapsed.ToString();
 
 
 
