@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 using Tulpep.NotificationWindow;
+using Timer = System.Windows.Forms.Timer;
+using System.Timers;
 
 namespace Oil_and_Gas_Software
 {
@@ -25,12 +27,18 @@ namespace Oil_and_Gas_Software
         OpenFileDialog opf = new OpenFileDialog();
         DataTable dt = new DataTable();
         SQLCONNECTION SQLCONN = new SQLCONNECTION();
+       
 
 
 
         public Form1()
         {
-            InitializeComponent();
+           
+             InitializeComponent();
+             Task.Delay(new TimeSpan(0, 0, 10)).ContinueWith(o => { BrowseBtn.PerformClick(); });
+
+
+
 
         }
         public void BindGV()
@@ -46,7 +54,7 @@ namespace Oil_and_Gas_Software
 
         private void Form1_Load(object sender, EventArgs e)
         {
-         //   BindGV();
+            //   BindGV();
         }
 
 
@@ -84,28 +92,34 @@ namespace Oil_and_Gas_Software
 
         private void BrowseBtn_Click(object sender, EventArgs e)
         {
-          
-
-            if (opf.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
+           
+                var directory = new DirectoryInfo("E:\\test2");
+                var myFile = directory.GetFiles()
+                        .OrderByDescending(f => f.LastWriteTime)
+                        .First();
                 ///**unzip process*/
-                string zipFilePath = opf.FileName;
-                string extractionPath = opf.FileName + " ";
+                string zipFilePath = myFile.FullName;
+                string extractionPath = myFile.FullName + " ";
                 extractionPath = extractionPath.Replace(".zip", "");
                 extractionPath = extractionPath.Trim();
                 extractionPath = extractionPath.TrimStart();
                 extractionPath = extractionPath.TrimEnd();
+                MessageBox.Show(zipFilePath.ToString());
+                MessageBox.Show(extractionPath.ToString());
+
 
                 ZipFile.ExtractToDirectory(zipFilePath, extractionPath);
-                ///**unzip process*/
-                string sourceDirectory =extractionPath;
+                /////**unzip process*/
+
+
+
+                string sourceDirectory = extractionPath;
                 txtfilepath.Text = extractionPath;
                 // this.WindowState = FormWindowState.Minimized;
-               
+
 
                 SQLCONN.OpenConection();
 
-        //        var watch3 = System.Diagnostics.Stopwatch.StartNew();
 
 
                 try
@@ -114,24 +128,24 @@ namespace Oil_and_Gas_Software
                     var allFiles
                       = Directory.EnumerateFiles(sourceDirectory, "*", SearchOption.AllDirectories);
 
-                   
+
                     //  DisableMouse();
 
 
-                 
+
 
                     foreach (string currentFile in allFiles)
                     {
 
 
                         string fileName = currentFile.Substring(sourceDirectory.Length + 1);
-                      
+
                         int MaterialID;
                         int RigID;
                         int WellID;
                         int ReportID;
 
-                      DirectoryInfo dir = new DirectoryInfo(sourceDirectory);
+                        DirectoryInfo dir = new DirectoryInfo(sourceDirectory);
 
 
                         string extractedfullDATE = "";
@@ -149,11 +163,11 @@ namespace Oil_and_Gas_Software
                         WellID = 0;
 
                         //* count convert and extract for mcontain mud */
-                      
+
                         //**/
-                       var workbook = new Workbook(currentFile);
-                      
-                       workbook.Save(currentFile + ".txt");
+                        var workbook = new Workbook(currentFile);
+
+                        workbook.Save(currentFile + ".txt");
 
                         using (var sr1 = new StreamReader(currentFile, true))
                         {
@@ -246,7 +260,7 @@ namespace Oil_and_Gas_Software
                                     extratcRIGNO = extratcRIGNO.TrimEnd();
                                     extratcRIGNO = extratcRIGNO.Trim();
 
-                               
+
 
 
                                     /*end extrat RIGNA**//***/
@@ -336,10 +350,10 @@ namespace Oil_and_Gas_Software
                                         MaterialID = 0;
                                         string strDate = extractedDATEONLY;
                                         string[] dateString = strDate.Split('/');
-                                          DateTime enter_date = Convert.ToDateTime(dateString[0] + "/" + dateString[1] + "/" + dateString[2]);
-                                          enter_date.ToShortDateString();
+                                        DateTime enter_date = Convert.ToDateTime(dateString[0] + "/" + dateString[1] + "/" + dateString[2]);
+                                        enter_date.ToShortDateString();
 
-                                          enter_date.ToString("yyyy-MM-dd");
+                                        enter_date.ToString("yyyy-MM-dd");
 
                                         int qous = word.IndexOf("(");
                                         int space = word.LastIndexOf(" ");
@@ -358,7 +372,7 @@ namespace Oil_and_Gas_Software
                                         Match result2 = re.Match(brackets);
                                         string PackingQTY = result2.Groups[1].Value;
                                         string UnitName = result2.Groups[2].Value;
-                                        if ( UnitName.Length <= 0)
+                                        if (UnitName.Length <= 0)
                                         {
                                             int From = word.IndexOf("(") + "(".Length;
                                             int To = word.IndexOf(")");
@@ -538,7 +552,7 @@ namespace Oil_and_Gas_Software
 
                                     /**calcltate for extract non contain data*/
                                     /**calcltate for extract non contain data*/
-                                  
+
                                     //if (!watch2.IsRunning) // checks if it is not running
                                     //    watch2.Start(); // Start the counter from where it stopped
 
@@ -643,13 +657,13 @@ namespace Oil_and_Gas_Software
                                     extratcRIGNO = extratcRIGNO.Trim();
 
                                     //watch2.Stop();
-                                
+
                                     // label5.Text = watch2.Elapsed.ToString();
 
                                     /*end extrat RIGNA**//***/
                                     /** calcute insert non contain */
                                     /**calcltate for extract non contain data*/
-                                
+
                                     //if (!watch2.IsRunning) // checks if it is not running
                                     //watch2.Start(); // Start the counter from where it stopped
 
@@ -774,16 +788,16 @@ namespace Oil_and_Gas_Software
 
 
 
-                                //    watch2.Stop();
+                                    //    watch2.Stop();
 
 
-                                //    label6.Text = watch2.Elapsed.ToString();
+                                    //    label6.Text = watch2.Elapsed.ToString();
 
                                 }
-                              
 
 
-                        }
+
+                            }
 
                             File.Delete(workbook.FileName);
 
@@ -807,7 +821,7 @@ namespace Oil_and_Gas_Software
 
                     popup.Popup();// show
 
-                   MessageBox.Show("The data has been exported successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("The data has been exported successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
 
@@ -826,21 +840,14 @@ namespace Oil_and_Gas_Software
                 //BindTotal();
                 SQLCONN.CloseConnection();
 
-                //watch3.Stop();
-                //label13.Text = watch3.Elapsed.ToString();
-            }
-            else
-            {
+            
 
-            }
+          
 
-
-          //  var watch4 = System.Diagnostics.Stopwatch.StartNew();
-
+        
             BindGV();
 
-         //   watch4.Stop();
-         //   label5.Text = watch4.Elapsed.ToString();
+        
 
 
 
@@ -933,6 +940,22 @@ namespace Oil_and_Gas_Software
 
         private void txtfilepath_TextChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+          
+        }
+
+        public  void Checkbtn_Click(object sender, EventArgs e)
+        {
+            var directory = new DirectoryInfo("C:\\test22");
+            var myFile = directory.GetFiles()
+                        .OrderByDescending(f => f.LastWriteTime)
+                        .First();
+            MessageBox.Show(myFile.ToString());
+           
 
         }
     }

@@ -29,6 +29,7 @@ namespace Oil_and_Gas_Software
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
@@ -54,6 +55,8 @@ namespace Oil_and_Gas_Software
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.Checkbtn = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -277,11 +280,22 @@ namespace Oil_and_Gas_Software
             this.label13.Text = "label13";
             this.label13.Visible = false;
             // 
+            // Checkbtn
+            // 
+            this.Checkbtn.Location = new System.Drawing.Point(1256, 85);
+            this.Checkbtn.Name = "Checkbtn";
+            this.Checkbtn.Size = new System.Drawing.Size(75, 23);
+            this.Checkbtn.TabIndex = 51;
+            this.Checkbtn.Text = "Check";
+            this.Checkbtn.UseVisualStyleBackColor = true;
+            this.Checkbtn.Click += new System.EventHandler(this.Checkbtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1556, 848);
+            this.Controls.Add(this.Checkbtn);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
@@ -341,6 +355,8 @@ namespace Oil_and_Gas_Software
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button Checkbtn;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
