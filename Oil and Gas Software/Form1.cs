@@ -23,11 +23,13 @@ namespace Oil_and_Gas_Software
 {
     public partial class Form1 : MetroForm
     {
-        FolderBrowserDialog fbd = new FolderBrowserDialog();
+
         OpenFileDialog opf = new OpenFileDialog();
         DataTable dt = new DataTable();
         SQLCONNECTION SQLCONN = new SQLCONNECTION();
-       
+        public String lastRunDate = "";
+
+
 
 
 
@@ -35,7 +37,10 @@ namespace Oil_and_Gas_Software
         {
            
              InitializeComponent();
-             Task.Delay(new TimeSpan(0, 0, 10)).ContinueWith(o => { BrowseBtn.PerformClick(); });
+            // Task.Delay(new TimeSpan(0, 0,10)).ContinueWith(o => { BrowseBtn.PerformClick(); });
+            //     Task.Delay(new TimeSpan(15, 00,00)).ContinueWith(o => { BrowseBtn.PerformClick(); });
+            timer1.Interval = 1000;
+            timer1.Enabled = true;
 
 
 
@@ -54,6 +59,7 @@ namespace Oil_and_Gas_Software
 
         private void Form1_Load(object sender, EventArgs e)
         {
+          
             //   BindGV();
         }
 
@@ -62,32 +68,7 @@ namespace Oil_and_Gas_Software
         {
             BindGV();
         }
-        Rectangle BoundRect;
-        Rectangle OldRect = Rectangle.Empty;
-     
-
-
-        private void EnableMouse()
-        {
-            Cursor.Clip = OldRect;
-            Cursor.Show();
-           // Application.RemoveMessageFilter(this.panel1);
-        }
-        public bool PreFilterMessage(ref Message m)
-        {
-            if (m.Msg == 0x201 || m.Msg == 0x202 || m.Msg == 0x203) return true;
-            if (m.Msg == 0x204 || m.Msg == 0x205 || m.Msg == 0x206) return true;
-            return false;
-        }
-        private void DisableMouse()
-        {
-            OldRect = Cursor.Clip;
-            // Arbitrary location.
-            BoundRect = new Rectangle(50, 50, 1, 1);
-            Cursor.Clip = BoundRect;
-            Cursor.Hide();
-           // Application.AddMessageFilter(this);
-        }
+       
 
 
         private void BrowseBtn_Click(object sender, EventArgs e)
@@ -97,32 +78,27 @@ namespace Oil_and_Gas_Software
                 var myFile = directory.GetFiles()
                         .OrderByDescending(f => f.LastWriteTime)
                         .First();
+         
+            if (myFile.CreationTime != myFile.CreationTime)
+            { 
+
+            }
                 ///**unzip process*/
                 string zipFilePath = myFile.FullName;
-                string extractionPath = myFile.FullName + " ";
+                string extractionPath = "E:\\test3"+".zip";
                 extractionPath = extractionPath.Replace(".zip", "");
                 extractionPath = extractionPath.Trim();
                 extractionPath = extractionPath.TrimStart();
                 extractionPath = extractionPath.TrimEnd();
-                MessageBox.Show(zipFilePath.ToString());
-                MessageBox.Show(extractionPath.ToString());
-
-
                 ZipFile.ExtractToDirectory(zipFilePath, extractionPath);
-                /////**unzip process*/
+                ///**unzip process*/
 
 
 
-                string sourceDirectory = extractionPath;
-                txtfilepath.Text = extractionPath;
-                // this.WindowState = FormWindowState.Minimized;
-
-
-                SQLCONN.OpenConection();
-
-
-
-                try
+                 string sourceDirectory = extractionPath;
+                 txtfilepath.Text = extractionPath;
+                 SQLCONN.OpenConection();
+                 try
                 {
 
                     var allFiles
@@ -803,6 +779,7 @@ namespace Oil_and_Gas_Software
 
                         }
                         Application.DoEvents();
+                         
 
                     }
 
@@ -812,7 +789,7 @@ namespace Oil_and_Gas_Software
                     popup.TitleText = "Oil and Gas Software";
                     popup.ContentText = "The data has been exported successfully";
                     this.WindowState = FormWindowState.Maximized;
-
+                     
 
 
                     //  EnableMouse();
@@ -822,7 +799,6 @@ namespace Oil_and_Gas_Software
                     popup.Popup();// show
 
                     MessageBox.Show("The data has been exported successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
 
 
 
@@ -837,20 +813,34 @@ namespace Oil_and_Gas_Software
 
 
                 }
-                //BindTotal();
-                SQLCONN.CloseConnection();
-
-            
-
-          
-
-        
-            BindGV();
-
-        
+                 //BindTotal();
+                 SQLCONN.CloseConnection();    
+                 BindGV();
 
 
+             /** delete extracted files*/     
+             Directory.Delete("E:\\test3", true);
+            var NewCreatedDirectory = Directory.CreateDirectory("E:\\test3");
+            /** delete extracted files*/
 
+        }
+        public static void DeleteDirectory(string target_dir)
+        {
+            string[] files = Directory.GetFiles(target_dir);
+            string[] dirs = Directory.GetDirectories(target_dir);
+
+            foreach (string file in files)
+            {
+                File.SetAttributes(file, FileAttributes.Normal);
+                File.Delete(file);
+            }
+
+            foreach (string dir in dirs)
+            {
+                DeleteDirectory(dir);
+            }
+
+            Directory.Delete(target_dir, false);
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -957,6 +947,66 @@ namespace Oil_and_Gas_Software
             MessageBox.Show(myFile.ToString());
            
 
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (lastRunDate != System.DateTime.Now.ToString("yyyy-MM-dd"))
+            {
+                String str = System.DateTime.Now.ToString("h:mm tt");
+
+                if (str.Equals("8:00 AM"))
+                {
+                    lastRunDate = System.DateTime.Now.ToString("yyyy-MM-dd");
+                   BrowseBtn.PerformClick();
+                }
+                if (str.Equals("9:00 AM"))
+                {
+                    lastRunDate = System.DateTime.Now.ToString("yyyy-MM-dd");
+                    BrowseBtn.PerformClick();
+                }
+                if (str.Equals("10:00 AM"))
+                {
+                    lastRunDate = System.DateTime.Now.ToString("yyyy-MM-dd");
+                    BrowseBtn.PerformClick();
+                }
+                if (str.Equals("11:00 AM"))
+                {
+                    lastRunDate = System.DateTime.Now.ToString("yyyy-MM-dd");
+                    BrowseBtn.PerformClick();
+                }
+                if (str.Equals("12:00 AM"))
+                {
+                    lastRunDate = System.DateTime.Now.ToString("yyyy-MM-dd");
+                    BrowseBtn.PerformClick();
+                }
+                if (str.Equals("13:00 PM"))
+                {
+                    lastRunDate = System.DateTime.Now.ToString("yyyy-MM-dd");
+                    BrowseBtn.PerformClick();
+                }
+                if (str.Equals("14:00 PM"))
+                {
+                    lastRunDate = System.DateTime.Now.ToString("yyyy-MM-dd");
+                    BrowseBtn.PerformClick();
+                }
+                if (str.Equals("15:00 PM"))
+                {
+                    lastRunDate = System.DateTime.Now.ToString("yyyy-MM-dd");
+                    BrowseBtn.PerformClick();
+                }
+                if (str.Equals("16:00 PM"))
+                {
+                    lastRunDate = System.DateTime.Now.ToString("yyyy-MM-dd");
+                    BrowseBtn.PerformClick();
+                }
+                if (str.Equals("17:00 PM"))
+                {
+                    lastRunDate = System.DateTime.Now.ToString("yyyy-MM-dd");
+                    BrowseBtn.PerformClick();
+                }
+
+            }
         }
     }
 }

@@ -290,6 +290,10 @@ namespace Oil_and_Gas_Software
             this.Checkbtn.UseVisualStyleBackColor = true;
             this.Checkbtn.Click += new System.EventHandler(this.Checkbtn_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
