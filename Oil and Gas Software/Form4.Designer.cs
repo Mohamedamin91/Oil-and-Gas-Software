@@ -382,6 +382,7 @@ namespace Oil_and_Gas_Software
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Enabled = false;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(737, 27);
             this.pictureBox1.Name = "pictureBox1";

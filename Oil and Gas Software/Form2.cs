@@ -4,8 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
-
-
+using Tulpep.NotificationWindow;
 
 namespace Oil_and_Gas_Software
 {
@@ -15,6 +14,8 @@ namespace Oil_and_Gas_Software
         DataSet ds2 = new DataSet();
         DataSet ds42 = new DataSet();
         DataSet ds23 = new DataSet();
+        SQLCONNECTION SQLCONN = new SQLCONNECTION();
+
         public Form2()
         {
             InitializeComponent();
@@ -335,9 +336,24 @@ namespace Oil_and_Gas_Software
 
         private void Form2_Load(object sender, EventArgs e)
         {
-                 // no smaller than design time size
-                 this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
-            pictureBox1.Enabled = false;
+            /** check if their any new files per day*/
+            DateTime dt = DateTime.Now.Date;
+
+            SQLCONN.OpenConection();
+            SqlDataReader reader = SQLCONN.DataReader("select * from reports where date = '" + dt.ToString("d") + "' ");
+            if (reader.HasRows)
+            {
+                PopupNotifier popup = new PopupNotifier();
+                popup.TitleText = "Oil and Gas Software";
+                popup.ContentText = "New report on  " + dt.ToString("d") + "   has been exported successfully";
+                this.WindowState = FormWindowState.Maximized;
+                popup.Popup();// show
+            }
+            
+            /** check if their any new files per day*/
+
+            this.MinimumSize = new System.Drawing.Size(this.Width, this.Height);
+                 pictureBox1.Enabled = false;
            
                 refreshdataMaterialSubategory();
                 refreshdataMaterial();

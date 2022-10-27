@@ -344,7 +344,6 @@ namespace Oil_and_Gas_Software
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox txtfilepath;
-        private System.Windows.Forms.Button BrowseBtn;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -361,6 +360,7 @@ namespace Oil_and_Gas_Software
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button Checkbtn;
         private System.Windows.Forms.Timer timer1;
+        public System.Windows.Forms.Button BrowseBtn;
     }
 }
 
