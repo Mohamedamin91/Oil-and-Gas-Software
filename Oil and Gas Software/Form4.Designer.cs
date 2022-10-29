@@ -118,7 +118,7 @@ namespace Oil_and_Gas_Software
             // 
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(107, 241);
+            this.button2.Location = new System.Drawing.Point(100, 237);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(74, 42);
             this.button2.TabIndex = 26;
@@ -144,9 +144,9 @@ namespace Oil_and_Gas_Software
             this.groupBox3.Controls.Add(this.dateTimePicker2);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.dateTimePicker1);
-            this.groupBox3.Location = new System.Drawing.Point(8, 80);
+            this.groupBox3.Location = new System.Drawing.Point(85, 89);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(422, 305);
+            this.groupBox3.Size = new System.Drawing.Size(385, 305);
             this.groupBox3.TabIndex = 34;
             this.groupBox3.TabStop = false;
             // 
@@ -154,7 +154,7 @@ namespace Oil_and_Gas_Software
             // 
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(301, 241);
+            this.button3.Location = new System.Drawing.Point(294, 237);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(74, 42);
             this.button3.TabIndex = 27;
@@ -167,7 +167,7 @@ namespace Oil_and_Gas_Software
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(208, 241);
+            this.button1.Location = new System.Drawing.Point(201, 237);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(74, 42);
             this.button1.TabIndex = 19;
@@ -181,7 +181,7 @@ namespace Oil_and_Gas_Software
             this.CatComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CatComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CatComboBox.FormattingEnabled = true;
-            this.CatComboBox.Location = new System.Drawing.Point(75, 81);
+            this.CatComboBox.Location = new System.Drawing.Point(68, 77);
             this.CatComboBox.Name = "CatComboBox";
             this.CatComboBox.Size = new System.Drawing.Size(261, 28);
             this.CatComboBox.TabIndex = 5;
@@ -193,7 +193,7 @@ namespace Oil_and_Gas_Software
             this.SubCatComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.SubCatComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SubCatComboBox.FormattingEnabled = true;
-            this.SubCatComboBox.Location = new System.Drawing.Point(75, 135);
+            this.SubCatComboBox.Location = new System.Drawing.Point(68, 131);
             this.SubCatComboBox.Name = "SubCatComboBox";
             this.SubCatComboBox.Size = new System.Drawing.Size(261, 28);
             this.SubCatComboBox.TabIndex = 6;
@@ -205,7 +205,7 @@ namespace Oil_and_Gas_Software
             this.MatComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.MatComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MatComboBox.FormattingEnabled = true;
-            this.MatComboBox.Location = new System.Drawing.Point(75, 187);
+            this.MatComboBox.Location = new System.Drawing.Point(68, 183);
             this.MatComboBox.Name = "MatComboBox";
             this.MatComboBox.Size = new System.Drawing.Size(261, 28);
             this.MatComboBox.TabIndex = 7;
@@ -229,7 +229,7 @@ namespace Oil_and_Gas_Software
             this.RigComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.RigComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RigComboBox.FormattingEnabled = true;
-            this.RigComboBox.Location = new System.Drawing.Point(75, 248);
+            this.RigComboBox.Location = new System.Drawing.Point(68, 244);
             this.RigComboBox.Name = "RigComboBox";
             this.RigComboBox.Size = new System.Drawing.Size(261, 28);
             this.RigComboBox.TabIndex = 9;
@@ -240,7 +240,7 @@ namespace Oil_and_Gas_Software
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(17, 89);
+            this.label1.Location = new System.Drawing.Point(10, 85);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(34, 20);
             this.label1.TabIndex = 11;
@@ -250,7 +250,7 @@ namespace Oil_and_Gas_Software
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(9, 138);
+            this.label2.Location = new System.Drawing.Point(2, 134);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(60, 20);
             this.label2.TabIndex = 12;
@@ -260,7 +260,7 @@ namespace Oil_and_Gas_Software
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(17, 195);
+            this.label3.Location = new System.Drawing.Point(10, 191);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(36, 20);
             this.label3.TabIndex = 13;
@@ -270,7 +270,7 @@ namespace Oil_and_Gas_Software
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(17, 38);
+            this.label6.Location = new System.Drawing.Point(10, 34);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(44, 20);
             this.label6.TabIndex = 18;
@@ -280,7 +280,7 @@ namespace Oil_and_Gas_Software
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(20, 251);
+            this.label4.Location = new System.Drawing.Point(13, 247);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(33, 20);
             this.label4.TabIndex = 14;
@@ -291,7 +291,7 @@ namespace Oil_and_Gas_Software
             // 
             this.dateTimePicker2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker2.Location = new System.Drawing.Point(220, 38);
+            this.dateTimePicker2.Location = new System.Drawing.Point(213, 34);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(116, 26);
             this.dateTimePicker2.TabIndex = 17;
@@ -312,7 +312,7 @@ namespace Oil_and_Gas_Software
             // 
             this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(75, 38);
+            this.dateTimePicker1.Location = new System.Drawing.Point(68, 34);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(116, 26);
             this.dateTimePicker1.TabIndex = 16;
@@ -321,7 +321,7 @@ namespace Oil_and_Gas_Software
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(990, 27);
+            this.pictureBox3.Location = new System.Drawing.Point(14, 320);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(53, 48);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -384,7 +384,7 @@ namespace Oil_and_Gas_Software
             // 
             this.pictureBox1.Enabled = false;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(737, 27);
+            this.pictureBox1.Location = new System.Drawing.Point(14, 102);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(53, 47);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -395,7 +395,7 @@ namespace Oil_and_Gas_Software
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(862, 28);
+            this.pictureBox2.Location = new System.Drawing.Point(14, 201);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(53, 47);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;

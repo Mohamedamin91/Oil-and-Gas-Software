@@ -76,6 +76,7 @@ namespace Oil_and_Gas_Software
 
           
             var allFirstFiles
+                  //   = Directory.EnumerateFiles("D:\\Aramco Reports", "*", SearchOption.AllDirectories);
                      = Directory.EnumerateFiles("E:\\test2", "*", SearchOption.AllDirectories);
             foreach (string currentFirstFile in allFirstFiles)
             {
@@ -88,6 +89,7 @@ namespace Oil_and_Gas_Software
                 string newfilename = currentFirstFile;
                 newfilename = newfilename.Replace("MR", "").ToString();
                 newfilename = newfilename.Replace(".zip", "").ToString();
+              //  newfilename = newfilename.Replace("D:\\Aramco Reports\\", "").ToString();
                 newfilename = newfilename.Replace("E:\\test2\\", "").ToString();
                 newfilename.Trim();
                 newfilename.TrimEnd();
@@ -104,6 +106,7 @@ namespace Oil_and_Gas_Software
 
                     ///**unzip process*/
                     string zipFilePath = currentFirstFile;
+                   // string extractionPath = "D:\\Extracted" + ".zip";
                     string extractionPath = "E:\\test3" + ".zip";
                     extractionPath = extractionPath.Replace(".zip", "");
                     extractionPath = extractionPath.Trim();
@@ -814,13 +817,15 @@ namespace Oil_and_Gas_Software
 
 
                     /** delete extracted files*/
+               //     Directory.Delete("D:\\Extracted", true);
                     Directory.Delete("E:\\test3", true);
+              //      var NewCreatedDirectory = Directory.CreateDirectory("D:\\Extracted");
                     var NewCreatedDirectory = Directory.CreateDirectory("E:\\test3");
                     /** delete extracted files*/
                     ///**unzip process*/               
-                  
+
                 }
-             
+
                 drnew.Dispose();
                 drnew.Close();
                 SQLCONN.CloseConnection();
@@ -915,14 +920,7 @@ namespace Oil_and_Gas_Software
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            //    label1.Visible = label2.Visible = true;
-            //progressBar1.Value = e.ProgressPercentage;
-            //label1.Text = e.ProgressPercentage.ToString() + "%";
-            //if (label1.Text == "100%")
-            //{
-            //    label2.Text = "The data has been exported successfully";
-            //}
-
+           
          
         }
 
@@ -993,11 +991,6 @@ namespace Oil_and_Gas_Software
             if (lastRunDate != System.DateTime.Now.ToString("yyyy-MM-dd"))
             {
                 String str = System.DateTime.Now.ToString("h:mm tt");
-                if (str.Equals("11:35 AM"))
-                {
-                    lastRunDate = System.DateTime.Now.ToString("yyyy-MM-dd");
-                    BrowseBtn.PerformClick();
-                }
 
                 if (str.Equals("8:00 AM"))
                 {

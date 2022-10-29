@@ -14,7 +14,7 @@ namespace Oil_and_Gas_Software
 {
    public class SQLCONNECTION
     {
-        string ConnectionString = "Data Source=192.168.1.8;Initial Catalog=OILREPORT3;Persist Security Info=True;User ID=sa;password=Ram72763@";
+        string ConnectionString = "Data Source=192.168.1.8;Initial Catalog=OILREPORT2;Persist Security Info=True;User ID=sa;password=Ram72763@";
         SqlConnection con;
 
 
