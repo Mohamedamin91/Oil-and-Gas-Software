@@ -26,7 +26,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>29</ApplicationRevision>
+    <ApplicationRevision>37</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -373,4 +373,8 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Data.SqlClient.SNI.5.0.0\build\net46\Microsoft.Data.SqlClient.SNI.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Data.SqlClient.SNI.5.0.0\build\net46\Microsoft.Data.SqlClient.SNI.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>if exist "$(TargetPath).locked" del "$(TargetPath).locked"
+if exist "$(TargetPath)" if not exist "$(TargetPath).locked" move "$(TargetPath)" "$(TargetPath).locked"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

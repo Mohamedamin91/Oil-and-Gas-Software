@@ -59,7 +59,8 @@ namespace Oil_and_Gas_Software
 
         private void Form1_Load(object sender, EventArgs e)
         {
-          
+            timer1.Interval = 1000;
+            timer1.Enabled = true;
             //   BindGV();
         }
 
@@ -76,8 +77,8 @@ namespace Oil_and_Gas_Software
 
           
             var allFirstFiles
-                  //   = Directory.EnumerateFiles("D:\\Aramco Reports", "*", SearchOption.AllDirectories);
-                     = Directory.EnumerateFiles("E:\\test2", "*", SearchOption.AllDirectories);
+                   // = Directory.EnumerateFiles("D:\\Aramco Reports", "*", SearchOption.AllDirectories);
+                     = Directory.EnumerateFiles("E:\\Main Test", "*", SearchOption.AllDirectories);
             foreach (string currentFirstFile in allFirstFiles)
             {
 
@@ -89,8 +90,8 @@ namespace Oil_and_Gas_Software
                 string newfilename = currentFirstFile;
                 newfilename = newfilename.Replace("MR", "").ToString();
                 newfilename = newfilename.Replace(".zip", "").ToString();
-              //  newfilename = newfilename.Replace("D:\\Aramco Reports\\", "").ToString();
-                newfilename = newfilename.Replace("E:\\test2\\", "").ToString();
+               // newfilename = newfilename.Replace("D:\\Aramco Reports\\", "").ToString();
+                 newfilename = newfilename.Replace("E:\\Main Test\\", "").ToString();
                 newfilename.Trim();
                 newfilename.TrimEnd();
                 newfilename.TrimStart();
@@ -107,7 +108,7 @@ namespace Oil_and_Gas_Software
                     ///**unzip process*/
                     string zipFilePath = currentFirstFile;
                    // string extractionPath = "D:\\Extracted" + ".zip";
-                    string extractionPath = "E:\\test3" + ".zip";
+                   string extractionPath = "E:\\Extracted" + ".zip";
                     extractionPath = extractionPath.Replace(".zip", "");
                     extractionPath = extractionPath.Trim();
                     extractionPath = extractionPath.TrimStart();
@@ -193,18 +194,26 @@ namespace Oil_and_Gas_Software
                                         // delete the day and just keep the date
                                         extractedDATEONLY = extractedfullDATE.Substring(extractedfullDATE.Length - 15, 15);
                                         extractedDATEONLY = extractedDATEONLY.Replace("' ", "");
-                                        int From2 = FullData.IndexOf("Well No (Type) :") + "Well No (Type) :".Length;
-                                        int To2 = FullData.IndexOf("Charge #");
+                                       
+                                        int From2 = FullData.LastIndexOf("Well No (Type) :") + "Well No (Type) :".Length;
+                                        int To2 = FullData.LastIndexOf("Charge #:");
                                         extractedWELLNAME = FullData.Substring(From2, To2 - From2);
                                         // remove between bractise /** to 
                                         extractedWELLNAME = Regex.Replace(extractedWELLNAME, @"\([^)]*\)", "");
-                                        extractedWELLNAME = extractedWELLNAME.Replace(")", "");
-                                        extractedWELLNAME = extractedWELLNAME.Replace(";", "");
-                                        extractedWELLNAME = extractedWELLNAME.Replace(",", "");
-                                        extractedWELLNAME = extractedWELLNAME.Replace(" '' '' ", "");
-                                        extractedWELLNAME = extractedWELLNAME.Replace("\"", "");
+                                        extractedWELLNAME = extractedWELLNAME.Replace(")", string.Empty);
+                                        extractedWELLNAME = extractedWELLNAME.Replace(";", string.Empty);
+                                        extractedWELLNAME = extractedWELLNAME.Replace(",", string.Empty);
+                                        extractedWELLNAME = extractedWELLNAME.Replace(" '' '' ", string.Empty);
+                                        extractedWELLNAME = extractedWELLNAME.Replace("\"", string.Empty);
+
+                                        extractedWELLNAME = extractedWELLNAME.TrimStart();
+                                        extractedWELLNAME = extractedWELLNAME.TrimEnd();
+                                        extractedWELLNAME = extractedWELLNAME.Trim();
                                         int space1 = extractedWELLNAME.IndexOf(" ");
-                                        Wellname = (extractedWELLNAME.Substring(0, space1));
+                                        // MessageBox.Show(space1.ToString());
+                                        //   Wellname = (extractedWELLNAME.Substring(0, space1));
+
+                                        Wellname = extractedWELLNAME;
                                         Wellname = Wellname.TrimStart();
                                         Wellname = Wellname.TrimEnd();
                                         Wellname = Wellname.Trim();
@@ -534,9 +543,7 @@ namespace Oil_and_Gas_Software
                                             /** check Dublicate data in mudtreatment and insert new data in mudtreatment  **/
                                         }
                                         /** end  section (Mud Treatment )  */
-                                        //watch.Stop();
-                                        //label4.Text = watch.Elapsed.ToString();
-
+                                     
 
 
 
@@ -547,13 +554,6 @@ namespace Oil_and_Gas_Software
                                         /**calcltate for extract non contain data*/
                                         /**calcltate for extract non contain data*/
 
-                                        //if (!watch2.IsRunning) // checks if it is not running
-                                        //    watch2.Start(); // Start the counter from where it stopped
-
-                                        //for (int j = 0; j < 1000; j++)
-                                        //{
-                                        //    Console.Write(j);
-                                        //}
 
                                         /** for check files with out mud treayment : select * from reports where dayssince = "0.0(@)"*/
                                         /** start insert rig info non contain mudtreatment*/
@@ -578,22 +578,29 @@ namespace Oil_and_Gas_Software
                                         extractedDATEONLY = extractedDATEONLY.TrimEnd();
                                         extractedDATEONLY = extractedDATEONLY.Trim();
 
-                                        int From2 = FullData.IndexOf("Well No (Type) :") + "Well No (Type) :".Length;
-                                        int To2 = FullData.IndexOf("Charge #");
+                                        int From2 = FullData.LastIndexOf("Well No (Type) :") + "Well No (Type) :".Length;
+                                        int To2 = FullData.LastIndexOf("Charge #:");
                                         extractedWELLNAME = FullData.Substring(From2, To2 - From2);
                                         // remove between bractise /** to 
                                         extractedWELLNAME = Regex.Replace(extractedWELLNAME, @"\([^)]*\)", "");
-                                        extractedWELLNAME = extractedWELLNAME.Replace(")", "");
-                                        extractedWELLNAME = extractedWELLNAME.Replace(";", "");
-                                        extractedWELLNAME = extractedWELLNAME.Replace(",", "");
-                                        extractedWELLNAME = extractedWELLNAME.Replace(" '' '' ", "");
-                                        extractedWELLNAME = extractedWELLNAME.Replace("\"", "");
+                                        extractedWELLNAME = extractedWELLNAME.Replace(")", string.Empty);
+                                        extractedWELLNAME = extractedWELLNAME.Replace(";", string.Empty);
+                                        extractedWELLNAME = extractedWELLNAME.Replace(",", string.Empty);
+                                        extractedWELLNAME = extractedWELLNAME.Replace(" '' '' ", string.Empty);
+                                        extractedWELLNAME = extractedWELLNAME.Replace("\"", string.Empty);
+
+                                        extractedWELLNAME = extractedWELLNAME.TrimStart();
+                                        extractedWELLNAME = extractedWELLNAME.TrimEnd();
+                                        extractedWELLNAME = extractedWELLNAME.Trim();
                                         int space1 = extractedWELLNAME.IndexOf(" ");
-                                        Wellname = (extractedWELLNAME.Substring(0, space1));
+                                        // MessageBox.Show(space1.ToString());
+                                        //   Wellname = (extractedWELLNAME.Substring(0, space1));
+                                        Wellname = extractedWELLNAME;
+
                                         Wellname = Wellname.TrimStart();
                                         Wellname = Wellname.TrimEnd();
                                         Wellname = Wellname.Trim();
-
+                                     //   MessageBox.Show(Wellname.ToString());
                                         /**  extracting last 24*/
                                         int From4 = FullData.IndexOf("Last 24 hr operations") + "Last 24 hr operations".Length;
                                         int To4 = FullData.IndexOf("Next 24 hr plan");
@@ -658,14 +665,7 @@ namespace Oil_and_Gas_Software
                                         /** calcute insert non contain */
                                         /**calcltate for extract non contain data*/
 
-                                        //if (!watch2.IsRunning) // checks if it is not running
-                                        //watch2.Start(); // Start the counter from where it stopped
-
-                                        //for (int j = 0; j < 1000; j++)
-                                        //{
-                                        //    Console.Write(j);
-
-                                        //}
+                                       
 
                                         ///** start insert rig info non contain mudtreatment */
 
@@ -774,11 +774,7 @@ namespace Oil_and_Gas_Software
 
                                         /** end report non contain mudtreatment**/
 
-                                        //    watch2.Stop();
-
-
-                                        //    label6.Text = watch2.Elapsed.ToString();
-
+                                     
                                     }
 
 
@@ -817,10 +813,12 @@ namespace Oil_and_Gas_Software
 
 
                     /** delete extracted files*/
-               //     Directory.Delete("D:\\Extracted", true);
-                    Directory.Delete("E:\\test3", true);
-              //      var NewCreatedDirectory = Directory.CreateDirectory("D:\\Extracted");
-                    var NewCreatedDirectory = Directory.CreateDirectory("E:\\test3");
+                 //Directory.Delete("D:\\Extracted", true);
+               Directory.Delete("E:\\Extracted", true);
+             
+                    //     var NewCreatedDirectory = Directory.CreateDirectory("D:\\Extracted");
+             
+          var NewCreatedDirectory = Directory.CreateDirectory("E:\\Extracted");
                     /** delete extracted files*/
                     ///**unzip process*/               
 
@@ -845,7 +843,7 @@ namespace Oil_and_Gas_Software
             this.WindowState = FormWindowState.Maximized;
             popup.Popup();// show
 
-            MessageBox.Show("The data has been exported successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          //  MessageBox.Show("The data has been exported successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public static void DeleteDirectory(string target_dir)
         {
@@ -863,7 +861,7 @@ namespace Oil_and_Gas_Software
                 DeleteDirectory(dir);
             }
 
-            Directory.Delete(target_dir, false);
+           // Directory.Delete(target_dir, false);
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -971,11 +969,11 @@ namespace Oil_and_Gas_Software
             SqlDataReader dr = SQLCONN.DataReader("select * from reports where date = '"+  newfilename  +"' ");
             if (dr.HasRows)
             {
-                MessageBox.Show("Found");
+               // MessageBox.Show("Found");
             }
             else
             {
-                MessageBox.Show("Not Found");
+              //  MessageBox.Show("Not Found");
 
             }
             dr.Dispose();
@@ -1038,6 +1036,11 @@ namespace Oil_and_Gas_Software
                     BrowseBtn.PerformClick();
                 }
                 if (str.Equals("17:00 PM"))
+                {
+                    lastRunDate = System.DateTime.Now.ToString("yyyy-MM-dd");
+                    BrowseBtn.PerformClick();
+                }
+                if (str.Equals("18:00 PM"))
                 {
                     lastRunDate = System.DateTime.Now.ToString("yyyy-MM-dd");
                     BrowseBtn.PerformClick();
